@@ -1,67 +1,106 @@
-* {
-  box-sizing: border-box;
-}
+@import "tailwindcss";
 
-html {
-  color-scheme: dark;
-  background-color: #111;
-}
-
-html,
-body {
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  margin: 0px;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-}
-
-.header {
-  max-width: 500px;
-  padding-inline: 2rem;
-}
-
-.header > img {
-  display: block;
-  margin: auto;
-  max-width: 100%;
-}
-
-.header > h2 {
-  font-family: 'TWK Everett', sans-serif;
-  font-style: normal;
+@font-face {
+  font-family: 'Geist';
+  src: url('https://fonts.gstatic.com/s/geist/v4/gyBhhwUxId8gMGYQMKR3pzfaWI_RnOM4mJPby1QNtA.woff2') format('woff2');
   font-weight: 400;
-  font-size: 1.25rem;
-  line-height: 144%;
-  text-align: center;
-  color: rgba(255, 255, 255, 0.6);
+  font-style: normal;
+  font-display: swap;
 }
 
-footer {
-  width: 100%;
-  padding: 1.5rem 2rem;
-  text-align: center;
-  color: rgba(255, 255, 255, 0.6);
-  background-color: var(--lk-bg);
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
+@font-face {
+  font-family: 'Geist';
+  src: url('https://fonts.gstatic.com/s/geist/v4/gyBhhwUxId8gMGYQMKR3pzfaWI_Re-Q4mJPby1QNtA.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
-footer a,
-h2 a {
-  color: #ff6352;
-  text-decoration-color: #a33529;
-  text-underline-offset: 0.125em;
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('https://fonts.gstatic.com/s/geistmono/v4/or3nQ6H-1_WfwkMZI_qYFrcdmg.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
-footer a:hover,
-h2 a {
-  text-decoration-color: #ff6352;
+@theme {
+  --font-sans: 'Geist', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+
+  --color-background: #0a0a0a;
+  --color-foreground: #fafafa;
+
+  --color-border-subtle: rgba(255, 255, 255, 0.12);
+  --color-muted-foreground: rgba(250, 250, 250, 0.5);
 }
 
-h2 a {
-  text-decoration: none;
+@layer base {
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+    font-weight: 400;
+  }
+}
+
+@layer utilities {
+  .section-container {
+    @apply mx-auto max-w-[1200px] border-x border-white/12;
+  }
+
+  .repeating-grid {
+    background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 12px),
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 12px);
+  }
+
+  .repeating-grid-subtle {
+    background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.015) 0, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 12px),
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.015) 0, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 12px);
+  }
+
+  .diagonal-mask {
+    background: repeating-linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.08) 0,
+      rgba(255, 255, 255, 0.08) 1px,
+      transparent 1px,
+      transparent 5px
+    );
+  }
+
+  .diagonal-stripes {
+    background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0, rgba(255, 255, 255, 0.04) 1px, transparent 1px, transparent 10px);
+  }
+
+  .diagonal-dither {
+    background-color: rgba(255, 255, 255, 0.12);
+    mask: url("https://framerusercontent.com/images/72Ox6mzuXn4bJouNgm9sRSTK0.png?width=20&height=20") left top / 12px 12px repeat alpha;
+    -webkit-mask: url("https://framerusercontent.com/images/72Ox6mzuXn4bJouNgm9sRSTK0.png?width=20&height=20") left top / 12px 12px repeat alpha;
+  }
 }

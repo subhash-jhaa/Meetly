@@ -4,7 +4,11 @@
 // ─── SITE CONFIG ─────────────────────────────────────────────────────────────
 export const SITE = {
   name: 'Meetly',
-  demoUrl: 'https://calendly.com/arushi-gandhi/30min',
+  /** Internal app entry — the meeting dashboard */
+  dashboardUrl: '/dashboard',
+  /** Auth routes */
+  signInUrl: '/signin',
+  signUpUrl: '/signup',
   slackUrl: 'https://join.slack.com/t/resslaiaiagen-czp2639/shared_invite/zt-2vpd5vabp-D9LpsJZRiweb7_OFnvIvhA',
   introVideoUrl: 'https://www.youtube.com/watch?v=oNjh7WbUFM4',
 } as const;

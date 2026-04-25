@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { HERO_DATA, SITE } from '../data/landingData';
 import { SectionSpacer } from './ui/primitives';
 
@@ -22,11 +23,12 @@ function YCBadge() {
 }
 
 function HeroCTAs() {
+  const router = useRouter();
   return (
     <div className="flex gap-[12px] items-center pt-[8px]">
       <button
         className="bg-[#fafafa] text-[#0a0a0a] border-none rounded-[4px] p-[11px_16px] text-[13px] font-mono cursor-pointer transition-opacity hover:opacity-85"
-        onClick={() => window.open(SITE.demoUrl, '_blank')}
+        onClick={() => router.push(SITE.signUpUrl)}
       >
         {HERO_DATA.cta.primary}
       </button>

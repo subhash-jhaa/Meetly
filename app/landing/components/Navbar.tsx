@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { SITE } from '../data/landingData';
 
 export default function Navbar() {
   return (
@@ -35,14 +36,12 @@ export default function Navbar() {
 
         {/* RIGHT */}
         <div className="flex-1 flex items-center justify-end gap-[12px]">
-          {/* SECONADRY BUTTON: JOIN OUR SLACK */}
-          <a
-            href="https://join.slack.com/t/resslaiaiagen-czp2639/shared_invite/zt-2vpd5vabp-D9LpsJZRiweb7_OFnvIvhA"
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* SECONDARY BUTTON: SIGN IN */}
+          <Link
+            href={SITE.signInUrl}
             className="group relative flex items-center justify-center border border-[#242424] bg-[#0a0908] px-[16px] py-[8px] no-underline transition-colors hover:bg-white/5"
           >
-            <span className="font-mono text-[13px] text-white">Join Our Slack</span>
+            <span className="font-mono text-[13px] text-white">Sign in</span>
             
             {/* INNER CORNER MARKERS (8 divs - bg-white/20) */}
             <div className="absolute -left-[1px] -top-[1px] h-[5px] w-[1px] bg-white/20 transition-colors group-hover:bg-white/40" />
@@ -56,17 +55,15 @@ export default function Navbar() {
             
             <div className="absolute -right-[1px] -bottom-[1px] h-[5px] w-[1px] bg-white/20 transition-colors group-hover:bg-white/40" />
             <div className="absolute -right-[1px] -bottom-[1px] h-[1px] w-[5px] bg-white/20 transition-colors group-hover:bg-white/40" />
-          </a>
+          </Link>
 
-          {/* DEFAULT BUTTON: BOOK A DEMO */}
-          <a
-            href="https://calendly.com/arushi-gandhi/30min"
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* DEFAULT BUTTON: START WITH FREE */}
+          <Link
+            href={SITE.signUpUrl}
             className="flex items-center justify-center bg-[#fafafa] rounded-[2px] px-[16px] py-[8px] no-underline transition-opacity hover:opacity-90"
           >
-            <span className="font-mono text-[13px] text-black">Book A Demo</span>
-          </a>
+            <span className="font-mono text-[13px] text-black">Start for free</span>
+          </Link>
         </div>
 
         {/* OUTER CORNER MARKERS (8 divs - bg-white/10) */}

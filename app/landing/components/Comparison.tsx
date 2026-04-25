@@ -83,7 +83,7 @@ export default function Comparison() {
             </div>
             <button
               className="btn-outline rounded-[4px] border border-white/20 px-[16px] py-[8px] font-mono text-[13px] text-[#fafafa] transition-colors hover:border-white/40 bg-transparent"
-              onClick={() => window.open(SITE.demoUrl, '_blank')}
+              onClick={() => window.open(SITE.signUpUrl, '_blank')}
             >
               {customPlan.cta}
             </button>

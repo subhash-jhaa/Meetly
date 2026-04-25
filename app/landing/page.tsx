@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Features from './components/Features';
@@ -16,6 +17,7 @@ import { FAQ_SECTION, SITE } from './data/landingData';
 
 // ─── FAQ WRAPPER (lives in page.tsx since it spans two columns) ───────────────
 function FAQSection() {
+  const router = useRouter();
   const { eyebrow, title, subtext, cta } = FAQ_SECTION;
 
   return (
@@ -46,7 +48,7 @@ function FAQSection() {
             </p>
             <button
               className="btn-outline mt-[24px] rounded-[4px] border border-white/20 px-[16px] py-[8px] font-mono text-[13px] text-[#fafafa] transition-colors hover:border-white/40 bg-transparent"
-              onClick={() => window.open(SITE.demoUrl, '_blank')}
+              onClick={() => router.push(SITE.signUpUrl)}
             >
               {cta}
             </button>

@@ -1,10 +1,12 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { CTA_DATA, SITE } from '../data/landingData';
 import { SectionSpacer } from './ui/primitives';
 
 export default function CTA() {
+  const router = useRouter();
   const { headline, subheadline, primaryCta, secondaryCta, dashboardImg } = CTA_DATA;
 
   return (
@@ -23,7 +25,7 @@ export default function CTA() {
             <div className="flex gap-[12px] flex-wrap">
               <button
                 className="btn-white bg-[#fafafa] text-[#0a0a0a] border-none rounded-[4px] p-[11px_16px] text-[13px] font-mono cursor-pointer transition-opacity hover:opacity-85"
-                onClick={() => window.open(SITE.demoUrl, '_blank')}
+                onClick={() => router.push(SITE.signUpUrl)}
               >
                 {primaryCta}
               </button>

@@ -4,6 +4,9 @@ import '@livekit/components-styles/prefabs';
 import type { Metadata, Viewport } from 'next';
 import { Toaster } from 'react-hot-toast';
 import '@/lib/env';  // ← validates all env vars on server startup
+import { Providers } from '@/components/Providers';
+
+
 export const metadata: Metadata = {
   title: {
     default: 'LiveKit Meet | Conference app build with LiveKit open source',
@@ -52,8 +55,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <body data-lk-theme="default" suppressHydrationWarning>
-        <Toaster />
-        {children}
+        <Providers>
+          <Toaster />
+          {children}
+        </Providers>
       </body>
     </html>
   );

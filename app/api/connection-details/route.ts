@@ -1,4 +1,5 @@
 import { auth } from '@/auth';
+import { prisma } from '@/lib/prisma';
 import { isRoomHost } from '@/lib/getRoomHost';
 import { getLiveKitURL } from '@/lib/getLiveKitURL';
 import { ConnectionDetails } from '@/lib/types';
@@ -26,6 +27,32 @@ export async function GET(request: NextRequest) {
     if (!LIVEKIT_URL) throw new Error('LIVEKIT_URL is not defined');
     if (typeof roomName !== 'string') {
       return new NextResponse('Missing required query parameter: roomName', { status: 400 });
+    }
+
+    // ✅ Block entry if meeting is scheduled but not yet time
+    const scheduledMeeting = await prisma.meeting.findFirst({
+      where: {
+        roomName,
+        scheduledAt: { not: null },
+        endedAt: null,
+      },
+    });
+
+    if (scheduledMeeting?.scheduledAt) {
+      const now = new Date();
+      const scheduledTime = new Date(scheduledMeeting.scheduledAt);
+      const diffMinutes = (scheduledTime.getTime() - now.getTime()) / 1000 / 60;
+
+      // Allow entry up to 5 minutes before scheduled time
+      if (diffMinutes > 5) {
+        return new NextResponse(
+          JSON.stringify({
+            error: 'Meeting has not started yet',
+            scheduledAt: scheduledMeeting.scheduledAt,
+          }),
+          { status: 425, headers: { 'Content-Type': 'application/json' } },
+        );
+      }
     }
 
     const livekitServerUrl = region ? getLiveKitURL(LIVEKIT_URL, region) : LIVEKIT_URL;

@@ -9,20 +9,33 @@ export async function POST(req: NextRequest) {
   }
 
   const { roomName } = await req.json();
-
   if (!roomName || typeof roomName !== 'string') {
     return NextResponse.json({ error: 'Missing roomName' }, { status: 400 });
   }
 
-  // Upsert — if room already exists keep the original host
-  const room = await prisma.room.upsert({
+  // Register room with host
+  await prisma.room.upsert({
     where: { name: roomName },
-    update: {},  // don't overwrite existing host
+    update: {},
     create: {
       name: roomName,
       hostId: session.user.id,
     },
   });
 
-  return NextResponse.json({ roomName: room.name, hostId: room.hostId });
+  // Check if a scheduled meeting already exists for this room
+  const existingScheduled = await prisma.meeting.findFirst({
+    where: { roomName, scheduledAt: { not: null }, endedAt: null },
+  });
+
+  // If a scheduled meeting exists, use it — otherwise create an instant one
+  const meeting = existingScheduled ?? await prisma.meeting.create({
+    data: { roomName, hostId: session.user.id },
+  });
+
+  return NextResponse.json({
+    meetingId: meeting.id,
+    roomName: meeting.roomName,
+    startedAt: meeting.startedAt,
+  });
 }

@@ -3,7 +3,7 @@ import '@livekit/components-styles';
 import '@livekit/components-styles/prefabs';
 import type { Metadata, Viewport } from 'next';
 import { Toaster } from 'react-hot-toast';
-
+import '@/lib/env';  // ← validates all env vars on server startup
 export const metadata: Metadata = {
   title: {
     default: 'LiveKit Meet | Conference app build with LiveKit open source',

@@ -45,18 +45,36 @@ function DemoMeetingTab(props: { label: string }) {
   const router = useRouter();
   const [e2ee, setE2ee] = useState(false);
   const [sharedPassphrase, setSharedPassphrase] = useState(randomString(64));
-  const startMeeting = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const startMeeting = async () => {
+    setIsLoading(true);
+    const roomId = generateRoomId();
+
+    // ✅ Register this user as the host before entering
+    await fetch('/api/rooms/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ roomName: roomId }),
+    });
+
     if (e2ee) {
-      router.push(`/rooms/${generateRoomId()}#${encodePassphrase(sharedPassphrase)}`);
+      router.push(`/rooms/${roomId}#${encodePassphrase(sharedPassphrase)}`);
     } else {
-      router.push(`/rooms/${generateRoomId()}`);
+      router.push(`/rooms/${roomId}`);
     }
   };
+
   return (
     <div className={styles.tabContent}>
       <p style={{ margin: 0 }}>Try Meetly for free with our live demo project.</p>
-      <button style={{ marginTop: '1rem' }} className="lk-button" onClick={startMeeting}>
-        Start Meeting
+      <button
+        style={{ marginTop: '1rem' }}
+        className="lk-button"
+        onClick={startMeeting}
+        disabled={isLoading}
+      >
+        {isLoading ? 'Starting...' : 'Start Meeting'}
       </button>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
@@ -65,7 +83,7 @@ function DemoMeetingTab(props: { label: string }) {
             type="checkbox"
             checked={e2ee}
             onChange={(ev) => setE2ee(ev.target.checked)}
-          ></input>
+          />
           <label htmlFor="use-e2ee">Enable end-to-end encryption</label>
         </div>
         {e2ee && (
@@ -83,7 +101,6 @@ function DemoMeetingTab(props: { label: string }) {
     </div>
   );
 }
-
 function CustomConnectionTab(props: { label: string }) {
   const router = useRouter();
 

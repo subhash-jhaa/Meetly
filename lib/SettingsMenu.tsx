@@ -1,45 +1,51 @@
 'use client';
+import { useSession } from 'next-auth/react';
 import * as React from 'react';
-import { Track } from 'livekit-client';
 import {
   useMaybeLayoutContext,
   MediaDeviceMenu,
-  TrackToggle,
   useRoomContext,
   useIsRecording,
 } from '@livekit/components-react';
 import styles from '../styles/SettingsMenu.module.css';
 import { CameraSettings } from './CameraSettings';
 import { MicrophoneSettings } from './MicrophoneSettings';
-/**
- * @alpha
- */
+
 export interface SettingsMenuProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-/**
- * @alpha
- */
 export function SettingsMenu(props: SettingsMenuProps) {
+  const { data: session } = useSession();
   const layoutContext = useMaybeLayoutContext();
   const room = useRoomContext();
   const recordingEndpoint = process.env.NEXT_PUBLIC_LK_RECORD_ENDPOINT;
+  const [isHost, setIsHost] = React.useState(false);
 
-  const settings = React.useMemo(() => {
-    return {
-      media: { camera: true, microphone: true, label: 'Media Devices', speaker: true },
-      recording: recordingEndpoint ? { label: 'Recording' } : undefined,
-    };
-  }, []);
-
-  const tabs = React.useMemo(
-    () => Object.keys(settings).filter((t) => t !== undefined) as Array<keyof typeof settings>,
-    [settings],
-  );
-  const [activeTab, setActiveTab] = React.useState(tabs[0]);
+  // Check if current user is the host of this room
+  React.useEffect(() => {
+    if (!room.name || !session?.user) return;
+    fetch(`/api/rooms/is-host?roomName=${room.name}`)
+      .then((r) => r.json())
+      .then((data) => setIsHost(data.isHost))
+      .catch(() => setIsHost(false));
+  }, [room.name, session?.user]);
 
   const isRecording = useIsRecording();
   const [initialRecStatus, setInitialRecStatus] = React.useState(isRecording);
   const [processingRecRequest, setProcessingRecRequest] = React.useState(false);
+
+  // Only show recording tab if user is the host
+  const settings = React.useMemo(() => {
+    return {
+      media: { camera: true, microphone: true, label: 'Media Devices', speaker: true },
+      recording: recordingEndpoint && isHost ? { label: 'Recording' } : undefined,
+    };
+  }, [isHost, recordingEndpoint]);
+
+  const tabs = React.useMemo(
+    () => Object.keys(settings).filter((t) => settings[t as keyof typeof settings] !== undefined) as Array<keyof typeof settings>,
+    [settings],
+  );
+  const [activeTab, setActiveTab] = React.useState(tabs[0]);
 
   React.useEffect(() => {
     if (initialRecStatus !== isRecording) {
@@ -62,8 +68,7 @@ export function SettingsMenu(props: SettingsMenuProps) {
     } else {
       response = await fetch(recordingEndpoint + `/start?roomName=${room.name}`);
     }
-    if (response.ok) {
-    } else {
+    if (!response.ok) {
       console.error(
         'Error handling recording request, check server logs:',
         response.status,
@@ -85,10 +90,8 @@ export function SettingsMenu(props: SettingsMenuProps) {
                 onClick={() => setActiveTab(tab)}
                 aria-pressed={tab === activeTab}
               >
-                {
-                  // @ts-ignore
-                  settings[tab].label
-                }
+                {/* @ts-ignore */}
+                {settings[tab].label}
               </button>
             ),
         )}
@@ -96,7 +99,7 @@ export function SettingsMenu(props: SettingsMenuProps) {
       <div className="tab-content">
         {activeTab === 'media' && (
           <>
-            {settings.media && settings.media.camera && (
+            {settings.media.camera && (
               <>
                 <h3>Camera</h3>
                 <section>
@@ -104,7 +107,7 @@ export function SettingsMenu(props: SettingsMenuProps) {
                 </section>
               </>
             )}
-            {settings.media && settings.media.microphone && (
+            {settings.media.microphone && (
               <>
                 <h3>Microphone</h3>
                 <section>
@@ -112,13 +115,13 @@ export function SettingsMenu(props: SettingsMenuProps) {
                 </section>
               </>
             )}
-            {settings.media && settings.media.speaker && (
+            {settings.media.speaker && (
               <>
                 <h3>Speaker & Headphones</h3>
                 <section className="lk-button-group">
                   <span className="lk-button">Audio Output</span>
                   <div className="lk-button-group-menu">
-                    <MediaDeviceMenu kind="audiooutput"></MediaDeviceMenu>
+                    <MediaDeviceMenu kind="audiooutput" />
                   </div>
                 </section>
               </>
@@ -143,7 +146,7 @@ export function SettingsMenu(props: SettingsMenuProps) {
       </div>
       <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
         <button
-          className={`lk-button`}
+          className="lk-button"
           onClick={() => layoutContext?.widget.dispatch?.({ msg: 'toggle_settings' })}
         >
           Close

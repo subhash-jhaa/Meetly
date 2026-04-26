@@ -1,4 +1,5 @@
-import { randomString } from '@/lib/client-utils';
+import { auth } from '@/auth';
+import { isRoomHost } from '@/lib/getRoomHost';
 import { getLiveKitURL } from '@/lib/getLiveKitURL';
 import { ConnectionDetails } from '@/lib/types';
 import { AccessToken, AccessTokenOptions, VideoGrant } from 'livekit-server-sdk';
@@ -11,52 +12,56 @@ const LIVEKIT_URL = process.env.LIVEKIT_URL;
 const COOKIE_KEY = 'random-participant-postfix';
 
 export async function GET(request: NextRequest) {
-  try {
-    // Parse query parameters
-    const roomName = request.nextUrl.searchParams.get('roomName');
-    const participantName = request.nextUrl.searchParams.get('participantName');
-    const metadata = request.nextUrl.searchParams.get('metadata') ?? '';
-    const region = request.nextUrl.searchParams.get('region');
-    if (!LIVEKIT_URL) {
-      throw new Error('LIVEKIT_URL is not defined');
-    }
-    const livekitServerUrl = region ? getLiveKitURL(LIVEKIT_URL, region) : LIVEKIT_URL;
-    let randomParticipantPostfix = request.cookies.get(COOKIE_KEY)?.value;
-    if (livekitServerUrl === undefined) {
-      throw new Error('Invalid region');
-    }
+  // ✅ 1. Must be logged in
+  const session = await auth();
+  if (!session?.user?.id) {
+    return new NextResponse('Unauthorized', { status: 401 });
+  }
 
+  try {
+    const roomName = request.nextUrl.searchParams.get('roomName');
+    const region = request.nextUrl.searchParams.get('region');
+    const metadata = request.nextUrl.searchParams.get('metadata') ?? '';
+
+    if (!LIVEKIT_URL) throw new Error('LIVEKIT_URL is not defined');
     if (typeof roomName !== 'string') {
       return new NextResponse('Missing required query parameter: roomName', { status: 400 });
     }
-    if (participantName === null) {
-      return new NextResponse('Missing required query parameter: participantName', { status: 400 });
-    }
 
-    // Generate participant token
-    if (!randomParticipantPostfix) {
-      randomParticipantPostfix = randomString(4);
-    }
+    const livekitServerUrl = region ? getLiveKitURL(LIVEKIT_URL, region) : LIVEKIT_URL;
+    if (!livekitServerUrl) throw new Error('Invalid region');
+
+    // ✅ 2. Check if this user is the host of this room
+    const userIsHost = await isRoomHost(roomName, session.user.id);
+
+    // ✅ 3. Use real identity from session — not a spoofable query param
+    const identity = session.user.id;
+    const displayName = session.user.name ?? 'Participant';
+
     const participantToken = await createParticipantToken(
       {
-        identity: `${participantName}__${randomParticipantPostfix}`,
-        name: participantName,
+        identity,
+        name: displayName,
         metadata,
       },
       roomName,
+      userIsHost,  // ← pass role into token
     );
 
-    // Return connection details
     const data: ConnectionDetails = {
       serverUrl: livekitServerUrl,
-      roomName: roomName,
-      participantToken: participantToken,
-      participantName: participantName,
+      roomName,
+      participantToken,
+      participantName: displayName,
     };
+
+    let cookiePostfix = request.cookies.get(COOKIE_KEY)?.value;
+    if (!cookiePostfix) cookiePostfix = Math.random().toString(36).slice(2, 6);
+
     return new NextResponse(JSON.stringify(data), {
       headers: {
         'Content-Type': 'application/json',
-        'Set-Cookie': `${COOKIE_KEY}=${randomParticipantPostfix}; Path=/; HttpOnly; SameSite=Strict; Secure; Expires=${getCookieExpirationTime()}`,
+        'Set-Cookie': `${COOKIE_KEY}=${cookiePostfix}; Path=/; HttpOnly; SameSite=Strict; Secure; Expires=${getCookieExpirationTime()}`,
       },
     });
   } catch (error) {
@@ -70,24 +75,32 @@ export async function GET(request: NextRequest) {
   }
 }
 
-function createParticipantToken(userInfo: AccessTokenOptions, roomName: string) {
+function createParticipantToken(
+  userInfo: AccessTokenOptions,
+  roomName: string,
+  isHost: boolean,   // ← role parameter
+) {
   const at = new AccessToken(API_KEY, API_SECRET, userInfo);
-  at.ttl = '5m';
+
+  // ✅ 4. Fixed TTL — was '5m', now '4h' so nobody gets kicked mid-meeting
+  at.ttl = '4h';
+
   const grant: VideoGrant = {
     room: roomName,
     roomJoin: true,
-    canPublish: true,
-    canPublishData: true,
-    canSubscribe: true,
+    canSubscribe: true,       // everyone can watch/listen
+    canPublish: isHost,       // ✅ only host can publish by default
+    canPublishData: true,     // everyone can send chat/data messages
+    roomAdmin: isHost,        // ✅ host can mute/kick participants
+    roomRecord: isHost,       // ✅ host can trigger recordings
   };
+
   at.addGrant(grant);
   return at.toJwt();
 }
 
 function getCookieExpirationTime(): string {
-  var now = new Date();
-  var time = now.getTime();
-  var expireTime = time + 60 * 120 * 1000;
-  now.setTime(expireTime);
+  const now = new Date();
+  now.setTime(now.getTime() + 60 * 120 * 1000);
   return now.toUTCString();
 }

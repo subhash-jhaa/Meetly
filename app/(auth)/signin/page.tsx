@@ -1,25 +1,17 @@
 'use client';
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
-export default function SignInPage() {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    // Simulate auth
-    setTimeout(() => {
-      router.push('/dashboard');
-    }, 1000);
-  };
+function SignInContent() {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') ?? '/dashboard';
+  const error = searchParams.get('error');
 
   return (
     <div className="flex flex-col gap-8 p-8 border border-white/10 bg-[#0a0908]/50 backdrop-blur-sm relative">
-      {/* CORNER MARKERS FOR THE CONTAINER */}
+      {/* Corner markers — keep your existing decorations */}
       <div className="absolute -left-[1px] -top-[1px] h-[12px] w-[1px] bg-white/20" />
       <div className="absolute -left-[1px] -top-[1px] h-[1px] w-[12px] bg-white/20" />
       <div className="absolute -right-[1px] -top-[1px] h-[12px] w-[1px] bg-white/20" />
@@ -32,85 +24,49 @@ export default function SignInPage() {
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-2 text-white/40 font-mono text-[12px] uppercase tracking-widest">
           <span className="w-8 h-[1px] bg-white/20" />
-          Welcome back
+          Welcome
         </div>
         <h1 className="text-[32px] font-normal tracking-[-0.04em] text-white">
           Sign in to Meetly
         </h1>
         <p className="text-white/40 text-[14px]">
-          Enter your credentials to access your dashboard.
+          Use your Google account to continue.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <div className="flex flex-col gap-1.5">
-          <label className="font-mono text-[11px] uppercase tracking-wider text-white/40 ml-1">
-            Email Address
-          </label>
-          <input
-            type="email"
-            required
-            placeholder="name@company.com"
-            className="w-full bg-[#0a0908] border border-white/10 px-4 py-3 text-[14px] text-white placeholder:text-white/20 outline-none focus:border-white/30 transition-colors"
-          />
-        </div>
+      {error && (
+        <p className="text-red-400 text-[13px] font-mono">
+          Something went wrong. Please try again.
+        </p>
+      )}
 
-        <div className="flex flex-col gap-1.5">
-          <div className="flex justify-between items-center ml-1">
-            <label className="font-mono text-[11px] uppercase tracking-wider text-white/40">
-              Password
-            </label>
-            <Link href="#" className="font-mono text-[11px] uppercase tracking-wider text-white/30 hover:text-white transition-colors">
-              Forgot?
-            </Link>
-          </div>
-          <input
-            type="password"
-            required
-            placeholder="••••••••"
-            className="w-full bg-[#0a0908] border border-white/10 px-4 py-3 text-[14px] text-white placeholder:text-white/20 outline-none focus:border-white/30 transition-colors"
-          />
-        </div>
+      <button
+        onClick={() => signIn('google', { callbackUrl })}
+        className="group relative w-full flex items-center justify-center gap-3 bg-[#fafafa] py-3 transition-opacity hover:opacity-90"
+      >
+        {/* Google icon */}
+        <svg width="18" height="18" viewBox="0 0 18 18">
+          <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/>
+          <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/>
+          <path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/>
+          <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z"/>
+        </svg>
+        <span className="font-mono text-[13px] text-black uppercase tracking-widest font-bold">
+          Continue with Google
+        </span>
+      </button>
 
-        <button
-          disabled={isLoading}
-          className="group relative w-full mt-2 flex items-center justify-center bg-[#fafafa] py-3 transition-opacity hover:opacity-90 disabled:opacity-50"
-        >
-          <span className="font-mono text-[13px] text-black uppercase tracking-widest font-bold">
-            {isLoading ? 'Processing...' : 'Sign In'}
-          </span>
-          {/* CORNER DECORATIONS FOR THE BUTTON */}
-          <div className="absolute -left-[1px] -top-[1px] h-[6px] w-[1px] bg-black/10" />
-          <div className="absolute -left-[1px] -top-[1px] h-[1px] w-[6px] bg-black/10" />
-          <div className="absolute -right-[1px] -bottom-[1px] h-[6px] w-[1px] bg-black/10" />
-          <div className="absolute -right-[1px] -bottom-[1px] h-[1px] w-[6px] bg-black/10" />
-        </button>
-      </form>
-
-      <div className="relative py-4">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-white/5"></div>
-        </div>
-        <div className="relative flex justify-center text-[12px] uppercase font-mono">
-          <span className="bg-[#0a0a0a] px-2 text-white/20 tracking-tighter">Or continue with</span>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-2 gap-3">
-        <button className="flex items-center justify-center gap-2 border border-white/10 bg-transparent py-2.5 transition-colors hover:bg-white/5 font-mono text-[12px] text-white/60">
-          Google
-        </button>
-        <button className="flex items-center justify-center gap-2 border border-white/10 bg-transparent py-2.5 transition-colors hover:bg-white/5 font-mono text-[12px] text-white/60">
-          GitHub
-        </button>
-      </div>
-
-      <p className="text-center text-[13px] text-white/40">
-        Don't have an account?{' '}
-        <Link href="/signup" className="text-white hover:underline underline-offset-4 decoration-white/30">
-          Sign up for free
-        </Link>
+      <p className="text-center text-[12px] text-white/30 leading-relaxed">
+        By signing in, you agree to our Terms of Service and Privacy Policy.
       </p>
     </div>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense>
+      <SignInContent />
+    </Suspense>
   );
 }

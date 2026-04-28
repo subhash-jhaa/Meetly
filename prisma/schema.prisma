@@ -74,8 +74,22 @@ model Meeting {
   recordingUrl String?
   scheduledAt  DateTime?
   title        String?
+  status       String        @default("ACTIVE")
   host         User          @relation(fields: [hostId], references: [id], onDelete: Cascade)
   participants Participant[]
+  summary      Summary?
+}
+
+model Summary {
+  id           String   @id @default(cuid())
+  meetingId    String   @unique
+  transcript   String?  @db.Text
+  content      String?  @db.Text
+  keyDecisions String[]
+  actionItems  String[]
+  nextSteps    String[]
+  createdAt    DateTime @default(now())
+  meeting      Meeting  @relation(fields: [meetingId], references: [id], onDelete: Cascade)
 }
 
 model Participant {

@@ -3,8 +3,9 @@ import '@livekit/components-styles';
 import '@livekit/components-styles/prefabs';
 import type { Metadata, Viewport } from 'next';
 import { Toaster } from 'react-hot-toast';
-import '@/lib/env';  // ← validates all env vars on server startup
+import '@/lib/env';  
 import { Providers } from '@/components/Providers';
+import '../styles/livekit-theme.css'; 
 
 
 export const metadata: Metadata = {

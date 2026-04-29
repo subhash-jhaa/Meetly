@@ -13,5 +13,5 @@
 }
 
 .tabs > .tab[aria-pressed='true'] {
-  border-color: var(--lk-accent-bg);
+  border-color: rgba(255, 255, 255, 0.2);
 }

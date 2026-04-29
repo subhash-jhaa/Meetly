@@ -1,0 +1,73 @@
+/* ─── Meetly × LiveKit theme override ───────────────────────────────────────
+   Loaded after @livekit/components-styles in app/layout.tsx.
+   Every --lk-* var here overrides the default blue LiveKit theme.
+   data-lk-theme="default" must stay on <body> — do not remove it.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+[data-lk-theme="default"] {
+
+  /* ── Backgrounds ── */
+  --lk-bg:  #0a0a0a;          /* room background — matches landing page */
+  --lk-bg2: #111111;          /* tile / control surface */
+  --lk-bg3: #1a1a1a;          /* hover state */
+  --lk-bg4: #222222;          /* active state */
+  --lk-bg5: #2a2a2a;          /* active hover */
+
+  /* ── Foregrounds ── */
+  --lk-fg:  #fafafa;
+  --lk-fg2: rgba(250,250,250,0.85);
+  --lk-fg3: rgba(250,250,250,0.65);
+  --lk-fg4: rgba(250,250,250,0.45);
+  --lk-fg5: rgba(250,250,250,0.30);
+
+  /* ── Border ── */
+  --lk-border-color: rgba(255, 255, 255, 0.08);
+
+  /* ── Accent — white instead of LiveKit blue ── */
+  --lk-accent-fg:  #0a0a0a;        /* text on accent buttons */
+  --lk-accent-bg:  #fafafa;        /* accent button fill */
+  --lk-accent2:    rgba(250,250,250,0.85);
+  --lk-accent3:    rgba(250,250,250,0.70);
+  --lk-accent4:    rgba(250,250,250,0.55);
+
+  /* ── Danger — keep red, just soften it ── */
+  --lk-danger-fg: #fff;
+  --lk-danger:    #e53e3e;
+  --lk-danger2:   rgba(229,62,62,0.85);
+  --lk-danger3:   rgba(229,62,62,0.70);
+  --lk-danger4:   rgba(229,62,62,0.55);
+
+  /* ── Success ── */
+  --lk-success-fg: #fff;
+  --lk-success:    #38a169;
+  --lk-success2:   rgba(56,161,105,0.85);
+  --lk-success3:   rgba(56,161,105,0.70);
+  --lk-success4:   rgba(56,161,105,0.55);
+
+  /* ── Controls (toolbar buttons) ── */
+  --lk-control-fg:              #fafafa;
+  --lk-control-bg:              #111111;
+  --lk-control-hover-bg:        #1a1a1a;
+  --lk-control-active-bg:       #fafafa;
+  --lk-control-active-hover-bg: rgba(250,250,250,0.85);
+
+  /* ── Connection quality ── */
+  --lk-connection-excellent: #38a169;
+  --lk-connection-good:      #d69e2e;
+  --lk-connection-poor:      #e53e3e;
+
+  /* ── Typography ── */
+  --lk-font-family:  'Geist', system-ui, -apple-system, sans-serif;
+  --lk-font-size:    14px;
+  --lk-line-height:  1.5;
+
+  /* ── Shape ── */
+  --lk-border-radius: 2px;       /* sharp corners — matches landing page */
+  --lk-box-shadow:    0 4px 24px rgba(0,0,0,0.6);
+  --lk-drop-shadow:   rgba(255,255,255,0.06) 0px 0px 24px;
+
+  /* ── Layout ── */
+  --lk-grid-gap:          4px;
+  --lk-control-bar-height: 64px;
+  --lk-chat-header-height: 64px;
+}

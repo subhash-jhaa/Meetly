@@ -10,11 +10,7 @@ export default async function Page({
   searchParams,
 }: {
   params: Promise<{ roomName: string }>;
-  searchParams: Promise<{
-    region?: string;
-    hq?: string;
-    codec?: string;
-  }>;
+  searchParams: Promise<{ region?: string; hq?: string; codec?: string }>;
 }) {
   const session = await auth();
   if (!session?.user) redirect('/signin');
@@ -23,43 +19,31 @@ export default async function Page({
   const _searchParams = await searchParams;
   const { roomName } = _params;
 
-  // ✅ Validate room exists
-  const room = await prisma.room.findUnique({
-    where: { name: roomName },
-  });
+  const room = await prisma.room.findUnique({ where: { name: roomName } });
 
   if (!room) {
-    // Room doesn't exist — show not found UI
     return (
-      <main
-        data-lk-theme="default"
-        style={{
-          height: '100%',
-          display: 'grid',
-          placeItems: 'center',
-          fontFamily: 'inherit',
-        }}
-      >
-        <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <h1 style={{ fontSize: '2rem', margin: 0 }}>Room not found</h1>
-          <p style={{ color: 'var(--lk-fg3)', margin: 0 }}>
+      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+        <div className="text-center flex flex-col items-center gap-4">
+          <div className="text-5xl">🔍</div>
+          <h1 className="text-2xl font-semibold text-white">Room not found</h1>
+          <p className="text-gray-400 text-sm">
             This meeting link is invalid or has expired.
           </p>
-          <a href="/dashboard" className="lk-button" style={{ marginTop: '0.5rem' }}>
+          
+            <a href="/dashboard"
+            className="mt-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500
+                       text-white text-sm font-medium rounded-lg transition-colors"
+          >
             Go to Dashboard
           </a>
         </div>
-      </main>
+      </div>
     );
   }
 
-  // ✅ Check if scheduled meeting is too early to join
   const scheduledMeeting = await prisma.meeting.findFirst({
-    where: {
-      roomName,
-      scheduledAt: { not: null },
-      endedAt: null,
-    },
+    where: { roomName, scheduledAt: { not: null }, endedAt: null },
     select: { scheduledAt: true, title: true },
   });
 
@@ -70,32 +54,28 @@ export default async function Page({
     if (diffMinutes > 5) {
       const formattedTime = new Date(scheduledMeeting.scheduledAt).toLocaleString();
       return (
-        <main
-          data-lk-theme="default"
-          style={{
-            height: '100%',
-            display: 'grid',
-            placeItems: 'center',
-          }}
-        >
-          <div
-            style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '1rem' }}
-          >
-            <h1 style={{ fontSize: '2rem', margin: 0 }}>Meeting hasn't started yet</h1>
+        <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+          <div className="text-center flex flex-col items-center gap-4">
+            <div className="text-5xl">⏰</div>
+            <h1 className="text-2xl font-semibold text-white">
+              Meeting hasn't started yet
+            </h1>
             {scheduledMeeting.title && (
-              <p style={{ fontSize: '1.25rem', margin: 0 }}>{scheduledMeeting.title}</p>
+              <p className="text-lg text-white/70">{scheduledMeeting.title}</p>
             )}
-            <p style={{ color: 'var(--lk-fg3)', margin: 0 }}>
-              Scheduled for {formattedTime}
-            </p>
-            <p style={{ color: 'var(--lk-fg3)', margin: 0, fontSize: '0.875rem' }}>
+            <p className="text-gray-400 text-sm">Scheduled for {formattedTime}</p>
+            <p className="text-gray-500 text-xs">
               You can join 5 minutes before the meeting starts.
             </p>
-            <a href="/dashboard" className="lk-button" style={{ marginTop: '0.5rem' }}>
+            
+              <a href="/dashboard"
+              className="mt-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500
+                         text-white text-sm font-medium rounded-lg transition-colors"
+            >
               Go to Dashboard
             </a>
           </div>
-        </main>
+        </div>
       );
     }
   }
@@ -104,7 +84,7 @@ export default async function Page({
     typeof _searchParams.codec === 'string' && isVideoCodec(_searchParams.codec)
       ? _searchParams.codec
       : 'vp9';
-  const hq = _searchParams.hq === 'true' ? true : false;
+  const hq = _searchParams.hq === 'true';
 
   return (
     <PageClientImpl

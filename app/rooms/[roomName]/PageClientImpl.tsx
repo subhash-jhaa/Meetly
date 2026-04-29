@@ -234,22 +234,33 @@ function VideoConferenceComponent(props: {
 
   const router = useRouter();
 
-  const handleOnLeave = React.useCallback(async () => {
-    try {
-      const isHostRes = await fetch(`/api/rooms/is-host?roomName=${props.roomName}`);
-      const { isHost } = await isHostRes.json();
-      if (isHost) {
-        await fetch('/api/rooms/end', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ roomName: props.roomName }),
-        });
+ const handleOnLeave = React.useCallback(async () => {
+  try {
+    const isHostRes = await fetch(`/api/rooms/is-host?roomName=${props.roomName}`);
+    const { isHost } = await isHostRes.json();
+
+    if (isHost) {
+      // End the meeting and get the meetingId back
+      const endRes = await fetch('/api/rooms/end', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ roomName: props.roomName }),
+      });
+
+      if (endRes.ok) {
+        const { meetingId } = await endRes.json();
+        // Host goes to summary page — recording + AI pipeline runs in background
+        router.push(`/meetings/${meetingId}/summary`);
+        return;
       }
-    } catch (e) {
-      console.error('Failed to end meeting:', e);
     }
-    router.push('/dashboard');
-  }, [router, props.roomName]);
+  } catch (e) {
+    console.error('Failed to end meeting:', e);
+  }
+
+  // Participants (or fallback if end fails) go to dashboard
+  router.push('/dashboard');
+}, [router, props.roomName]);
 
   const handleError = React.useCallback((error: Error) => {
     console.error(error);

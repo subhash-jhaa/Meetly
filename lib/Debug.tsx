@@ -13,7 +13,12 @@ export const useDebugMode = ({ logLevel }: { logLevel?: LogLevel }) => {
   React.useEffect(() => {
     setLogLevel(logLevel ?? 'debug');
 
-    if (process.env.NEXT_PUBLIC_DATADOG_CLIENT_TOKEN && process.env.NEXT_PUBLIC_DATADOG_SITE) {
+    if (
+      process.env.NEXT_PUBLIC_DATADOG_CLIENT_TOKEN &&
+      process.env.NEXT_PUBLIC_DATADOG_CLIENT_TOKEN !== '<YOUR_DATADOG_CLIENT_TOKEN>' &&
+      process.env.NEXT_PUBLIC_DATADOG_SITE &&
+      process.env.NEXT_PUBLIC_DATADOG_SITE !== '<YOUR_DATADOG_SITE>'
+    ) {
       console.log('setting up datadog logs');
       datadogLogs.init({
         clientToken: process.env.NEXT_PUBLIC_DATADOG_CLIENT_TOKEN,

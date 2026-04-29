@@ -78,6 +78,8 @@ export default function Dashboard() {
   const [scheduleDate, setScheduleDate] = useState('');
   const [scheduleTime, setScheduleTime] = useState('');
   const [loading, setLoading] = useState(false);
+  const [createdRoom, setCreatedRoom] = useState<{ url: string; roomName: string } | null>(null);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     fetch('/api/meetings/upcoming').then(r => r.json()).then(d => setUpcoming(d.meetings ?? []));
@@ -92,7 +94,9 @@ export default function Dashboard() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ roomName, title: title || 'Instant Meeting' }),
     });
-    if (res.ok) router.push(`/rooms/${roomName}`);
+    if (res.ok) {
+      setCreatedRoom({ roomName, url: `${window.location.origin}/rooms/${roomName}` });
+    }
     setLoading(false);
   }
 
@@ -107,7 +111,8 @@ export default function Dashboard() {
     });
     if (res.ok) {
       const d = await res.json();
-      router.push(`/rooms/${d.roomName}`);
+      setCreatedRoom({ roomName: d.roomName, url: `${window.location.origin}/rooms/${d.roomName}` });
+      fetch('/api/meetings/upcoming').then(r => r.json()).then(data => setUpcoming(data.meetings ?? []));
     }
     setLoading(false);
   }
@@ -204,38 +209,79 @@ export default function Dashboard() {
               </div>
 
               <div className="flex flex-col gap-3">
-                <input
-                  value={title}
-                  onChange={e => setTitle(e.target.value)}
-                  placeholder="Meeting title (optional)"
-                  className="w-full bg-[#111] border border-[#242424] px-4 py-3 font-mono text-[13px] text-white placeholder-white/20 focus:outline-none focus:border-white/30 transition-colors"
-                />
-
-                {tab === 'schedule' && (
-                  <div className="flex gap-3">
-                    <input
-                      type="date"
-                      value={scheduleDate}
-                      onChange={e => setScheduleDate(e.target.value)}
-                      className="flex-1 bg-[#111] border border-[#242424] px-4 py-3 font-mono text-[13px] text-white focus:outline-none focus:border-white/30 transition-colors"
-                    />
-                    <input
-                      type="time"
-                      value={scheduleTime}
-                      onChange={e => setScheduleTime(e.target.value)}
-                      className="flex-1 bg-[#111] border border-[#242424] px-4 py-3 font-mono text-[13px] text-white focus:outline-none focus:border-white/30 transition-colors"
-                    />
+                {createdRoom ? (
+                  <div className="flex flex-col gap-4 mt-2">
+                    <div className="bg-[#111] border border-[#242424] p-4 rounded-lg flex flex-col gap-2">
+                      <p className="font-mono text-[10px] text-white/40 uppercase tracking-widest">
+                        Meeting Link
+                      </p>
+                      <div className="flex items-center gap-2">
+                        <p className="font-mono text-[13px] text-white/90 truncate flex-1">
+                          {createdRoom.url}
+                        </p>
+                        <button
+                          onClick={() => {
+                            navigator.clipboard.writeText(createdRoom.url);
+                            setCopied(true);
+                            setTimeout(() => setCopied(false), 2000);
+                          }}
+                          className="font-mono text-[11px] bg-white/10 text-white px-3 py-1.5 hover:bg-white/20 transition-colors whitespace-nowrap"
+                        >
+                          {copied ? 'Copied!' : 'Copy'}
+                        </button>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => router.push(`/rooms/${createdRoom.roomName}`)}
+                        className="flex-1 bg-white text-black font-mono text-[13px] py-3 hover:opacity-90 transition-opacity"
+                      >
+                        Join Room
+                      </button>
+                      <button
+                        onClick={() => setCreatedRoom(null)}
+                        className="flex-1 border border-[#242424] text-white font-mono text-[13px] py-3 hover:bg-white/5 transition-colors"
+                      >
+                        Done
+                      </button>
+                    </div>
                   </div>
-                )}
+                ) : (
+                  <>
+                    <input
+                      value={title}
+                      onChange={e => setTitle(e.target.value)}
+                      placeholder="Meeting title (optional)"
+                      className="w-full bg-[#111] border border-[#242424] px-4 py-3 font-mono text-[13px] text-white placeholder-white/20 focus:outline-none focus:border-white/30 transition-colors"
+                    />
 
-                <button
-                  onClick={tab === 'instant' ? startInstant : scheduleRoom}
-                  disabled={loading || (tab === 'schedule' && (!scheduleDate || !scheduleTime))}
-                  className="relative w-full bg-white text-black font-mono text-[13px] py-3 hover:opacity-90 transition-opacity disabled:opacity-30"
-                >
-                  <Corners size={5} opacity="20" />
-                  {loading ? 'Starting...' : tab === 'instant' ? 'Start meeting' : 'Schedule meeting'}
-                </button>
+                    {tab === 'schedule' && (
+                      <div className="flex gap-3">
+                        <input
+                          type="date"
+                          value={scheduleDate}
+                          onChange={e => setScheduleDate(e.target.value)}
+                          className="flex-1 bg-[#111] border border-[#242424] px-4 py-3 font-mono text-[13px] text-white focus:outline-none focus:border-white/30 transition-colors"
+                        />
+                        <input
+                          type="time"
+                          value={scheduleTime}
+                          onChange={e => setScheduleTime(e.target.value)}
+                          className="flex-1 bg-[#111] border border-[#242424] px-4 py-3 font-mono text-[13px] text-white focus:outline-none focus:border-white/30 transition-colors"
+                        />
+                      </div>
+                    )}
+
+                    <button
+                      onClick={tab === 'instant' ? startInstant : scheduleRoom}
+                      disabled={loading || (tab === 'schedule' && (!scheduleDate || !scheduleTime))}
+                      className="relative w-full bg-white text-black font-mono text-[13px] py-3 hover:opacity-90 transition-opacity disabled:opacity-30"
+                    >
+                      <Corners size={5} opacity="20" />
+                      {loading ? 'Starting...' : tab === 'instant' ? 'Start meeting' : 'Schedule meeting'}
+                    </button>
+                  </>
+                )}
               </div>
             </div>
 

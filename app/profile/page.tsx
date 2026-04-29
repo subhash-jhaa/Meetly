@@ -159,7 +159,7 @@ export default function ProfilePage() {
             />
           </div>
           
-            href="/dashboard"
+            <a href="/dashboard"
             className="font-mono text-[12px] text-white/40 hover:text-white transition-colors"
           >
             ← Dashboard

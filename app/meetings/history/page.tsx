@@ -159,6 +159,7 @@ export default function HistoryPage() {
             className="h-7 w-7 rounded-[4px] object-contain"
           />
           
+          <a
             href="/dashboard"
             className="font-mono text-[12px] text-white/40 hover:text-white transition-colors"
           >
@@ -276,7 +277,7 @@ export default function HistoryPage() {
                       </button>
                     )}
                     {m.recordingUrl && (
-                      
+                      <a
                         href={m.recordingUrl}
                         target="_blank"
                         rel="noopener noreferrer"

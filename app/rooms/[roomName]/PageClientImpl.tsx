@@ -55,14 +55,30 @@ export function PageClientImpl(props: {
   const router = useRouter();
   const [lobbyState, setLobbyState] = React.useState<LobbyState>({ status: 'prejoin' });
   const [preJoinChoices, setPreJoinChoices] = React.useState<LocalUserChoices | undefined>();
-
   const { data: session } = useSession();
+
+  const [userPrefs, setUserPrefs] = React.useState<{
+    audioDeviceId?: string;
+    videoDeviceId?: string;
+    defaultMuted?: boolean;
+    defaultCameraOff?: boolean;
+  }>({});
+
+  React.useEffect(() => {
+    fetch('/api/profile')
+      .then(r => r.json())
+      .then(d => {
+        if (d.user?.preferences) setUserPrefs(d.user.preferences);
+      });
+  }, []);
 
   const preJoinDefaults = React.useMemo(() => ({
     username: session?.user?.name ?? '',
-    videoEnabled: true,
-    audioEnabled: true,
-  }), [session?.user?.name]);
+    videoEnabled: userPrefs.defaultCameraOff ? false : true,
+    audioEnabled: userPrefs.defaultMuted ? false : true,
+    videoDeviceId: userPrefs.videoDeviceId,
+    audioDeviceId: userPrefs.audioDeviceId,
+  }), [session?.user?.name, userPrefs]);
 
   const handlePreJoinSubmit = React.useCallback(async (values: LocalUserChoices) => {
     setPreJoinChoices(values);
@@ -159,7 +175,6 @@ export function PageClientImpl(props: {
     );
   }
 
-  // status === 'ready'
   return (
     <VideoConferenceComponent
       connectionDetails={lobbyState.connectionDetails}
@@ -167,6 +182,7 @@ export function PageClientImpl(props: {
       options={{ codec: props.codec, hq: props.hq }}
       roomName={props.roomName}
       isHost={lobbyState.isHost}
+      userPrefs={userPrefs}
     />
   );
 }
@@ -177,6 +193,7 @@ function VideoConferenceComponent(props: {
   options: { hq: boolean; codec: VideoCodec };
   roomName: string;
   isHost: boolean;
+  userPrefs: any;
 }) {
   const keyProvider = new ExternalE2EEKeyProvider();
   const { worker, e2eePassphrase } = useSetupE2EE();

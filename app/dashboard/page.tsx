@@ -142,6 +142,19 @@ export default function Dashboard() {
             <span className="font-mono text-[12px] text-white/40 hidden md:block">
               {session?.user?.name}
             </span>
+            <a
+              href="/meetings/history"
+              className="font-mono text-[12px] text-white/40 hover:text-white transition-colors"
+            >
+              History
+            </a>
+            <a
+              href="/profile"
+              className="relative border border-[#242424] bg-[#0a0908] px-4 py-2 font-mono text-[12px] text-white/60 hover:text-white hover:bg-white/5 transition-colors"
+            >
+              <Corners size={5} opacity="20" />
+              Profile
+            </a>
             <button
               onClick={() => signOut({ callbackUrl: '/' })}
               className="relative border border-[#242424] bg-[#0a0908] px-4 py-2 font-mono text-[12px] text-white/60 hover:text-white hover:bg-white/5 transition-colors"

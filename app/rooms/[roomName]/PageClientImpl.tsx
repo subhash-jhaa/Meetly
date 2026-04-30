@@ -319,10 +319,10 @@ function VideoConferenceComponent(props: {
   const lowPowerMode = useLowCPUOptimizer(room);
 
   return (
-    <div className="lk-room-container" style={{ display: 'flex' }}>
+    <div className="lk-room-container" style={{ display: 'flex', height: '100vh', width: '100vw', overflow: 'hidden' }}>
       <RoomContext.Provider value={room}>
         {/* Main meeting area */}
-        <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ flex: 1, minWidth: 0, height: '100%', position: 'relative' }}>
           <KeyboardShortcuts />
           <VideoConference
             chatMessageFormatter={formatChatMessageLinks}

@@ -214,13 +214,13 @@ export const HOW_IT_WORKS_STEPS = [
 // ─── TESTIMONIALS ─────────────────────────────────────────────────────────────
 export const TESTIMONIALS_SECTION = {
   eyebrow: 'Customer Stories',
-  title: 'Teams that never want to go back.',
-  quote: `"Meetly eliminated our entire post-meeting workflow. Summaries, tasks, decisions — all done before we've even said goodbye. It's the single biggest productivity unlock we've had this year."`,
-  author: { name: 'Priya Mehta', company: 'Head of Product · Vercel' },
+  title: 'Forward-looking shops ready to embrace AI',
+  quote: `&ldquo;Ressl is a serious life saver during the end of quarter madness, thank you!&rdquo;`,
+  author: { name: 'Jiyaad Naeem', company: 'Cockroach Labs' },
   metrics: [
-    { num: '40%', label: 'Reduction in meeting time' },
-    { num: '3hrs', label: 'Saved per person, per week' },
-    { num: '98%', label: 'Transcript accuracy rate' },
+    { num: '-20%', label: 'Reduction in labour costs' },
+    { num: '+75%', label: 'Faster response to new leads' },
+    { num: '15 hours', label: 'Saved per week, per location' },
   ],
 } as const;
 
@@ -273,9 +273,9 @@ export const FAQ_ITEMS = [
 
 // ─── CTA ──────────────────────────────────────────────────────────────────────
 export const CTA_DATA = {
-  headline: 'Your next meeting should run itself.',
+  headline: 'Transform your business with AI.',
   subheadline:
-    `Stop burning hours on notes and follow-ups. Let Meetly handle the overhead so your team can focus on what actually moves the business forward.`,
+    'Your office, fully automated. Built around how you already work — not the other way around.',
   primaryCta: 'Start for free',
   secondaryCta: 'Book a demo',
   dashboardImg: 'https://framerusercontent.com/images/3LTXk1sUD5A7o2BhLA18XJVw9ec.png',

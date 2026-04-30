@@ -55,13 +55,9 @@ interface EyebrowProps {
 
 export function Eyebrow({ text, variant = 'bar' }: EyebrowProps) {
   return (
-    <div className="flex items-center gap-[8px]">
-      {variant === 'bar' ? (
-        <div className="h-[14px] w-[2px] bg-[#7c7c7c]" />
-      ) : (
-        <span className="eyebrow-line w-[12px] h-[1px] bg-[#fafafa]/40" />
-      )}
-      <span className="font-mono text-[12px] uppercase tracking-widest text-[#7c7c7c]">
+    <div className="flex items-center gap-[10px]">
+      <span className="eyebrow-line w-[14px] h-[1px] bg-white/30" />
+      <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-[#fafafa]/50">
         {text}
       </span>
     </div>
@@ -101,7 +97,7 @@ interface IconButtonProps {
 }
 
 export function IconButton({ label, onClick, variant = 'primary', icon }: IconButtonProps) {
-  const base = 'rounded-[4px] p-[11px_16px] text-[13px] font-mono cursor-pointer transition-all';
+  const base = 'rounded-[2px] p-[11px_20px] text-[13px] font-mono cursor-pointer transition-all active:scale-[0.98]';
   const styles =
     variant === 'primary'
       ? `bg-[#fafafa] text-[#0a0a0a] border-none hover:opacity-85 ${base}`
@@ -167,11 +163,7 @@ export function SectionSpacer({
       )}
       <div className="flex justify-center w-full">
         <div className="w-full max-w-[1200px] h-[100px] border-x border-y border-white/12 relative overflow-hidden">
-          {variant === 'diagonal' ? (
-            <div className="absolute inset-0 diagonal-mask" />
-          ) : (
-            <div className="absolute inset-0 repeating-grid-subtle opacity-60" />
-          )}
+          <div className="absolute inset-0 diagonal-mask" />
           <CrosshairCorners />
         </div>
       </div>

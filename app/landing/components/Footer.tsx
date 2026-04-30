@@ -13,8 +13,8 @@ const HEAD_CLASS =
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-[#09090b] border-t border-white/12">
-      <div className="mx-auto max-w-[1200px] border-x border-white/12">
+    <footer className="w-full bg-[#09090b]">
+      <div className="mx-auto max-w-[1200px] border-x border-t border-white/12">
 
         {/* TOP GRID: brand + columns */}
         <div className="grid grid-cols-1 md:grid-cols-[1.2fr_repeat(4,0.7fr)] border-b border-white/12">

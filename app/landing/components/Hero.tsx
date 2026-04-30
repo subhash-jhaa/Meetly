@@ -27,13 +27,13 @@ function HeroCTAs() {
   return (
     <div className="flex gap-[12px] items-center pt-[8px]">
       <button
-        className="bg-[#fafafa] text-[#0a0a0a] border-none rounded-[4px] p-[11px_16px] text-[13px] font-mono cursor-pointer transition-opacity hover:opacity-85"
+        className="bg-[#fafafa] text-[#0a0a0a] border-none rounded-[2px] p-[11px_16px] text-[13px] font-mono cursor-pointer transition-opacity hover:opacity-85 active:scale-[0.98]"
         onClick={() => router.push(SITE.signUpUrl)}
       >
         {HERO_DATA.cta.primary}
       </button>
       <button
-        className="bg-transparent text-[#fafafa] border border-white/20 rounded-[4px] p-[11px_16px] text-[13px] font-mono cursor-pointer flex items-center gap-[6px] transition-colors hover:border-white/40"
+        className="bg-transparent text-[#fafafa] border border-white/20 rounded-[2px] p-[11px_16px] text-[13px] font-mono cursor-pointer flex items-center gap-[6px] transition-colors hover:border-white/40 active:scale-[0.98]"
         onClick={() => window.open(SITE.introVideoUrl, '_blank')}
       >
         <svg className="w-[15px] h-[15px] fill-[#fafafa]" viewBox="0 0 24 24">
@@ -73,8 +73,7 @@ function HeroBottomSpacer() {
   return (
     <div className="flex justify-center w-full">
       <div className="w-full max-w-[1200px] h-[120px] border-x border-b border-white/12 relative">
-        <div className="absolute inset-0 repeating-grid-subtle" />
-        <div className="absolute inset-0 diagonal-dither scale-x-[-1]" />
+        <div className="absolute inset-0 diagonal-mask" />
         {/* Crosshair corners */}
         {(['tl', 'tr', 'bl', 'br'] as const).map((pos) => {
           const cls = {

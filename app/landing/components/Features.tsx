@@ -54,7 +54,7 @@ function FeaturesHeader() {
         </p>
         <a
           href="#"
-          className="w-fit px-[24px] py-[12px] border border-white/12 bg-[#fafafa] text-[#0a0a0a] text-[14px] font-medium rounded-[4px] hover:bg-white transition-colors"
+          className="w-fit px-[24px] py-[12px] border border-white/12 bg-[#fafafa] text-[#0a0a0a] text-[14px] font-medium rounded-[2px] hover:bg-white transition-colors active:scale-[0.98]"
         >
           {FEATURES_SECTION.cta}
         </a>

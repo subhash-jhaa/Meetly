@@ -1,53 +1,92 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { CTA_DATA, SITE } from '../data/landingData';
-import { SectionSpacer } from './ui/primitives';
+import { CrosshairCorners } from './ui/primitives';
 
 export default function CTA() {
   const router = useRouter();
-  const { headline, subheadline, primaryCta, secondaryCta, dashboardImg } = CTA_DATA;
+  const { headline, subheadline, dashboardImg } = CTA_DATA;
 
   return (
-    <section className="flex flex-col items-center w-full bg-[#0a0a0a]">
-      <div className="section-container w-full">
-        <div className="cta-section grid grid-cols-1 md:grid-cols-2 min-h-[420px] border border-white/12">
+    <section className="relative w-full overflow-hidden bg-[#0a0a0a] text-center pt-32 pb-0">
+      
+      {/* ─── BACKGROUND VISUAL ─── */}
+      <div className="absolute inset-0 z-0">
+        <Image 
+          src="/images/cta-bg.png" 
+          alt="CTA background" 
+          fill 
+          className="object-cover opacity-30 grayscale"
+        />
+        {/* Vignette/Gradients to blend */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-transparent to-black" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#0a0a0a_100%)]" />
+      </div>
 
-          {/* LEFT: COPY */}
-          <div className="cta-left p-[48px_32px] flex flex-col justify-center gap-[24px] border-r border-white/12">
-            <h2 className="cta-h2 text-[clamp(32px,4vw,58px)] font-normal tracking-[-0.05em] leading-none max-w-[500px]">
-              {headline}
-            </h2>
-            <p className="cta-sub text-[15px] text-[#fafafa]/50 max-w-[360px] leading-[1.4]">
-              {subheadline}
-            </p>
-            <div className="flex gap-[12px] flex-wrap">
-              <button
-                className="btn-white bg-[#fafafa] text-[#0a0a0a] border-none rounded-[4px] p-[11px_16px] text-[13px] font-mono cursor-pointer transition-opacity hover:opacity-85"
-                onClick={() => router.push(SITE.signUpUrl)}
-              >
-                {primaryCta}
-              </button>
-              <button
-                className="btn-ghost bg-transparent text-[#fafafa] border border-white/20 rounded-[4px] p-[11px_16px] text-[13px] font-mono cursor-pointer flex items-center gap-[6px] transition-colors hover:border-white/40"
-                onClick={() => window.open(SITE.slackUrl, '_blank')}
-              >
-                {secondaryCta}
-              </button>
+      <div className="relative z-10 w-full flex flex-col items-center">
+        <div className="section-container w-full border-x border-white/12 relative flex flex-col items-center px-6">
+          
+          {/* Top Logo Mark */}
+          <div className="mb-12 flex flex-col items-center">
+            <div className="w-8 h-8 relative">
+               <div className="absolute inset-0 bg-white rotate-45 rounded-sm" />
+               <div className="absolute inset-[6px] bg-black rotate-45 rounded-sm flex items-center justify-center">
+                  <div className="w-2 h-2 bg-white rounded-full" />
+               </div>
             </div>
           </div>
 
-          {/* RIGHT: DASHBOARD PREVIEW */}
-          <div className="cta-right repeating-grid-subtle flex items-center justify-center relative overflow-hidden h-[300px] md:h-auto">
-            <div className="cta-dashboard transform perspective-[1200px] scale-[0.68] rounded-[6px] overflow-hidden border border-white/12 max-w-[90%]">
-              <img src={dashboardImg} alt="Dashboard preview" className="w-full block" />
+          <h2 className="text-[clamp(36px,6vw,72px)] font-normal tracking-[-0.05em] leading-[1.05] text-white max-w-3xl">
+            {headline}
+          </h2>
+          
+          <p className="mt-8 text-[16px] md:text-[18px] text-white/50 max-w-xl leading-relaxed">
+            {subheadline}
+          </p>
+
+          <div className="mt-12 flex gap-4">
+             <button
+               className="bg-white text-black px-8 py-3 rounded-[2px] font-mono text-[13px] hover:bg-white/90 transition-all active:scale-[0.98]"
+               onClick={() => router.push(SITE.signUpUrl)}
+             >
+               Start for free
+             </button>
+             <button
+               className="bg-white/5 text-white border border-white/10 px-8 py-3 rounded-[2px] font-mono text-[13px] hover:bg-white/10 transition-all backdrop-blur-md active:scale-[0.98]"
+               onClick={() => router.push(SITE.dashboardUrl)}
+             >
+               Book a demo
+             </button>
+          </div>
+
+          {/* Central Mockup */}
+          <div className="mt-20 w-full max-w-5xl mx-auto relative z-20 group">
+            <div className="relative border border-white/12 rounded-t-xl overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.9)] bg-[#111111] transform translate-y-12">
+              <img src={dashboardImg} alt="Meetly Dashboard" className="w-full block" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
             </div>
+            
+            {/* Box decoration */}
+            <div className="absolute -inset-4 border border-white/5 rounded-2xl -z-10 pointer-events-none" />
+            <CrosshairCorners color="bg-white/40" />
           </div>
         </div>
       </div>
 
-      <SectionSpacer />
+      {/* Bottom Decorative Section (The Footer Spacer) */}
+      <div className="relative w-full bg-[#0a0a0a] z-10">
+        <div className="mx-auto max-w-[1200px] border-x border-t border-white/12 relative overflow-visible h-[120px] bg-[#0a0a0a]">
+          {/* Vertical grid lines that extend up */}
+          <div className="absolute inset-0 diagonal-mask opacity-40" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a0a0a]/50 to-[#09090b]" />
+          
+          {/* Subtle crosshair at the overlap point */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-px h-8 bg-white/20" />
+        </div>
+      </div>
     </section>
   );
 }

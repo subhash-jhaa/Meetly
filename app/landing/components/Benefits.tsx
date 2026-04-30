@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { BENEFIT_ITEMS, BENEFITS_SECTION } from '../data/landingData';
-import { CardCornerAccents, SectionSpacer } from './ui/primitives';
+import { CardCornerAccents, Eyebrow, SectionSpacer } from './ui/primitives';
 
 // ─── ICON MAP ─────────────────────────────────────────────────────────────────
 const ICON_MAP: Record<string, React.ReactNode> = {
@@ -73,11 +73,8 @@ export default function Benefits() {
 
         {/* SECTION HEADER */}
         <div className="p-12 md:p-16 border-b border-white/12">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-3 w-[2px] bg-white/30" />
-            <span className="font-mono text-[11px] uppercase tracking-widest text-white/40">
-              {BENEFITS_SECTION.eyebrow}
-            </span>
+          <div className="mb-6">
+            <Eyebrow text={BENEFITS_SECTION.eyebrow} />
           </div>
           <h2 className="text-[32px] md:text-[48px] font-normal leading-[1.1] tracking-tight text-white max-w-3xl">
             {BENEFITS_SECTION.title}

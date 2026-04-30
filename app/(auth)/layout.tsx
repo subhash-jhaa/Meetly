@@ -7,7 +7,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       {/* BACKGROUND ELEMENTS */}
       <div className="absolute inset-0 repeating-grid-subtle opacity-50" />
       <div className="absolute inset-0 diagonal-dither opacity-[0.03] pointer-events-none" />
-      
+
       {/* LOGO */}
       <div className="absolute top-8 left-8 z-10">
         <Link href="/" className="flex items-center gap-2 group">

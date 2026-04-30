@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 import { encodePassphrase, generateRoomId, randomString } from '@/lib/client-utils';
@@ -137,11 +138,13 @@ export default function Dashboard() {
         <div className="relative flex w-full max-w-[1200px] h-[64px] items-center justify-between border border-[#242424] bg-[#0a0908] px-6">
           <Corners />
           <div className="flex items-center gap-2">
-            <img
-              src="https://framerusercontent.com/images/E1cdDQforYmgVbu5AtpZDN1cjVs.png?width=512&height=512"
-              alt="Meetly"
-              className="h-7 w-7 rounded-[4px] object-contain"
-            />
+            <Link href="/">
+              <img
+                src="https://framerusercontent.com/images/E1cdDQforYmgVbu5AtpZDN1cjVs.png?width=512&height=512"
+                alt="Meetly"
+                className="h-7 w-7 rounded-[4px] object-contain cursor-pointer"
+              />
+            </Link>
           </div>
           <div className="flex items-center gap-3">
             <span className="font-mono text-[12px] text-white/40 hidden md:block">
@@ -199,9 +202,8 @@ export default function Dashboard() {
                   <button
                     key={t}
                     onClick={() => setTab(t)}
-                    className={`px-4 py-2 font-mono text-[12px] capitalize transition-colors ${
-                      tab === t ? 'bg-white text-black' : 'text-white/50 hover:text-white'
-                    }`}
+                    className={`px-4 py-2 font-mono text-[12px] capitalize transition-colors ${tab === t ? 'bg-white text-black' : 'text-white/50 hover:text-white'
+                      }`}
                   >
                     {t === 'instant' ? 'Start now' : 'Schedule'}
                   </button>
@@ -317,9 +319,8 @@ export default function Dashboard() {
               {upcoming.map((m, i) => (
                 <div
                   key={m.id}
-                  className={`flex items-center justify-between px-8 py-5 hover:bg-white/[0.02] transition-colors cursor-pointer ${
-                    i < upcoming.length - 1 ? 'border-b border-[#242424]' : ''
-                  }`}
+                  className={`flex items-center justify-between px-8 py-5 hover:bg-white/[0.02] transition-colors cursor-pointer ${i < upcoming.length - 1 ? 'border-b border-[#242424]' : ''
+                    }`}
                   onClick={() => router.push(`/rooms/${m.roomName}`)}
                 >
                   <div>
@@ -358,9 +359,8 @@ export default function Dashboard() {
               history.map((m, i) => (
                 <div
                   key={m.id}
-                  className={`flex items-center justify-between px-8 py-5 hover:bg-white/[0.02] transition-colors ${
-                    i < history.length - 1 ? 'border-b border-[#242424]' : ''
-                  }`}
+                  className={`flex items-center justify-between px-8 py-5 hover:bg-white/[0.02] transition-colors ${i < history.length - 1 ? 'border-b border-[#242424]' : ''
+                    }`}
                 >
                   <div className="flex-1 min-w-0">
                     <p className="text-[14px] text-white truncate">

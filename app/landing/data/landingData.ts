@@ -4,45 +4,41 @@
 // ─── SITE CONFIG ─────────────────────────────────────────────────────────────
 export const SITE = {
   name: 'Meetly',
-  /** Internal app entry — the meeting dashboard */
   dashboardUrl: '/dashboard',
-  /** Auth routes */
   signInUrl: '/signin',
   signUpUrl: '/signup',
-  slackUrl: 'https://join.slack.com/t/resslaiaiagen-czp2639/shared_invite/zt-2vpd5vabp-D9LpsJZRiweb7_OFnvIvhA',
-  introVideoUrl: 'https://www.youtube.com/watch?v=oNjh7WbUFM4',
+  slackUrl: '',
+  introVideoUrl: '/meetly_hero_video.mp4',
 } as const;
 
 // ─── NAVBAR ───────────────────────────────────────────────────────────────────
 export const NAVBAR_DATA = {
   links: [
     { label: 'Features', href: '#features' },
-    { label: 'Integrations', href: '#integrations' },
-    { label: 'Blog', href: '#blog' },
-    { label: 'Enterprise', href: '#enterprise' },
-    { label: 'Changelog', href: '#changelog' },
+    { label: 'How it works', href: '#how-it-works' },
+    { label: 'Sign in', href: '/signin' },
   ],
-  cta: { primary: 'Start for free', secondary: 'Book a demo' },
+  cta: { primary: 'Start for free', secondary: '' },
 } as const;
 
 // ─── HERO ─────────────────────────────────────────────────────────────────────
 export const HERO_DATA = {
   badge: {
-    text: 'Backed by Y Combinator',
+    text: 'AI-powered meetings',
     logo: 'https://framerusercontent.com/images/ZCTiEB4A2nM5gHfjGAGzp0sRX0.png',
   },
-  headline: 'Meetings that think, summarize, and act.',
+  headline: "Meetings that don't get forgotten.",
   subheadline:
-    `Stop taking notes. Stop chasing follow-ups. Meetly's AI joins every call, captures every decision, and delivers instant summaries your whole team can act on — before the call even ends.`,
-  trustLine: 'No credit card required · 2M+ meetings summarized monthly',
+    `Meetly captures your audio, transcribes it, and extracts action items. A structured summary hits your inbox the second you hang up. You focus on the call. We handle the notes.`,
+  trustLine: 'Free to start · No credit card · Works in your browser',
   featureTags: [
     'Live AI Summaries',
     'HD Video Calls',
     'Auto Action Items',
     'Instant Transcripts',
   ],
-  cta: { primary: 'Start for free', secondary: 'Watch a demo' },
-  videoSrc: 'https://framerusercontent.com/assets/UVDXLnjzehJoOI0RqS5jxHQqg1o.webm',
+  cta: { primary: 'Start a meeting', secondary: 'See how it works' },
+  videoSrc: '/meetly_hero_video.mp4',
   partnerLogos: [
     'https://framerusercontent.com/images/DqzIEgwb9yNI3Yv1Ot2ltSOLIbQ.png',
     'https://framerusercontent.com/images/z63aDZYITrqx191No7lyEJS0CM.png',
@@ -64,63 +60,53 @@ export const STATS = [
 // ─── FEATURES (STICKY CARDS) ──────────────────────────────────────────────────
 export const FEATURE_BLOCKS = [
   {
-    tag: 'AI Meeting Summaries',
-    title: 'Every meeting, summarized in seconds.',
-    description:
-      `Meetly's AI reads the room — capturing key decisions, open questions, and action items in real time. Get a polished summary delivered to your inbox the moment the call ends. No more "can you send me the notes?"`,
+    tag: 'Live AI Transcription',
+    title: 'Live AI Transcription',
+    description: `Meetly captures and transcribes audio in the background. You stay focused on the conversation.`,
+    img: '/meetly_feature_ai_summaries.png',
   },
   {
-    tag: 'HD Video Conferencing',
-    title: 'Crystal-clear calls. Zero friction.',
-    description:
-      'Studio-quality video and noise-cancelling audio that just works — in any browser, on any device. Host up to 500 participants with no lag, no plugins, and no IT ticket required.',
+    tag: 'Extracted Action Items',
+    title: 'Extracted Action Items',
+    description: `Our pipeline pulls out key decisions and tasks the moment the call ends. Nothing slips through the cracks.`,
+    img: '/meetly_feature_hd_video.png',
   },
   {
-    tag: 'Smart Agenda Builder',
-    title: `Structured meetings. Sharper outcomes.`,
-    description:
-      `Set a focused agenda before every meeting and Meetly keeps the conversation on track. Our AI flags when discussion drifts off-topic and auto-timestamps each agenda item in the transcript.`,
+    tag: 'Automated Distribution',
+    title: 'Automated Distribution',
+    description: `Structured summaries hit everyone's inbox automatically. Nobody has to ask for the notes.`,
+    img: '/meetly_feature_agenda.png',
+  },
+  {
+    tag: 'Secure Waiting Room',
+    title: 'Secure Waiting Room',
+    description: `Control access with a pre-meeting lobby. Manage participants with direct host controls.`,
+  },
+  {
+    tag: 'Frictionless Joining',
+    title: 'Frictionless Joining',
+    description: `Create instant rooms or schedule in advance. Share simple links that work directly in the browser.`,
+  },
+  {
+    tag: 'Searchable Archive',
+    title: 'Searchable Archive',
+    description: `Query your entire history of transcripts and summaries. Find exactly what was decided months ago, instantly.`,
   },
 ] as const;
 
 export const FEATURES_SECTION = {
-  eyebrow: 'Why Meetly',
+  eyebrow: 'Features',
   title: 'Built for teams that move fast.',
-  description:
-    `Not just another video call tool. Meetly combines HD conferencing, AI intelligence, and team collaboration into one seamless workspace — so your meetings actually produce results.`,
+  description: `Not just another video call tool. Meetly combines HD conferencing, AI intelligence, and team collaboration into one seamless workspace — so your meetings actually produce results.`,
   cta: 'Explore all features',
 } as const;
 
 // ─── FEATURES ACCORDION ───────────────────────────────────────────────────────
 export const ACCORDION_ITEMS = [
-  {
-    id: 0,
-    title: 'AI that captures everything',
-    description:
-      `Every word, every decision, every action item — transcribed live and organized automatically. Meetly never misses a thing, even when you do.`,
-    iconPath: 'shield-clock',
-  },
-  {
-    id: 1,
-    title: 'Works with tools you already use',
-    description:
-      `Slack, Notion, Google Calendar, HubSpot — Meetly plugs into your stack and pushes summaries and tasks directly where your team works. No context switching.`,
-    iconPath: 'code',
-  },
-  {
-    id: 2,
-    title: 'Powered by the best AI for the job',
-    description:
-      `We use leading LLMs fine-tuned on meeting context for superior accuracy. Not generic AI — purpose-built intelligence that understands business conversations.`,
-    iconPath: 'bolt',
-  },
-  {
-    id: 3,
-    title: 'Enterprise-grade security, always',
-    description:
-      `End-to-end encryption, SOC 2 Type II compliance, and zero data retention policies. Your conversations stay yours — no exceptions.`,
-    iconPath: 'shield-check',
-  },
+  { id: 0, title: 'AI that captures everything', description: `Every word, every decision, every action item — transcribed live and organized automatically.`, iconPath: 'shield-clock' },
+  { id: 1, title: 'Works with tools you already use', description: `Slack, Notion, Google Calendar, HubSpot — Meetly plugs into your stack.`, iconPath: 'code' },
+  { id: 2, title: 'Powered by the best AI for the job', description: `We use leading LLMs fine-tuned on meeting context for superior accuracy.`, iconPath: 'bolt' },
+  { id: 3, title: 'Enterprise-grade security, always', description: `End-to-end encryption, SOC 2 Type II compliance, and zero data retention policies.`, iconPath: 'shield-check' },
 ] as const;
 
 // ─── BENEFITS ─────────────────────────────────────────────────────────────────
@@ -130,98 +116,63 @@ export const BENEFITS_SECTION = {
 };
 
 export const BENEFIT_ITEMS = [
-  {
-    title: 'Zero note-taking required',
-    desc: 'Meetly handles every word. Your team stays present in the conversation instead of buried in a doc.',
-    iconPath: 'arrow-ne',
-  },
-  {
-    title: 'Action items, automatically',
-    desc: `Every task gets captured, assigned, and synced to your project tools — without anyone lifting a finger.`,
-    iconPath: 'chevrons',
-  },
-  {
-    title: 'Never miss what was decided',
-    desc: `Search any meeting, any decision, any date. Your entire meeting history is indexed and instantly retrievable.`,
-    iconPath: 'eye',
-  },
-  {
-    title: 'Async-ready summaries',
-    desc: 'Teammates who missed the call get a full summary. No replay required, no update meetings needed.',
-    iconPath: 'monitor',
-  },
-  {
-    title: 'Aligned from the first minute',
-    desc: `Smart agendas and pre-meeting briefs mean everyone shows up prepared. Decisions happen faster.`,
-    iconPath: 'upload',
-  },
-  {
-    title: 'Scales with your team',
-    desc: 'From solo standup to 500-person all-hands. One platform, one plan, no per-seat shock.',
-    iconPath: 'activity',
-  },
+  { title: 'Zero note-taking required', desc: 'Meetly handles every word.', iconPath: 'arrow-ne' },
+  { title: 'Action items, automatically', desc: `Every task gets captured.`, iconPath: 'chevrons' },
+  { title: 'Never miss what was decided', desc: `Your entire meeting history is indexed.`, iconPath: 'eye' },
+  { title: 'Async-ready summaries', desc: 'Teammates who missed the call get a full summary.', iconPath: 'monitor' },
+  { title: 'Aligned from the first minute', desc: `Smart agendas mean everyone is prepared.`, iconPath: 'upload' },
+  { title: 'Scales with your team', desc: 'One platform, one plan.', iconPath: 'activity' },
 ] as const;
 
 // ─── COMPARISON ───────────────────────────────────────────────────────────────
 export const COMPARISON_SECTION = {
   eyebrow: 'Comparison',
   title: 'Built different. Works better.',
-  customPlan: {
-    heading: 'Need an enterprise plan?',
-    description: `We tailor security controls, compliance, SLAs, and onboarding to fit organizations of any size.`,
-    cta: 'Talk to sales',
-  },
+  customPlan: { heading: 'Need an enterprise plan?', description: `We tailor security controls.`, cta: 'Talk to sales' },
 };
 
 export const COMPARISON_ROWS = [
-  { feat: 'AI meeting summaries', other: 'Add-on or absent', meetly: 'Built-in & real-time', isText: true },
-  { feat: 'Auto action items', isText: false },
-  { feat: 'Transcript accuracy', other: '~80%', meetly: '98% verified', isText: true },
-  { feat: 'Native integrations', isText: false },
-  { feat: 'Async-ready notes', other: 'Manual export', meetly: 'Auto-delivered', isText: true },
-  { feat: 'SOC 2 Type II', isText: false },
-  { feat: 'Setup time', other: 'Hours / IT required', meetly: 'Under 2 minutes', isText: true },
-  { feat: 'Smart agenda builder', isText: false },
+  { feat: 'Auto-summary', other: 'Requires third-party bots', meetly: 'Built-in automatically', isText: true },
+  { feat: 'Action items extracted', isText: false },
+  { feat: 'Emailed to all participants', isText: false },
+  { feat: 'Searchable history', other: 'Video files only', meetly: 'Full-text search', isText: true },
+  { feat: 'No per-seat pricing', other: 'Per-user fees', meetly: 'Flat plans', isText: true },
+  { feat: 'Works in browser, no install', isText: false },
 ] as const;
 
 // ─── HOW IT WORKS ─────────────────────────────────────────────────────────────
 export const HOW_IT_WORKS_SECTION = {
   eyebrow: 'How it works',
-  title: 'Smarter meetings in three steps.',
+  title: 'Smarter meetings in four steps.',
 };
 
 export const HOW_IT_WORKS_STEPS = [
-  {
-    step: 1,
-    title: 'Connect in seconds',
-    desc: `Sign up, sync your calendar, and invite your team. Meetly is live in under two minutes — no IT, no downloads, no drama.`,
-    img: 'https://framerusercontent.com/images/7Js3JXXc3nTRKSrHFAwLzrbjPmc.png',
-  },
-  {
-    step: 2,
-    title: 'Meet. Meetly handles the rest.',
-    desc: `Host your call as usual. Meetly joins silently, transcribes everything live, and builds a structured summary in real time.`,
-    img: 'https://framerusercontent.com/images/xkBrVL5lHeQZcB6MjAInbK5P64.png',
-  },
-  {
-    step: 3,
-    title: 'Act on what matters',
-    desc: `The moment the call ends, your summary, action items, and decisions land in your inbox and sync to your tools. Meeting done. Work starts.`,
-    img: 'https://framerusercontent.com/images/pKiDNptCJ4FNCB5IDfzPMqsVVKs.png',
-  },
+  { step: 1, title: 'Start or join a meeting', desc: `Generate an instant link or schedule ahead. Guests join directly from their browser without installing anything.`, img: 'https://framerusercontent.com/images/7Js3JXXc3nTRKSrHFAwLzrbjPmc.png' },
+  { step: 2, title: 'Talk while Meetly records', desc: `The platform handles high-quality video and securely captures the audio in the background.`, img: 'https://framerusercontent.com/images/xkBrVL5lHeQZcB6MjAInbK5P64.png' },
+  { step: 3, title: 'AI transcribes and summarizes', desc: `The moment you hang up, our pipeline processes the transcript and extracts the core decisions and action items.`, img: 'https://framerusercontent.com/images/pKiDNptCJ4FNCB5IDfzPMqsVVKs.png' },
+  { step: 4, title: 'Delivered and indexed', desc: `A structured summary is emailed to all participants and indexed in your searchable archive forever.`, img: 'https://framerusercontent.com/images/7Js3JXXc3nTRKSrHFAwLzrbjPmc.png' },
 ] as const;
 
 // ─── TESTIMONIALS ─────────────────────────────────────────────────────────────
 export const TESTIMONIALS_SECTION = {
   eyebrow: 'Customer Stories',
-  title: 'Forward-looking shops ready to embrace AI',
-  quote: `&ldquo;Ressl is a serious life saver during the end of quarter madness, thank you!&rdquo;`,
-  author: { name: 'Jiyaad Naeem', company: 'Cockroach Labs' },
-  metrics: [
-    { num: '-20%', label: 'Reduction in labour costs' },
-    { num: '+75%', label: 'Faster response to new leads' },
-    { num: '15 hours', label: 'Saved per week, per location' },
-  ],
+  title: 'Forward-looking teams ready to embrace AI',
+  testimonials: [
+    { quote: `"We used to lose track of decisions the second a meeting ended. Meetly handles the notes and the follow-ups automatically. It feels like we hired a chief of staff."`, name: 'Sarah Jenkins', role: 'Founder at Acme Corp.' },
+    { quote: `"My clients love getting a clear, bulleted summary right after our syncs. It makes me look incredibly organized, and I don't have to spend 15 minutes typing up notes."`, name: 'Marcus Rohl', role: 'Technical Consultant' },
+    { quote: `"Finally, a tool that just works in the browser without making me install another app. The searchable history has saved us from repeating the same architecture debates."`, name: 'David Chen', role: 'Engineering Lead' },
+  ]
+} as const;
+
+// ─── PRICING ──────────────────────────────────────────────────────────────────
+export const PRICING_SECTION = {
+  eyebrow: 'Pricing',
+  title: 'Simple, transparent pricing.',
+  plans: [
+    { name: 'Free', price: '$0', features: ['5 meetings per month', 'AI summaries included', '1 host'], isPopular: false },
+    { name: 'Pro', price: '$12', period: '/mo', features: ['Unlimited meetings', 'Full meeting recording', 'Automated email summaries', 'Searchable meeting history'], isPopular: true },
+    { name: 'Team', price: '$29', period: '/mo', features: ['Up to 5 hosts', 'All Pro features included', 'Priority support'], isPopular: false },
+  ]
 } as const;
 
 // ─── FAQ ──────────────────────────────────────────────────────────────────────
@@ -233,99 +184,32 @@ export const FAQ_SECTION = {
 };
 
 export const FAQ_ITEMS = [
-  {
-    number: '01',
-    question: 'Does Meetly record my calls without permission?',
-    answer:
-      `Never. Meetly announces itself when it joins a call and only activates with explicit host permission. All participants see a clear recording indicator throughout the meeting.`,
-  },
-  {
-    number: '02',
-    question: 'Which video conferencing tools does Meetly work with?',
-    answer:
-      `Meetly works as a standalone conferencing platform and also integrates with Zoom, Google Meet, and Microsoft Teams — so you can bring AI summaries to meetings you already run.`,
-  },
-  {
-    number: '03',
-    question: 'How accurate are the AI transcripts?',
-    answer:
-      `We hit 98% accuracy in independent benchmarks across English and 12+ other languages. Speaker identification, filler word removal, and domain vocabulary tuning are all included.`,
-  },
-  {
-    number: '04',
-    question: 'Is my meeting data stored or used for training?',
-    answer:
-      `No. Your meeting data is never used to train AI models. You can configure zero-retention mode so nothing is stored after the summary is delivered.`,
-  },
-  {
-    number: '05',
-    question: 'What integrations does Meetly support?',
-    answer:
-      `Slack, Notion, Linear, HubSpot, Salesforce, Jira, Google Calendar, Outlook, Asana, and more. Action items and summaries push directly to wherever your team works.`,
-  },
-  {
-    number: '06',
-    question: 'Is there a free plan?',
-    answer:
-      `Yes. The free plan includes unlimited meetings, AI summaries for up to 10 meetings per month, and 2 integrations. No credit card required to get started.`,
-  },
+  { number: '01', question: 'How does the AI summary work?', answer: `When a meeting ends, the audio is transcribed and fed into our AI pipeline. It extracts the core topics, decisions, and action items, then formats them into a clean summary.` },
+  { number: '02', question: 'What languages are supported?', answer: `Currently, our transcription engine fully supports English. We plan to roll out additional language support soon.` },
+  { number: '03', question: 'Do I have to record the meeting to get a summary?', answer: `Yes. The AI requires the audio recording to generate the transcript and extract action items.` },
+  { number: '04', question: 'How is my data stored?', answer: `Your data is securely stored in isolated databases. Transcripts and summaries are only accessible by meeting participants. We never use your meeting data to train public AI models.` },
+  { number: '05', question: 'Do my guests need to install an app?', answer: `No. Meetly runs entirely in the browser. You share a link, and they join instantly.` },
+  { number: '06', question: 'What happens when I hit the free tier limit?', answer: `You can continue hosting standard video calls, but the AI transcription and summary features will be paused until the next billing cycle or until you upgrade.` },
 ] as const;
 
 // ─── CTA ──────────────────────────────────────────────────────────────────────
 export const CTA_DATA = {
-  headline: 'Transform your business with AI.',
-  subheadline:
-    'Your office, fully automated. Built around how you already work — not the other way around.',
-  primaryCta: 'Start for free',
-  secondaryCta: 'Book a demo',
+  headline: 'Stop forgetting what you decided.',
+  subheadline: 'Spin up a room. Have the conversation. Let us handle the notes.',
+  primaryCta: 'Start your first meeting',
+  secondaryCta: '',
+  footnote: 'Free forever for solo use.',
   dashboardImg: 'https://framerusercontent.com/images/3LTXk1sUD5A7o2BhLA18XJVw9ec.png',
 } as const;
 
 // ─── FOOTER ───────────────────────────────────────────────────────────────────
 export const FOOTER_DATA = {
-  tagline: 'AI-powered meetings. Zero overhead.',
+  tagline: 'Meetings with built-in memory.',
   columns: [
-    {
-      heading: 'Product',
-      links: [
-        { label: 'Features', href: '#features' },
-        { label: 'Integrations', href: '#integrations' },
-        { label: 'Changelog', href: '#changelog' },
-        { label: 'Roadmap', href: '#roadmap' },
-        { label: 'Pricing', href: '#pricing' },
-      ],
-    },
-    {
-      heading: 'Company',
-      links: [
-        { label: 'About', href: '#about' },
-        { label: 'Blog', href: '#blog' },
-        { label: 'Careers', href: '#careers' },
-        { label: 'Press kit', href: '#press' },
-      ],
-    },
-    {
-      heading: 'Resources',
-      links: [
-        { label: 'Documentation', href: '#docs' },
-        { label: 'API Reference', href: '#api' },
-        { label: 'Status', href: '#status' },
-        { label: 'Security', href: '#security' },
-      ],
-    },
-    {
-      heading: 'Legal',
-      links: [
-        { label: 'Privacy Policy', href: '#privacy' },
-        { label: 'Terms of Service', href: '#terms' },
-        { label: 'Cookie Policy', href: '#cookies' },
-        { label: 'GDPR', href: '#gdpr' },
-      ],
-    },
+    { heading: 'Product', links: [{ label: 'Features', href: '#features' }] },
+    { heading: 'Legal', links: [{ label: 'Privacy Policy', href: '#privacy' }, { label: 'Terms of Service', href: '#terms' }] },
   ],
   social: [
-    { label: 'X / Twitter', href: 'https://x.com/Meetly' },
-    { label: 'LinkedIn', href: 'https://linkedin.com/company/meetly' },
-    { label: 'Instagram', href: 'https://www.instagram.com/meetly/' },
+    { label: 'GitHub', href: 'https://github.com/meetly' },
   ],
 } as const;

@@ -10,7 +10,7 @@ import Comparison from './components/Comparison';
 import HowItWorks from './components/HowItWorks';
 import Testimonials from './components/Testimonials';
 import CTA from './components/CTA';
-import Footer from './components/Footer';
+import { FlickeringFooter } from '@/components/ui/flickering-footer';
 import FAQ from './components/FAQ';
 import { SectionSpacer } from './components/ui/primitives';
 import { FAQ_SECTION, SITE } from './data/landingData';
@@ -78,7 +78,7 @@ export default function LandingPage() {
       <Testimonials />
       <FAQSection />
       <CTA />
-      <Footer />
+      <FlickeringFooter />
     </div>
   );
 }

@@ -126,7 +126,7 @@ const ACCENT_CLASSES: Record<CardCornerAccentProps['position'], string> = {
 
 export function CardCornerAccent({ position }: CardCornerAccentProps) {
   return (
-    <div className={`absolute w-1 h-1 border-white/30 ${ACCENT_CLASSES[position]}`} />
+    <div className={`absolute w-3 h-3 border-white/40 ${ACCENT_CLASSES[position]}`} />
   );
 }
 

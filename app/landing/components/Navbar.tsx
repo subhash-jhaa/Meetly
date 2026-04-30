@@ -9,10 +9,10 @@ export default function Navbar() {
     <nav className="sticky top-0 z-[100] w-full flex flex-col items-center bg-[#0a0a0a]/90 backdrop-blur-md pt-4 px-4">
       {/* CONTAINER */}
       <div className="relative flex w-full max-w-[1200px] h-[64px] items-center justify-between border border-white/12 bg-[#0a0908] px-[24px]">
-        
+
         {/* LEFT */}
         <div className="flex-1 flex justify-start">
-          <Link href="#hero" className="flex items-center no-underline outline-none">
+          <Link href="/" className="flex items-center no-underline outline-none">
             <img
               src="https://framerusercontent.com/images/E1cdDQforYmgVbu5AtpZDN1cjVs.png?width=512&height=512"
               alt="Meetly Logo"
@@ -42,17 +42,17 @@ export default function Navbar() {
             className="group relative flex items-center justify-center border border-white/12 rounded-[2px] bg-[#0a0908] px-[16px] py-[8px] no-underline transition-colors hover:bg-white/5"
           >
             <span className="font-mono text-[13px] text-white">Sign in</span>
-            
+
             {/* INNER CORNER MARKERS (8 divs - bg-white/20) */}
             <div className="absolute -left-[1px] -top-[1px] h-[5px] w-[1px] bg-white/20 transition-colors group-hover:bg-white/40" />
             <div className="absolute -left-[1px] -top-[1px] h-[1px] w-[5px] bg-white/20 transition-colors group-hover:bg-white/40" />
-            
+
             <div className="absolute -right-[1px] -top-[1px] h-[5px] w-[1px] bg-white/20 transition-colors group-hover:bg-white/40" />
             <div className="absolute -right-[1px] -top-[1px] h-[1px] w-[5px] bg-white/20 transition-colors group-hover:bg-white/40" />
-            
+
             <div className="absolute -left-[1px] -bottom-[1px] h-[5px] w-[1px] bg-white/20 transition-colors group-hover:bg-white/40" />
             <div className="absolute -left-[1px] -bottom-[1px] h-[1px] w-[5px] bg-white/20 transition-colors group-hover:bg-white/40" />
-            
+
             <div className="absolute -right-[1px] -bottom-[1px] h-[5px] w-[1px] bg-white/20 transition-colors group-hover:bg-white/40" />
             <div className="absolute -right-[1px] -bottom-[1px] h-[1px] w-[5px] bg-white/20 transition-colors group-hover:bg-white/40" />
           </Link>
@@ -69,13 +69,13 @@ export default function Navbar() {
         {/* OUTER CORNER MARKERS (8 divs - bg-white/10) */}
         <div className="absolute -left-[1px] -top-[1px] h-[7px] w-[1px] bg-white/10" />
         <div className="absolute -left-[1px] -top-[1px] h-[1px] w-[7px] bg-white/10" />
-        
+
         <div className="absolute -right-[1px] -top-[1px] h-[7px] w-[1px] bg-white/10" />
         <div className="absolute -right-[1px] -top-[1px] h-[1px] w-[7px] bg-white/10" />
-        
+
         <div className="absolute -left-[1px] -bottom-[1px] h-[7px] w-[1px] bg-white/10" />
         <div className="absolute -left-[1px] -bottom-[1px] h-[1px] w-[7px] bg-white/10" />
-        
+
         <div className="absolute -right-[1px] -bottom-[1px] h-[7px] w-[1px] bg-white/10" />
         <div className="absolute -right-[1px] -bottom-[1px] h-[1px] w-[7px] bg-white/10" />
 

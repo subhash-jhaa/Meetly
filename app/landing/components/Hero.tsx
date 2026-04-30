@@ -52,7 +52,7 @@ function PartnerLogoGrid() {
         <div
           key={i}
           className={[
-            'logo-cell h-[110px] flex items-center justify-center overflow-hidden bg-[#0a0a0a] border-b border-white/12',
+            'logo-cell h-[80px] flex items-center justify-center overflow-hidden bg-[#0a0a0a] border-b border-white/12',
             i >= 3 ? 'border-b-0' : '',
             i % 3 !== 0 ? 'border-l border-white/12' : '',
           ].join(' ')}
@@ -72,7 +72,7 @@ function PartnerLogoGrid() {
 function HeroBottomSpacer() {
   return (
     <div className="flex justify-center w-full">
-      <div className="w-full max-w-[1200px] h-[120px] border-x border-b border-white/12 relative">
+      <div className="w-full max-w-[1200px] h-[90px] border-x border-b border-white/12 relative">
         <div className="absolute inset-0 diagonal-mask" />
         {/* Crosshair corners */}
         {(['tl', 'tr', 'bl', 'br'] as const).map((pos) => {
@@ -114,7 +114,7 @@ export default function Hero() {
         <div className="flex-[0.6] flex flex-col border-r border-white/12">
 
           {/* HEADING AREA */}
-          <div className="p-[72px_32px_48px] flex flex-col gap-[24px] border-b border-white/12">
+          <div className="p-[56px_32px_24px] flex flex-col gap-[24px] border-b border-white/12">
             <YCBadge />
             <h1 className="text-[clamp(36px,5vw,62px)] font-normal leading-none tracking-[-0.05em] text-[#fafafa]">
               {HERO_DATA.headline}
@@ -137,7 +137,7 @@ export default function Hero() {
             loop
             muted
             playsInline
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
           />
         </div>
       </div>

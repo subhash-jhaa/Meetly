@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
     }
 
     // ── Only care about egress finishing ─────────────────────────────────────
-    if (event.event === 'egress.ended') {
+    if (event.event === 'egress_ended') {
         const egress = event.egressInfo;
 
         // status 3 = EGRESS_COMPLETE in LiveKit SDK

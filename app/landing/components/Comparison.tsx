@@ -10,7 +10,12 @@ function ComparisonRow({
   other,
   meetly,
   isText,
-}: (typeof COMPARISON_ROWS)[number]) {
+}: {
+  feat: string;
+  other?: string;
+  meetly?: string;
+  isText: boolean;
+}) {
   const CheckIcon = () => (
     <svg className="check-svg w-[20px] h-[20px] inline-block text-[#fafafa]" viewBox="0 0 24 24">
       <path d="M5 12l5 5L20 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />

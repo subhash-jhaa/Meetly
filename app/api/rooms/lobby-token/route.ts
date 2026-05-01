@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
   }
 
   const LIVEKIT_URL = process.env.LIVEKIT_URL!;
-  const livekitServerUrl = getLiveKitURL(LIVEKIT_URL, undefined) ?? LIVEKIT_URL;
+  const livekitServerUrl = getLiveKitURL(LIVEKIT_URL, null) ?? LIVEKIT_URL;
 
   const userIsHost = await isRoomHost(roomName, session.user.id);
 

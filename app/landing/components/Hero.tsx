@@ -47,14 +47,15 @@ function HeroCTAs() {
 
 function PartnerLogoGrid() {
   return (
-    <div className="grid grid-cols-3 bg-[#0a0a0a]">
+    <div className="grid grid-cols-3 md:grid-cols-6 bg-[#0a0a0a] border-b border-white/12">
       {HERO_DATA.partnerLogos.map((url, i) => (
         <div
           key={i}
           className={[
-            'logo-cell h-[80px] flex items-center justify-center overflow-hidden bg-[#0a0a0a] border-b border-white/12',
-            i >= 3 ? 'border-b-0' : '',
-            i % 3 !== 0 ? 'border-l border-white/12' : '',
+            'logo-cell h-[80px] flex items-center justify-center overflow-hidden bg-[#0a0a0a]',
+            i % 6 !== 0 ? 'md:border-l border-white/12' : '',
+            i % 3 !== 0 ? 'border-l md:border-l-0 border-white/12' : '',
+            i >= 3 ? 'border-t md:border-t-0 border-white/12' : '',
           ].join(' ')}
         >
           <img
@@ -72,7 +73,7 @@ function PartnerLogoGrid() {
 function HeroBottomSpacer() {
   return (
     <div className="flex justify-center w-full">
-      <div className="w-full max-w-[1200px] h-[90px] border-x border-b border-white/12 relative">
+      <div className="w-full max-w-[1200px] h-[90px] border-x border-white/12 relative">
         <div className="absolute inset-0 diagonal-mask" />
         {/* Crosshair corners */}
         {(['tl', 'tr', 'bl', 'br'] as const).map((pos) => {
@@ -108,13 +109,13 @@ export default function Hero() {
       </div>
 
       {/* HERO MAIN BODY - 2 COLUMN GRID */}
-      <div className="flex flex-col md:flex-row border-b border-white/12">
+      <div id="hero" className="flex flex-col md:flex-row border-b border-white/12">
 
         {/* LEFT COLUMN */}
-        <div className="flex-[0.6] flex flex-col border-r border-white/12">
+        <div className="flex-[0.55] flex flex-col border-r border-white/12">
 
           {/* HEADING AREA */}
-          <div className="p-[56px_32px_24px] flex flex-col gap-[24px] border-b border-white/12">
+          <div className="p-[64px_32px_80px] flex flex-col gap-[24px]">
             <YCBadge />
             <h1 className="text-[clamp(36px,5vw,62px)] font-normal leading-none tracking-[-0.05em] text-[#fafafa]">
               {HERO_DATA.headline}
@@ -124,12 +125,9 @@ export default function Hero() {
             </p>
             <HeroCTAs />
           </div>
-
-          {/* PARTNER LOGOS */}
-          <PartnerLogoGrid />
         </div>
 
-        {/* RIGHT COLUMN: VIDEO */}
+        {/* RIGHT COLUMN: VIDEO (FULL FRAME) */}
         <div className="flex-1 overflow-hidden relative min-h-[400px] md:min-h-0 bg-[#0a0a0a]">
           <video
             src={HERO_DATA.videoSrc}
@@ -137,10 +135,14 @@ export default function Hero() {
             loop
             muted
             playsInline
-            className="w-full h-full object-contain"
+            className="w-full h-full object-cover"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
         </div>
       </div>
+
+      {/* PARTNER LOGOS - FULL WIDTH BELOW */}
+      <PartnerLogoGrid />
 
       <HeroBottomSpacer />
     </section>

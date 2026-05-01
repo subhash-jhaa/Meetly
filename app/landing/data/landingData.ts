@@ -60,8 +60,8 @@ export const STATS = [
 // ─── FEATURES (STICKY CARDS) ──────────────────────────────────────────────────
 export const FEATURE_BLOCKS = [
   {
-    tag: 'Live AI Transcription',
-    title: 'Live AI Transcription',
+    tag: 'AI Summaries',
+    title: 'AI Summaries',
     description: `Meetly captures and transcribes audio in the background. You stay focused on the conversation.`,
     img: '/meetly_feature_ai_summaries.png',
   },
@@ -69,28 +69,31 @@ export const FEATURE_BLOCKS = [
     tag: 'Extracted Action Items',
     title: 'Extracted Action Items',
     description: `Our pipeline pulls out key decisions and tasks the moment the call ends. Nothing slips through the cracks.`,
-    img: '/meetly_feature_hd_video.png',
+    img: '/meetly_feature_action_items.png',
   },
   {
     tag: 'Automated Distribution',
     title: 'Automated Distribution',
     description: `Structured summaries hit everyone's inbox automatically. Nobody has to ask for the notes.`,
-    img: '/meetly_feature_agenda.png',
+    img: '/meetly_feature_distribution.png',
   },
   {
     tag: 'Secure Waiting Room',
     title: 'Secure Waiting Room',
     description: `Control access with a pre-meeting lobby. Manage participants with direct host controls.`,
+    img: '/meetly_feature_waiting_room.png',
   },
   {
     tag: 'Frictionless Joining',
     title: 'Frictionless Joining',
     description: `Create instant rooms or schedule in advance. Share simple links that work directly in the browser.`,
+    img: '/meetly_feature_joining.png',
   },
   {
     tag: 'Searchable Archive',
     title: 'Searchable Archive',
     description: `Query your entire history of transcripts and summaries. Find exactly what was decided months ago, instantly.`,
+    img: '/meetly_feature_archive.png',
   },
 ] as const;
 
@@ -199,7 +202,7 @@ export const CTA_DATA = {
   primaryCta: 'Start your first meeting',
   secondaryCta: '',
   footnote: 'Free forever for solo use.',
-  dashboardImg: 'https://framerusercontent.com/images/3LTXk1sUD5A7o2BhLA18XJVw9ec.png',
+  dashboardImg: '/images/cta-dashboard.png',
 } as const;
 
 // ─── FOOTER ───────────────────────────────────────────────────────────────────

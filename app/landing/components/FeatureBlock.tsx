@@ -4,11 +4,12 @@ interface FeatureBlockProps {
   tag: string;
   title: string;
   description: string;
+  img?: string;
   icon?: React.ReactNode;
   index: number;
 }
 
-const FeatureBlock = ({ tag, title, description, icon, index }: FeatureBlockProps) => {
+const FeatureBlock = ({ tag, title, description, img, icon, index }: FeatureBlockProps) => {
   const topOffset = 80 + index * 24; // stagger the sticky offset so they peek behind each other
 
   // Unique minimalist colorful gradients for each feature card
@@ -32,44 +33,54 @@ const FeatureBlock = ({ tag, title, description, icon, index }: FeatureBlockProp
       {/* IMAGE / VISUAL AREA */}
       <div className="flex flex-1 items-center justify-center overflow-hidden bg-[#0d0d0d] min-h-[300px] md:min-h-0 border-b md:border-b-0 md:border-r border-[#242424]">
         <div className="relative flex h-full w-full items-center justify-center p-[36px]">
-          <div className="w-full h-full min-h-[320px] rounded-[16px] bg-[#111] border border-white/[0.06] flex flex-col items-center justify-center overflow-hidden relative shadow-2xl group">
+          <div className="w-full h-full min-h-[320px] rounded-[16px] bg-[#111] border border-white/[0.06] flex flex-col items-center justify-center overflow-hidden relative group">
 
-            {/* Minimal Colorful Gradient Background (Acts as the image) */}
-            <div
-              className="absolute inset-0 opacity-40 transition-opacity duration-700 group-hover:opacity-60"
-              style={{
-                background: bgGradient,
-                filter: 'blur(40px)',
-                transform: 'scale(1.2)'
-              }}
-            />
+            {img ? (
+              <img 
+                src={img} 
+                alt={title} 
+                className="absolute inset-0 w-full h-full object-cover" 
+              />
+            ) : (
+              <>
+                {/* Minimal Colorful Gradient Background (Acts as the image) */}
+                <div
+                  className="absolute inset-0 opacity-40 transition-opacity duration-700 group-hover:opacity-60"
+                  style={{
+                    background: bgGradient,
+                    filter: 'blur(40px)',
+                    transform: 'scale(1.2)'
+                  }}
+                />
 
-            {/* Dithered grid background */}
-            <div className="absolute inset-0 repeating-grid opacity-30 mix-blend-overlay" />
+                {/* Dithered grid background */}
+                <div className="absolute inset-0 repeating-grid opacity-30 mix-blend-overlay" />
 
-            {/* Meetly Branding Overlay */}
-            <div className="relative z-10 flex flex-col items-center justify-center gap-[32px]">
-              <div className="px-[20px] py-[10px] rounded-full border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl flex items-center gap-[10px] transition-transform duration-500 group-hover:scale-105">
-                <div className="w-[8px] h-[8px] rounded-full bg-white animate-pulse" />
-                <span className="text-white font-semibold tracking-wide text-[14px]">Meetly AI</span>
-              </div>
+                {/* Meetly Branding Overlay */}
+                <div className="relative z-10 flex flex-col items-center justify-center gap-[32px]">
+                  <div className="px-[20px] py-[10px] rounded-full border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl flex items-center gap-[10px] transition-transform duration-500 group-hover:scale-105">
+                    <div className="w-[8px] h-[8px] rounded-full bg-white animate-pulse" />
+                    <span className="text-white font-semibold tracking-wide text-[14px]">Meetly AI</span>
+                  </div>
 
-              {icon || (
-                <svg
-                  className="relative z-10 h-[72px] w-[72px] opacity-[0.8] stroke-white drop-shadow-xl transition-transform duration-500 group-hover:-translate-y-2"
-                  viewBox="0 0 80 80"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  fill="none"
-                >
-                  <rect x="10" y="20" width="60" height="45" rx="4" />
-                  <path d="M20 35h40M20 45h30M20 55h18" />
-                  <circle cx="62" cy="22" r="8" />
-                  <path d="M59 22l2 2 4-4" />
-                </svg>
-              )}
-            </div>
+                  {icon || (
+                    <svg
+                      className="relative z-10 h-[72px] w-[72px] opacity-[0.8] stroke-white drop-shadow-xl transition-transform duration-500 group-hover:-translate-y-2"
+                      viewBox="0 0 80 80"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      fill="none"
+                    >
+                      <rect x="10" y="20" width="60" height="45" rx="4" />
+                      <path d="M20 35h40M20 45h30M20 55h18" />
+                      <circle cx="62" cy="22" r="8" />
+                      <path d="M59 22l2 2 4-4" />
+                    </svg>
+                  )}
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

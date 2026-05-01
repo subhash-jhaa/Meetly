@@ -68,10 +68,31 @@ export default function CTA() {
           </div>
 
           {/* Central Mockup */}
-          <div className="mt-20 w-full max-w-5xl mx-auto relative z-20 group">
-            <div className="relative border border-white/12 rounded-t-xl overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.9)] bg-[#111111] transform translate-y-12">
-              <img src={dashboardImg} alt="Meetly Dashboard" className="w-full block" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
+          <div className="mt-20 w-full max-w-5xl mx-auto relative z-20">
+            <div className="relative border border-white/12 rounded-t-2xl overflow-hidden bg-[#0a0a0a] transform translate-y-12">
+              
+              {/* Browser Header */}
+              <div className="h-10 border-b border-white/10 bg-white/5 flex items-center px-4 gap-2 backdrop-blur-md">
+                <div className="flex gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                </div>
+                <div className="mx-auto bg-white/5 px-4 py-1 rounded-full text-[10px] font-mono text-white/30 border border-white/5 flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-emerald-500/50 animate-pulse" />
+                  meetly.ai/room/design-sync
+                </div>
+              </div>
+
+              <img 
+                src={dashboardImg} 
+                alt="Meetly Dashboard" 
+                className="w-full block" 
+              />
+              
+              {/* Overlay Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+              
             </div>
 
             {/* Box decoration */}

@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
 
         // status 3 = EGRESS_COMPLETE in LiveKit SDK
         if (egress?.status === 3) {
-            const recordingUrl = egress.fileResults?.[0]?.downloadUrl;
+            const recordingUrl = egress.fileResults?.[0]?.location;
             const roomName = egress.roomName;
 
             if (!recordingUrl || !roomName) {

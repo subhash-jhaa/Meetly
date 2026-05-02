@@ -1,4 +1,5 @@
 import React from 'react';
+import { SectionCornerBrackets } from './ui/primitives';
 
 interface FeatureBlockProps {
   tag: string;
@@ -115,15 +116,8 @@ const FeatureBlock = ({ tag, title, description, img, icon, index }: FeatureBloc
         </p>
       </div>
 
-      {/* CROSSHAIR CORNERS */}
-      <div className="absolute -left-[1px] -top-[1px] h-[6px] w-[1px] bg-white/10 pointer-events-none" />
-      <div className="absolute -left-[1px] -top-[1px] h-[1px] w-[6px] bg-white/10 pointer-events-none" />
-      <div className="absolute -right-[1px] -top-[1px] h-[6px] w-[1px] bg-white/10 pointer-events-none" />
-      <div className="absolute -right-[1px] -top-[1px] h-[1px] w-[6px] bg-white/10 pointer-events-none" />
-      <div className="absolute -left-[1px] -bottom-[1px] h-[6px] w-[1px] bg-white/10 pointer-events-none" />
-      <div className="absolute -left-[1px] -bottom-[1px] h-[1px] w-[6px] bg-white/10 pointer-events-none" />
-      <div className="absolute -right-[1px] -bottom-[1px] h-[6px] w-[1px] bg-white/10 pointer-events-none" />
-      <div className="absolute -right-[1px] -bottom-[1px] h-[1px] w-[6px] bg-white/10 pointer-events-none" />
+      {/* SECTION CORNER BRACKETS */}
+      <SectionCornerBrackets />
     </div>
   );
 };

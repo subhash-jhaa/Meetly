@@ -7,7 +7,7 @@ import Link from "next/link";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { FOOTER_DATA, SITE } from "../../app/landing/data/landingData";
-import { Logo } from "../../app/landing/components/ui/primitives";
+import { Logo, SectionCornerBrackets } from "../../app/landing/components/ui/primitives";
 
 // ── Utilities ─────────────────────────────────────────────────────────────────
 const cn = (...i: ClassValue[]) => twMerge(clsx(i));
@@ -169,7 +169,8 @@ export const FlickeringFooter = () => {
 
   return (
     <footer id="footer" className="w-full bg-[#0a0a0a]">
-      <div className="mx-auto max-w-[1200px] border-x border-white/12 pt-20">
+      <div className="mx-auto max-w-[1200px] border-x border-white/12 pt-20 relative group">
+        <SectionCornerBrackets />
 
         {/* Info row */}
         <div className="flex flex-col md:flex-row md:justify-between p-10 border-b border-white/12 gap-10">

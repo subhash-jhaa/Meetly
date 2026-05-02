@@ -12,7 +12,7 @@ import Testimonials from './components/Testimonials';
 import CTA from './components/CTA';
 import { FlickeringFooter } from '@/components/ui/flickering-footer';
 import FAQ from './components/FAQ';
-import { SectionSpacer } from './components/ui/primitives';
+import { SectionSpacer, SectionCornerBrackets } from './components/ui/primitives';
 import { FAQ_SECTION, SITE } from './data/landingData';
 
 // ─── FAQ WRAPPER (lives in page.tsx since it spans two columns) ───────────────
@@ -22,7 +22,8 @@ function FAQSection() {
 
   return (
     <div className="w-full flex flex-col items-center" id="faq">
-      <div className="section-container w-full pb-24">
+      <div className="section-container w-full pb-24 relative group">
+        <SectionCornerBrackets />
         <div className="flex flex-col md:flex-row border-b border-white/12">
           {/* LEFT: META */}
           <div className="flex-1 p-[64px_32px] border-r border-white/12 border-b md:border-b-0">

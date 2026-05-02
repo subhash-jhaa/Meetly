@@ -1,6 +1,6 @@
 'use client';
 
-import { CardCornerAccents, SectionHeader, SectionSpacer, CornerBox } from './ui/primitives';
+import { CardCornerAccents, SectionHeader, SectionSpacer, CornerBox, SectionCornerBrackets } from './ui/primitives';
 import { TESTIMONIALS_SECTION } from '../data/landingData';
 
 export default function Testimonials() {
@@ -8,7 +8,8 @@ export default function Testimonials() {
 
   return (
     <section className="w-full flex flex-col items-center bg-[#0a0a0a]" id="stories">
-      <div className="w-full max-w-[1200px] border-x border-white/12 relative">
+      <div className="w-full max-w-[1200px] border-x border-white/12 relative group">
+        <SectionCornerBrackets />
 
         {/* SECTION HEADER */}
         <div className="p-12 md:p-16">

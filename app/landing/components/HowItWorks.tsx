@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { HOW_IT_WORKS_SECTION, HOW_IT_WORKS_STEPS } from '../data/landingData';
-import { CrosshairCorners, Eyebrow, SectionSpacer } from './ui/primitives';
+import { CrosshairCorners, Eyebrow, SectionSpacer, SectionCornerBrackets } from './ui/primitives';
 
 // ── Compact visual mockups (Grayscale / Technical style) ──────────────────────
 function LinkMockup() {
@@ -130,7 +130,8 @@ export default function HowItWorks() {
 
   return (
     <section id="how-it-works" className="flex flex-col items-center w-full bg-[#0a0a0a]">
-      <div className="w-full max-w-[1200px] border-x border-white/12">
+      <div className="w-full max-w-[1200px] border-x border-white/12 relative group">
+        <SectionCornerBrackets />
 
         {/* ── Section header ── */}
         <div className="px-[48px] py-[80px] flex flex-col gap-[20px]">

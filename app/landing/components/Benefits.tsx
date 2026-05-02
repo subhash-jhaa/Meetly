@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { BENEFIT_ITEMS, BENEFITS_SECTION } from '../data/landingData';
-import { CardCornerAccents, Eyebrow, SectionSpacer } from './ui/primitives';
+import { CardCornerAccents, Eyebrow, SectionSpacer, SectionCornerBrackets } from './ui/primitives';
 
 // ─── ICON MAP ─────────────────────────────────────────────────────────────────
 const ICON_MAP: Record<string, React.ReactNode> = {
@@ -102,7 +102,8 @@ function BenefitCard({ title, desc, iconPath }: BenefitCardProps) {
 export default function Benefits() {
   return (
     <section className="w-full flex flex-col items-center bg-[#0a0a0a]" id="benefits">
-      <div className="w-full max-w-[1200px] border-x border-white/12 relative">
+      <div className="w-full max-w-[1200px] border-x border-white/12 relative group">
+        <SectionCornerBrackets />
 
         {/* SECTION HEADER */}
         <div className="px-[48px] py-[80px] flex flex-col gap-[20px]">

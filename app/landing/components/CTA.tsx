@@ -4,14 +4,14 @@ import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { CTA_DATA, SITE } from '../data/landingData';
-import { CrosshairCorners, Logo, CornerBox, SectionSpacer } from './ui/primitives';
+import { CrosshairCorners, Logo, CornerBox, SectionSpacer, SectionCornerBrackets } from './ui/primitives';
 
 export default function CTA() {
   const router = useRouter();
   const { headline, subheadline, dashboardImg } = CTA_DATA;
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#0a0a0a] text-center pt-32 pb-0">
+    <section className="relative w-full bg-[#0a0a0a] text-center pt-0 pb-0">
 
       {/* ─── BACKGROUND VISUAL ─── */}
       <div className="absolute inset-0 z-0">
@@ -27,7 +27,8 @@ export default function CTA() {
       </div>
 
       <div className="relative z-10 w-full flex flex-col items-center">
-        <div className="section-container w-full border-x border-white/12 relative flex flex-col items-center px-6 pb-24">
+        <div className="section-container w-full border-x border-white/12 relative flex flex-col items-center px-6 pt-24 pb-24 group">
+          <SectionCornerBrackets />
 
           {/* Top Logo Mark */}
           <div className="mb-12 flex flex-col items-center">

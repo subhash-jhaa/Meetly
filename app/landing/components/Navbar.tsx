@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { SITE } from '../data/landingData';
-import { Logo } from './ui/primitives';
+import { Logo, SectionCornerBrackets } from './ui/primitives';
 
 export default function Navbar() {
   return (
@@ -63,18 +63,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* OUTER CORNER MARKERS (8 divs - bg-white/10) */}
-        <div className="absolute -left-[1px] -top-[1px] h-[7px] w-[1px] bg-white/10" />
-        <div className="absolute -left-[1px] -top-[1px] h-[1px] w-[7px] bg-white/10" />
-
-        <div className="absolute -right-[1px] -top-[1px] h-[7px] w-[1px] bg-white/10" />
-        <div className="absolute -right-[1px] -top-[1px] h-[1px] w-[7px] bg-white/10" />
-
-        <div className="absolute -left-[1px] -bottom-[1px] h-[7px] w-[1px] bg-white/10" />
-        <div className="absolute -left-[1px] -bottom-[1px] h-[1px] w-[7px] bg-white/10" />
-
-        <div className="absolute -right-[1px] -bottom-[1px] h-[7px] w-[1px] bg-white/10" />
-        <div className="absolute -right-[1px] -bottom-[1px] h-[1px] w-[7px] bg-white/10" />
+        <SectionCornerBrackets />
 
       </div>
     </nav>

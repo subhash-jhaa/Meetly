@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { FEATURES_SECTION, FEATURE_BLOCKS } from '../data/landingData';
-import { Eyebrow, SectionSpacer, CrosshairCorners } from './ui/primitives';
+import { Eyebrow, SectionSpacer, CrosshairCorners, SectionCornerBrackets } from './ui/primitives';
 import FeatureBlock from './FeatureBlock';
 import FeaturesAccordion from './FeaturesAccordion';
 
@@ -28,7 +28,8 @@ function FeaturesDiagonalSpacer() {
 // ─── SECTION HEADER (below accordion) ────────────────────────────────────────
 function FeaturesHeader() {
   return (
-    <div className="w-full max-w-[1200px] border-x border-t border-white/12 p-[64px_48px] flex flex-col md:flex-row gap-[48px] md:items-end justify-between">
+    <div className="w-full max-w-[1200px] border-x border-t border-white/12 p-[64px_48px] flex flex-col md:flex-row gap-[48px] md:items-end justify-between relative group">
+      <SectionCornerBrackets showBottom={false} />
       <div className="flex-[0.7] flex flex-col gap-[24px]">
         <Eyebrow text={FEATURES_SECTION.eyebrow} variant="bar" />
         <h2 className="text-[clamp(32px,4vw,56px)] font-normal leading-[1.1] tracking-[-0.04em] text-[#fafafa] max-w-[700px]">
@@ -59,7 +60,8 @@ export default function Features() {
       <div className="w-full max-w-[1200px] border-x border-white/12 h-40" />
 
       {/* STICKY SCROLL CONTAINER */}
-      <div className="relative w-full max-w-[1200px] border-x border-t border-b border-white/12">
+      <div className="relative w-full max-w-[1200px] border-x border-t border-b border-white/12 group">
+        <SectionCornerBrackets showBottom={false} />
         {FEATURE_BLOCKS.map((block, i) => (
           <FeatureBlock key={i} index={i} {...block} />
         ))}

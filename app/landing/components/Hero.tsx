@@ -3,7 +3,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { HERO_DATA, SITE } from '../data/landingData';
-import { SectionSpacer, CrosshairCorners } from './ui/primitives';
+import { SectionSpacer, CrosshairCorners, SectionCornerBrackets } from './ui/primitives';
 
 // ─── SUB-COMPONENTS ──────────────────────────────────────────────────────────
 
@@ -57,11 +57,7 @@ function PartnerLogoGrid() {
             i >= 3 ? 'border-t border-white/12' : '',
           ].join(' ')}
         >
-          <img
-            src={url}
-            alt="Partner"
-            className="max-w-[70%] max-h-[45%] object-contain opacity-60 brightness-[10]"
-          />
+          {/* Logo hidden for now */}
         </div>
       ))}
     </div>
@@ -74,8 +70,6 @@ function HeroBottomSpacer() {
     <div className="flex justify-center w-full">
       <div className="w-full max-w-[1200px] h-[90px] border-x border-b border-white/12 relative">
         <div className="absolute inset-0 diagonal-mask" />
-        {/* Crosshair corners */}
-        <CrosshairCorners />
       </div>
     </div>
   );
@@ -84,45 +78,49 @@ function HeroBottomSpacer() {
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 export default function Hero() {
   return (
-    <section className="section-container overflow-hidden flex flex-col">
-
+    <section className="section-container flex flex-col items-center">
       {/* TOP SPACER GRID */}
-      <div id="hero" className="h-[48px] border-b border-white/12 relative overflow-hidden">
+      <div id="hero" className="w-full max-w-[1200px] h-[48px] border-x border-b border-white/12 relative group">
+        <SectionCornerBrackets showBottom={false} />
         <div className="absolute inset-0 diagonal-mask opacity-40" />
       </div>
 
-      {/* HERO MAIN BODY - 2 COLUMN GRID */}
-      <div id="hero" className="flex flex-col md:flex-row border-b border-white/12">
+      <div className="relative group flex flex-col w-full max-w-[1200px] border-x border-white/12">
+        <SectionCornerBrackets />
 
-        {/* LEFT COLUMN */}
-        <div className="flex-1 flex flex-col border-r border-white/12">
+        {/* HERO MAIN BODY - 2 COLUMN GRID */}
+        <div id="hero" className="flex flex-col md:flex-row border-b border-white/12">
 
-          {/* HEADING AREA */}
-          <div className="p-[64px_32px_80px] flex flex-col gap-[24px] flex-1">
-            <YCBadge />
-            <h1 className="text-[clamp(36px,5vw,62px)] font-normal leading-none tracking-[-0.05em] text-[#fafafa]">
-              {HERO_DATA.headline}
-            </h1>
-            <p className="text-[16px] text-[#fafafa]/50 max-w-[400px] leading-[1.4]">
-              {HERO_DATA.subheadline}
-            </p>
-            <HeroCTAs />
+          {/* LEFT COLUMN */}
+          <div className="flex-1 flex flex-col border-r border-white/12">
+
+            {/* HEADING AREA */}
+            <div className="p-[64px_32px_80px] flex flex-col gap-[24px] flex-1">
+              <YCBadge />
+              <h1 className="text-[clamp(36px,5vw,62px)] font-normal leading-none tracking-[-0.05em] text-[#fafafa]">
+                {HERO_DATA.headline}
+              </h1>
+              <p className="text-[16px] text-[#fafafa]/50 max-w-[400px] leading-[1.4]">
+                {HERO_DATA.subheadline}
+              </p>
+              <HeroCTAs />
+            </div>
+
+            <PartnerLogoGrid />
           </div>
 
-          <PartnerLogoGrid />
-        </div>
-
-        {/* RIGHT COLUMN: VIDEO (FULL FRAME) */}
-        <div className="flex-1 overflow-hidden relative min-h-[400px] md:min-h-0 bg-[#0a0a0a]">
-          <video
-            src={HERO_DATA.videoSrc}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+          {/* RIGHT COLUMN: VIDEO (FULL FRAME) */}
+          <div className="flex-1 overflow-hidden relative min-h-[400px] md:min-h-0 bg-[#0a0a0a]">
+            <video
+              src={HERO_DATA.videoSrc}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+          </div>
         </div>
       </div>
 

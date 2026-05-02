@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { COMPARISON_ROWS, COMPARISON_SECTION, SITE } from '../data/landingData';
-import { SectionSpacer, CornerBox } from './ui/primitives';
+import { SectionSpacer, CornerBox, SectionCornerBrackets } from './ui/primitives';
 
 // ─── TABLE ROW ────────────────────────────────────────────────────────────────
 function ComparisonRow({
@@ -25,7 +25,7 @@ function ComparisonRow({
       </div>
     </div>
   );
-  
+
   const CrossIcon = () => (
     <div className="flex items-center justify-center">
       <div className="w-5 h-5 rounded-full bg-red-500/10 flex items-center justify-center border border-red-500/30">
@@ -58,7 +58,8 @@ export default function Comparison() {
 
   return (
     <section className="flex flex-col items-center w-full bg-[#0a0a0a]">
-      <div className="section-container w-full border-x border-white/12 relative">
+      <div className="section-container w-full border-x border-white/12 relative group">
+        <SectionCornerBrackets />
 
         {/* SECTION HEADER */}
         <div className="p-[80px_48px_48px] flex flex-col items-center gap-6">

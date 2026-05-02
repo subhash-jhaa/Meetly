@@ -32,35 +32,68 @@ interface BenefitCardProps {
   index: number;
 }
 
-function BenefitCard({ title, desc, iconPath, index }: BenefitCardProps) {
+function BenefitCard({ title, desc, iconPath }: BenefitCardProps) {
   return (
-    <div
-      className={[
-        'group p-8 md:p-10 border-b border-white/12 bg-[#171717] relative flex flex-col min-h-[280px]',
-        index % 3 !== 2 ? 'md:border-r border-white/12' : '',
-      ].join(' ')}
-    >
-      {/* Card corner markers */}
-      {(['left-0 top-0', 'right-0 top-0', 'left-0 bottom-0', 'right-0 bottom-0'] as const).map((pos) => (
-        <div key={pos} className={`absolute ${pos} flex items-center justify-center pointer-events-none`}>
-          <div className="absolute h-[7px] w-[1px] bg-white/10" />
-          <div className="absolute h-[1px] w-[7px] bg-white/10" />
-        </div>
-      ))}
+    <div className="relative border border-[#242424] bg-[#171717] w-full flex flex-col justify-between p-6 min-h-[240px]">
 
-      {/* Boxed icon */}
-      <div className="w-10 h-10 bg-[#18181b] border border-white/5 rounded-[2px] flex items-center justify-center relative mb-auto">
-        <svg className="w-4 h-4 text-white/80" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+      {/* Feature Card Icon */}
+      <div className="relative w-12 h-12 bg-[#18181b] flex items-center justify-center">
+        <svg className="w-5 h-5 text-[#fafafa]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
           {ICON_MAP[iconPath]}
         </svg>
-        <CardCornerAccents />
+
+        {/* Icon Corner Accents (8 divs) */}
+        {(['tl', 'tr', 'bl', 'br'] as const).map((pos) => {
+          const cls = {
+            tl: 'left-0 top-0',
+            tr: 'right-0 top-0',
+            bl: 'left-0 bottom-0',
+            br: 'right-0 bottom-0',
+          }[pos];
+          return (
+            <React.Fragment key={pos}>
+              <div className={`absolute ${cls} w-[1px] h-[3px] bg-white/20`} />
+              <div className={`absolute ${cls} h-[1px] w-[3px] bg-white/20`} />
+            </React.Fragment>
+          );
+        })}
       </div>
 
-      {/* Text */}
+      {/* Text Container */}
       <div className="mt-8">
-        <h4 className="text-[18px] font-normal tracking-tight text-white mb-3">{title}</h4>
-        <p className="text-[14px] leading-relaxed text-white/40">{desc}</p>
+        {/* Title + Sub */}
+        <div className="flex flex-col gap-2">
+          {/* Title */}
+          <div>
+            <h4 className="text-[18px] md:text-[20px] font-normal tracking-tight text-[#fafafa] leading-snug">
+              {title}
+            </h4>
+          </div>
+          {/* Subtitle */}
+          <div>
+            <p className="text-[14px] text-[#a1a1aa] leading-relaxed max-w-[320px]">
+              {desc}
+            </p>
+          </div>
+        </div>
       </div>
+
+      {/* Desktop Card Corner Accents (8 divs) */}
+      {(['tl', 'tr', 'bl', 'br'] as const).map((pos) => {
+        const cls = {
+          tl: '-left-[1px] -top-[1px]',
+          tr: '-right-[1px] -top-[1px]',
+          bl: '-left-[1px] -bottom-[1px]',
+          br: '-right-[1px] -bottom-[1px]',
+        }[pos];
+        return (
+          <React.Fragment key={`card-${pos}`}>
+            <div className={`absolute ${cls} w-[1px] h-[3px] bg-white/20 pointer-events-none z-10`} />
+            <div className={`absolute ${cls} h-[1px] w-[3px] bg-white/20 pointer-events-none z-10`} />
+          </React.Fragment>
+        );
+      })}
+
     </div>
   );
 }
@@ -72,24 +105,25 @@ export default function Benefits() {
       <div className="w-full max-w-[1200px] border-x border-white/12 relative">
 
         {/* SECTION HEADER */}
-        <div className="p-12 md:p-16 border-b border-white/12">
-          <div className="mb-6">
-            <Eyebrow text={BENEFITS_SECTION.eyebrow} />
-          </div>
-          <h2 className="text-[32px] md:text-[48px] font-normal leading-[1.1] tracking-tight text-white max-w-3xl">
+        <div className="px-[48px] py-[80px] flex flex-col gap-[20px]">
+          <Eyebrow text={BENEFITS_SECTION.eyebrow} />
+          <h2 className="text-[clamp(32px,5vw,56px)] font-normal tracking-[-0.05em] leading-[1.05] text-[#fafafa] max-w-3xl">
             {BENEFITS_SECTION.title}
           </h2>
         </div>
 
         {/* CARD GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {BENEFIT_ITEMS.map((item, i) => (
-            <BenefitCard key={i} index={i} {...item} />
-          ))}
+        <div className="px-[48px] pb-24 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {BENEFIT_ITEMS.map((item, i) => (
+              <BenefitCard key={i} index={i} {...item} />
+            ))}
+          </div>
         </div>
+
       </div>
 
-      <SectionSpacer variant="grid" />
+      <SectionSpacer variant="grid" hasGap={false} />
     </section>
   );
 }

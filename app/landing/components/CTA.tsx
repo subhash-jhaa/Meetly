@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { CTA_DATA, SITE } from '../data/landingData';
-import { CrosshairCorners } from './ui/primitives';
+import { CrosshairCorners, Logo, CornerBox, SectionSpacer } from './ui/primitives';
 
 export default function CTA() {
   const router = useRouter();
@@ -27,16 +27,11 @@ export default function CTA() {
       </div>
 
       <div className="relative z-10 w-full flex flex-col items-center">
-        <div className="section-container w-full border-x border-white/12 relative flex flex-col items-center px-6">
+        <div className="section-container w-full border-x border-white/12 relative flex flex-col items-center px-6 pb-24">
 
           {/* Top Logo Mark */}
           <div className="mb-12 flex flex-col items-center">
-            <div className="w-8 h-8 relative">
-              <div className="absolute inset-0 bg-white rotate-45 rounded-sm" />
-              <div className="absolute inset-[6px] bg-black rotate-45 rounded-sm flex items-center justify-center">
-                <div className="w-2 h-2 bg-white rounded-full" />
-              </div>
-            </div>
+            <Logo className="w-12 h-12" />
           </div>
 
           <h2 className="text-[clamp(36px,6vw,72px)] font-normal tracking-[-0.05em] leading-[1.05] text-white max-w-3xl">
@@ -68,31 +63,18 @@ export default function CTA() {
           </div>
 
           {/* Central Mockup */}
-          <div className="mt-20 w-full max-w-5xl mx-auto relative z-20">
-            <div className="relative border border-white/12 rounded-t-2xl overflow-hidden bg-[#0a0a0a] transform translate-y-12">
-              
-              {/* Browser Header */}
-              <div className="h-10 border-b border-white/10 bg-white/5 flex items-center px-4 gap-2 backdrop-blur-md">
-                <div className="flex gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                </div>
-                <div className="mx-auto bg-white/5 px-4 py-1 rounded-full text-[10px] font-mono text-white/30 border border-white/5 flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-emerald-500/50 animate-pulse" />
-                  meetly.ai/room/design-sync
-                </div>
-              </div>
+          <div className="mt-8 w-full max-w-5xl mx-auto relative z-20">
+            <div className="relative border border-white/12 overflow-hidden bg-[#0a0a0a]">
 
-              <img 
-                src={dashboardImg} 
-                alt="Meetly Dashboard" 
-                className="w-full block" 
+              <img
+                src={dashboardImg}
+                alt="Meetly Dashboard"
+                className="w-full block"
               />
-              
+
               {/* Overlay Gradient */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-              
+
             </div>
 
             {/* Box decoration */}
@@ -102,17 +84,7 @@ export default function CTA() {
         </div>
       </div>
 
-      {/* Bottom Decorative Section (The Footer Spacer) */}
-      <div className="relative w-full bg-[#0a0a0a] z-10">
-        <div className="mx-auto max-w-[1200px] border-x border-t border-white/12 relative overflow-visible h-[120px] bg-[#0a0a0a]">
-          {/* Vertical grid lines that extend up */}
-          <div className="absolute inset-0 diagonal-mask opacity-40" />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a0a0a]/50 to-[#09090b]" />
-
-          {/* Subtle crosshair at the overlap point */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-px h-8 bg-white/20" />
-        </div>
-      </div>
+      <SectionSpacer variant="grid" hasGap={false} />
     </section>
   );
 }

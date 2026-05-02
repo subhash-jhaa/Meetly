@@ -146,7 +146,7 @@ export const COMPARISON_ROWS = [
 // ─── HOW IT WORKS ─────────────────────────────────────────────────────────────
 export const HOW_IT_WORKS_SECTION = {
   eyebrow: 'How it works',
-  title: 'Smarter meetings in four steps.',
+  title: 'Smarter meetings in Three steps.',
 };
 
 export const HOW_IT_WORKS_STEPS = [
@@ -213,6 +213,6 @@ export const FOOTER_DATA = {
     { heading: 'Legal', links: [{ label: 'Privacy Policy', href: '#privacy' }, { label: 'Terms of Service', href: '#terms' }] },
   ],
   social: [
-    { label: 'GitHub', href: 'https://github.com/meetly' },
+    { label: 'GitHub', href: 'https://github.com/subhash-jhaa/Meetly' },
   ],
 } as const;

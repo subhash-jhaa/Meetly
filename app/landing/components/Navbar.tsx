@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { SITE } from '../data/landingData';
+import { Logo } from './ui/primitives';
 
 export default function Navbar() {
   return (
@@ -13,11 +14,7 @@ export default function Navbar() {
         {/* LEFT */}
         <div className="flex-1 flex justify-start">
           <Link href="/" className="flex items-center no-underline outline-none">
-            <img
-              src="https://framerusercontent.com/images/E1cdDQforYmgVbu5AtpZDN1cjVs.png?width=512&height=512"
-              alt="Meetly Logo"
-              className="h-[28px] w-[28px] rounded-[4px] object-contain"
-            />
+            <Logo className="h-[28px] w-[28px]" />
           </Link>
         </div>
 

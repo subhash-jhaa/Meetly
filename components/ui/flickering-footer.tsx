@@ -7,6 +7,7 @@ import Link from "next/link";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { FOOTER_DATA, SITE } from "../../app/landing/data/landingData";
+import { Logo } from "../../app/landing/components/ui/primitives";
 
 // ── Utilities ─────────────────────────────────────────────────────────────────
 const cn = (...i: ClassValue[]) => twMerge(clsx(i));
@@ -34,16 +35,6 @@ const Badge = ({ label }: { label: string }) => (
     <rect x="2" y="2" width="40" height="40" rx="20" fill="#222" />
     <text x="50%" y="54%" dominantBaseline="middle" textAnchor="middle" fill="white" fontSize="7" fontWeight="bold">{label}</text>
   </svg>
-);
-
-// ── Logo mark ─────────────────────────────────────────────────────────────────
-const Logo = ({ className }: { className?: string }) => (
-  <div className={cn("w-8 h-8 relative", className)}>
-    <div className="absolute inset-0 bg-white rotate-45 rounded-sm" />
-    <div className="absolute inset-[6px] bg-black rotate-45 rounded-sm flex items-center justify-center">
-      <div className="w-2 h-2 bg-white rounded-full" />
-    </div>
-  </div>
 );
 
 // ── Link row ──────────────────────────────────────────────────────────────────
@@ -77,7 +68,7 @@ export const FlickeringGrid: React.FC<GridProps> = ({
   const rgb = useMemo(() => toRGBA(color), [color]);
 
   const buildMask = useCallback((cw: number, ch: number) => {
-    if (!text) { maskRef.current = null; return; }
+    if (!text || cw <= 0 || ch <= 0) { maskRef.current = null; return; }
     const off = Object.assign(document.createElement("canvas"), { width: cw, height: ch });
     const ctx = off.getContext("2d", { willReadFrequently: true })!;
     ctx.fillStyle = ctx.strokeStyle = "white";
@@ -177,11 +168,11 @@ export const FlickeringFooter = () => {
   }, []);
 
   return (
-    <footer id="footer" className="w-full bg-[#0a0a0a] pt-20">
-      <div className="mx-auto max-w-[1200px] border-x border-t border-white/[0.07]">
+    <footer id="footer" className="w-full bg-[#0a0a0a]">
+      <div className="mx-auto max-w-[1200px] border-x border-white/12 pt-20">
 
         {/* Info row */}
-        <div className="flex flex-col md:flex-row md:justify-between p-10 border-b border-white/[0.07] gap-10">
+        <div className="flex flex-col md:flex-row md:justify-between p-10 border-b border-white/12 gap-10">
           {/* Brand */}
           <div className="flex flex-col gap-5 max-w-xs">
             <Link href="/" className="flex items-center gap-2">
@@ -190,7 +181,6 @@ export const FlickeringFooter = () => {
             </Link>
             <p className="text-[14px] text-white/40 leading-relaxed">{FOOTER_DATA.tagline}</p>
             <div className="flex gap-3">
-              <Badge label="SOC2" /><Badge label="HIPAA" /><Badge label="GDPR" />
             </div>
           </div>
 

@@ -36,10 +36,10 @@ const FeatureBlock = ({ tag, title, description, img, icon, index }: FeatureBloc
           <div className="w-full h-full min-h-[320px] rounded-[16px] bg-[#111] border border-white/[0.06] flex flex-col items-center justify-center overflow-hidden relative group">
 
             {img ? (
-              <img 
-                src={img} 
-                alt={title} 
-                className="absolute inset-0 w-full h-full object-cover" 
+              <img
+                src={img}
+                alt={title}
+                className="absolute inset-0 w-full h-full object-cover"
               />
             ) : (
               <>

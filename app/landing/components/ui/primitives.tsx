@@ -11,24 +11,22 @@ interface CrosshairCornerProps {
 }
 
 const CORNER_CLASSES: Record<CrosshairCornerProps['position'], string> = {
-  tl: 'left-0 top-0 -translate-x-1/2 -translate-y-1/2',
-  tr: 'right-0 top-0 translate-x-1/2 -translate-y-1/2',
-  bl: 'left-0 bottom-0 -translate-x-1/2 translate-y-1/2',
-  br: 'right-0 bottom-0 translate-x-1/2 translate-y-1/2',
+  tl: '-left-[1px] -top-[1px]',
+  tr: '-right-[1px] -top-[1px]',
+  bl: '-left-[1px] -bottom-[1px]',
+  br: '-right-[1px] -bottom-[1px]',
 };
 
 export function CrosshairCorner({
   position,
-  size = 11,
+  size = 6,
   color = 'bg-white/40',
 }: CrosshairCornerProps) {
   return (
-    <div
-      className={`absolute flex items-center justify-center pointer-events-none z-10 ${CORNER_CLASSES[position]}`}
-    >
-      <div className={`absolute w-[1px] ${color}`} style={{ height: size }} />
-      <div className={`absolute h-[1px] ${color}`} style={{ width: size }} />
-    </div>
+    <>
+      <div className={`absolute ${CORNER_CLASSES[position]} w-[1px] ${color} pointer-events-none z-10`} style={{ height: size }} />
+      <div className={`absolute ${CORNER_CLASSES[position]} h-[1px] ${color} pointer-events-none z-10`} style={{ width: size }} />
+    </>
   );
 }
 
@@ -50,14 +48,19 @@ export function CrosshairCorners({
 // ─── EYEBROW LABEL ───────────────────────────────────────────────────────────
 interface EyebrowProps {
   text: string;
-  variant?: 'bar' | 'line'; // bar = vertical accent, line = horizontal dash
+  className?: string;
+  variant?: 'bar' | 'dot';
 }
 
-export function Eyebrow({ text, variant = 'bar' }: EyebrowProps) {
+export function Eyebrow({ text, className, variant = 'bar' }: EyebrowProps) {
   return (
-    <div className="flex items-center gap-[10px]">
-      <span className="eyebrow-line w-[14px] h-[1px] bg-white/30" />
-      <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-[#fafafa]/50">
+    <div className={`flex items-center gap-2 ${className}`}>
+      {variant === 'bar' ? (
+        <div className="w-[1.5px] h-3 bg-white/40" />
+      ) : (
+        <div className="w-1 h-1 rounded-full bg-white/40" />
+      )}
+      <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/40">
         {text}
       </span>
     </div>
@@ -167,6 +170,40 @@ export function SectionSpacer({
           <CrosshairCorners />
         </div>
       </div>
+    </div>
+  );
+}
+
+// ─── BRAND LOGO ──────────────────────────────────────────────────────────────
+export function Logo({ className = "h-7 w-7" }: { className?: string }) {
+  return (
+    <img
+      src="https://framerusercontent.com/images/E1cdDQforYmgVbu5AtpZDN1cjVs.png?width=512&height=512"
+      alt="Meetly Logo"
+      className={`${className} rounded-[4px] object-contain`}
+    />
+  );
+}
+
+// ─── CORNER BOX (RESSL AI STYLE) ─────────────────────────────────────────────
+interface CornerBoxProps {
+  children: React.ReactNode;
+  size?: 'sm' | 'md' | 'lg';
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+export function CornerBox({ children, size = 'md', className = '', style }: CornerBoxProps) {
+  const sizeClass = {
+    sm: 'corner-box-sm',
+    md: 'corner-box-md',
+    lg: 'corner-box-lg',
+  }[size];
+
+  return (
+    <div className={`corner-box ${sizeClass} ${className}`} style={style}>
+      <span className="cb"></span>
+      {children}
     </div>
   );
 }

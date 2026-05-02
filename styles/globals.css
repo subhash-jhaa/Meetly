@@ -94,13 +94,11 @@
   }
 
   .diagonal-mask {
-    background: repeating-linear-gradient(
-      -45deg,
-      rgba(255, 255, 255, 0.08) 0,
-      rgba(255, 255, 255, 0.08) 1px,
-      transparent 1px,
-      transparent 5px
-    );
+    background: repeating-linear-gradient(-45deg,
+        rgba(255, 255, 255, 0.08) 0,
+        rgba(255, 255, 255, 0.08) 1px,
+        transparent 1px,
+        transparent 5px);
   }
 
   .diagonal-stripes {

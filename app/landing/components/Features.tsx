@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { FEATURES_SECTION, FEATURE_BLOCKS } from '../data/landingData';
-import { Eyebrow, SectionSpacer } from './ui/primitives';
+import { Eyebrow, SectionSpacer, CrosshairCorners } from './ui/primitives';
 import FeatureBlock from './FeatureBlock';
 import FeaturesAccordion from './FeaturesAccordion';
 
@@ -11,27 +11,14 @@ function FeaturesDiagonalSpacer() {
   return (
     <>
       {/* GAP */}
-      <div className="w-full h-[160px] md:h-[200px] flex justify-center">
+      <div className="w-full h-[96px] flex justify-center">
         <div className="w-full max-w-[1200px] h-full border-x border-white/12" />
       </div>
       {/* DIAGONAL SPACER BODY */}
       <div className="flex justify-center w-full">
         <div className="w-full max-w-[1200px] h-[100px] border-x border-y border-white/12 relative overflow-hidden">
           <div className="absolute inset-0 diagonal-mask" />
-          {(['tl', 'tr', 'bl', 'br'] as const).map((pos) => {
-            const cls = {
-              tl: 'left-0 top-0 -translate-x-1/2 -translate-y-1/2',
-              tr: 'right-0 top-0 translate-x-1/2 -translate-y-1/2',
-              bl: 'left-0 bottom-0 -translate-x-1/2 translate-y-1/2',
-              br: 'right-0 bottom-0 translate-x-1/2 translate-y-1/2',
-            }[pos];
-            return (
-              <div key={pos} className={`absolute flex items-center justify-center pointer-events-none z-10 ${cls}`}>
-                <div className="absolute h-[11px] w-[1px] bg-white/40" />
-                <div className="absolute h-[1px] w-[11px] bg-white/40" />
-              </div>
-            );
-          })}
+          <CrosshairCorners />
         </div>
       </div>
     </>

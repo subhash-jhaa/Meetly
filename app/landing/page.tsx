@@ -22,7 +22,7 @@ function FAQSection() {
 
   return (
     <div className="w-full flex flex-col items-center" id="faq">
-      <div className="section-container w-full">
+      <div className="section-container w-full pb-24">
         <div className="flex flex-col md:flex-row border-b border-white/12">
           {/* LEFT: META */}
           <div className="flex-1 p-[64px_32px] border-r border-white/12 border-b md:border-b-0">
@@ -60,7 +60,7 @@ function FAQSection() {
           </div>
         </div>
       </div>
-      <SectionSpacer />
+      <SectionSpacer hasGap={false} />
     </div>
   );
 }

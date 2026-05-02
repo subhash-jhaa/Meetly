@@ -1,8 +1,6 @@
 'use client';
 
-import React from 'react';
-import Image from 'next/image';
-import { CardCornerAccents, SectionHeader, SectionSpacer } from './ui/primitives';
+import { CardCornerAccents, SectionHeader, SectionSpacer, CornerBox } from './ui/primitives';
 import { TESTIMONIALS_SECTION } from '../data/landingData';
 
 export default function Testimonials() {
@@ -13,7 +11,7 @@ export default function Testimonials() {
       <div className="w-full max-w-[1200px] border-x border-white/12 relative">
 
         {/* SECTION HEADER */}
-        <div className="p-12 md:p-16 border-b border-white/12">
+        <div className="p-12 md:p-16">
           <SectionHeader
             eyebrow={eyebrow}
             title={title}
@@ -21,9 +19,9 @@ export default function Testimonials() {
         </div>
 
         {/* MAIN GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-3 border-b border-white/12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-12 pb-24">
           {testimonials.map((t, i) => (
-            <div key={i} className={`flex flex-col border-b md:border-b-0 ${i < testimonials.length - 1 ? 'md:border-r' : ''} border-white/12 bg-[#171717]/40 relative overflow-hidden group`}>
+            <CornerBox key={i} size="md" className={`flex flex-col border-none bg-[#171717]/40 relative overflow-hidden group`}>
               {/* TESTIMONIAL QUOTE */}
               <div className="flex-1 p-10 md:p-12 relative overflow-hidden">
                 <div className="relative z-10 flex flex-col h-full justify-between gap-8">
@@ -42,11 +40,11 @@ export default function Testimonials() {
                   </svg>
                 </div>
               </div>
-            </div>
+            </CornerBox>
           ))}
         </div>
       </div>
-      <SectionSpacer variant="grid" />
+      <SectionSpacer variant="grid" hasGap={false} />
     </section>
   );
 }

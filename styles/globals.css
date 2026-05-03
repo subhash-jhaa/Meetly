@@ -111,3 +111,6 @@
     -webkit-mask: url("https://framerusercontent.com/images/72Ox6mzuXn4bJouNgm9sRSTK0.png?width=20&height=20") left top / 12px 12px repeat alpha;
   }
 }
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}

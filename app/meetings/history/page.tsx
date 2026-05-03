@@ -154,7 +154,7 @@ export default function HistoryPage() {
       <nav className="sticky top-0 z-50 w-full flex justify-center bg-[#0a0a0a]/90 backdrop-blur-md pt-4 px-4">
         <div className="relative flex w-full max-w-[1200px] h-[64px] items-center justify-between border border-[#242424] bg-[#0a0908] px-6">
           <Corners />
-          <Link href="/">
+          <Link href="/#hero">
             <img
               src="https://framerusercontent.com/images/E1cdDQforYmgVbu5AtpZDN1cjVs.png?width=512&height=512"
               alt="Meetly"

@@ -14,6 +14,9 @@ import { FlickeringFooter } from '@/components/ui/flickering-footer';
 import FAQ from './components/FAQ';
 import { SectionSpacer, SectionCornerBrackets } from './components/ui/primitives';
 import { FAQ_SECTION, SITE } from './data/landingData';
+import { useSession } from 'next-auth/react';  // ← ADD
+import { useEffect } from 'react'; 
+
 
 // ─── FAQ WRAPPER (lives in page.tsx since it spans two columns) ───────────────
 function FAQSection() {
@@ -68,6 +71,26 @@ function FAQSection() {
 
 // ─── LANDING PAGE ────────────────────────────────────────────────────────────
 export default function LandingPage() {
+  const router = useRouter();
+  const { data: session, status } = useSession();
+
+  // Redirect signed-in users straight to dashboard
+  useEffect(() => {
+    // Only redirect if there's no hash (e.g., coming from dashboard logo to #hero should stay)
+    if (status === 'authenticated' && !window.location.hash) {
+      router.replace('/dashboard');
+    }
+  }, [status, router]);
+
+  // Show nothing while checking session
+  if (status === 'loading') {
+    return (
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+        <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <div className="bg-[#0a0a0a] text-[#fafafa] selection:bg-white selection:text-black min-h-screen relative">
       <Navbar />

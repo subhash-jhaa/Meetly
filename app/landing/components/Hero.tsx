@@ -10,11 +10,11 @@ import { SectionSpacer, CrosshairCorners, SectionCornerBrackets } from './ui/pri
 function YCBadge() {
   return (
     <div className="flex items-center gap-[8px] border border-white/12 rounded-[4px] p-[4px_8px] w-fit bg-[#0a0a0a]">
-      <img
-        src={HERO_DATA.badge.logo}
+      {/* <img
+        
         alt="YC"
         className="w-[18px] h-[18px] rounded-[2px]"
-      />
+      /> */}
       <span className="text-[11px] font-mono text-[#fafafa]/70 tracking-[-0.04em]">
         {HERO_DATA.badge.text}
       </span>
@@ -44,25 +44,6 @@ function HeroCTAs() {
     </div>
   );
 }
-
-// function PartnerLogoGrid() {
-//   return (
-//     <div className="grid grid-cols-3 bg-[#0a0a0a] border-t border-white/12 mt-auto">
-//       {HERO_DATA.partnerLogos.map((url, i) => (
-//         <div
-//           key={i}
-//           className={[
-//             'logo-cell h-[80px] flex items-center justify-center overflow-hidden bg-[#0a0a0a]',
-//             i % 3 !== 0 ? 'border-l border-white/12' : '',
-//             i >= 3 ? 'border-t border-white/12' : '',
-//           ].join(' ')}
-//         >
-//           {/* Logo hidden for now */}
-//         </div>
-//       ))}
-//     </div>
-//   );
-// }
 
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 export default function Hero() {

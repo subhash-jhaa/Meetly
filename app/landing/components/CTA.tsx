@@ -80,7 +80,7 @@ export default function CTA() {
 
             {/* Box decoration */}
             <div className="absolute -inset-4 border border-white/5 rounded-2xl -z-10 pointer-events-none" />
-            <CrosshairCorners color="bg-white/40" />
+            <CrosshairCorners color="bg-zinc-500" />
           </div>
         </div>
       </div>

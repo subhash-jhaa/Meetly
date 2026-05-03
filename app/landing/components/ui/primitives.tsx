@@ -20,7 +20,7 @@ const CORNER_CLASSES: Record<CrosshairCornerProps['position'], string> = {
 export function CrosshairCorner({
   position,
   size = 6,
-  color = 'bg-white/40',
+  color = 'bg-zinc-500',
 }: CrosshairCornerProps) {
   return (
     <>
@@ -220,14 +220,14 @@ export function SectionCornerBrackets({
     <>
       {showTop && (
         <>
-          <div className="absolute -top-[1px] -left-[1px] w-3 h-3 border-t border-l border-zinc-400 pointer-events-none z-50" />
-          <div className="absolute -top-[1px] -right-[1px] w-3 h-3 border-t border-r border-zinc-400 pointer-events-none z-50" />
+          <div className="absolute -top-[1px] -left-[1px] w-3 h-3 border-t border-l border-zinc-500 pointer-events-none z-50" />
+          <div className="absolute -top-[1px] -right-[1px] w-3 h-3 border-t border-r border-zinc-500 pointer-events-none z-50" />
         </>
       )}
       {showBottom && (
         <>
-          <div className="absolute -bottom-[1px] -left-[1px] w-3 h-3 border-b border-l border-zinc-400 pointer-events-none z-50" />
-          <div className="absolute -bottom-[1px] -right-[1px] w-3 h-3 border-b border-r border-zinc-400 pointer-events-none z-50" />
+          <div className="absolute -bottom-[1px] -left-[1px] w-3 h-3 border-b border-l border-zinc-500 pointer-events-none z-50" />
+          <div className="absolute -bottom-[1px] -right-[1px] w-3 h-3 border-b border-r border-zinc-500 pointer-events-none z-50" />
         </>
       )}
     </>

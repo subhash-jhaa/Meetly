@@ -25,7 +25,7 @@ export const NAVBAR_DATA = {
 export const HERO_DATA = {
   badge: {
     text: 'AI-powered meetings',
-    logo: 'https://framerusercontent.com/images/ZCTiEB4A2nM5gHfjGAGzp0sRX0.png',
+    logo: '',
   },
   headline: "Meetings that don't get forgotten.",
   subheadline:

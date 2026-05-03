@@ -118,7 +118,7 @@ function StepCard({ step, title, desc, img }: { step: number; title: string; des
       </div>
 
       {/* Main Card Corner Accents */}
-      <CrosshairCorners color="bg-white/20" />
+      <CrosshairCorners color="bg-zinc-500" />
     </div>
   );
 }

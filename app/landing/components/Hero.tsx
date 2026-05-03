@@ -67,31 +67,48 @@ function HeroCTAs() {
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 export default function Hero() {
   return (
-    <section id="hero" className="w-full flex flex-col items-center bg-[#0a0a0a]">
+    <section id="hero" className="w-full flex flex-col items-center bg-[#0a0a0a] min-h-screen">
+      
       {/* TOP SPACER */}
       <div className="w-full max-w-[1200px] h-[48px] border-x border-b border-white/12 relative">
-        <div className="absolute inset-0 diagonal-mask opacity-40" />
+        <div className="absolute inset-0 diagonal-mask" />
       </div>
 
-      <div className="relative group flex flex-col w-full max-w-[1200px] border-x border-white/12">
-        <SectionCornerBrackets />
+      <div className="relative group flex flex-col w-full max-w-[1200px] border-x border-b border-white/12 flex-1 overflow-hidden">
+        
+        {/* CINEMATIC BACKGROUND VIDEO */}
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        >
+          <source src="/hero-bg.mp4" type="video/mp4" />
+        </video>
+        
+        {/* DARK OVERLAY FOR TEXT LEGIBILITY */}
+        <div className="absolute inset-0 bg-[#0a0a0a]/65 z-[1]" />
 
-        {/* HERO MAIN BODY - FULL WIDTH (UN-COMPRESSED) */}
-        <div className="flex flex-col border-b border-white/12">
+        <div className="relative z-10">
+          <SectionCornerBrackets />
+        </div>
 
-          {/* HEADING AREA - NOW FULL WIDTH */}
+        {/* HERO MAIN BODY */}
+        <div className="flex flex-col relative z-10 flex-1 justify-center">
+
+          {/* HEADING AREA */}
           <div className="p-[80px_48px_120px] md:p-[100px_64px_140px] flex flex-col gap-[32px] max-w-[1000px]">
             <YCBadge />
-            <h1 className="text-[clamp(40px,6vw,84px)] font-normal leading-[1.05] tracking-[-0.05em] text-[#fafafa]">
+            <h1 className="text-[clamp(40px,6vw,84px)] font-normal leading-[1.05] tracking-[-0.05em] text-[#fafafa] drop-shadow-xl">
               {HERO_DATA.headline}
             </h1>
-            <p className="text-[18px] md:text-[21px] text-[#fafafa]/50 max-w-[700px] leading-[1.5]">
+            <p className="text-[18px] md:text-[21px] text-[#fafafa]/80 max-w-[700px] leading-[1.5] drop-shadow-md">
               {HERO_DATA.subheadline}
             </p>
             <HeroCTAs />
           </div>
 
-          {/* <PartnerLogoGrid /> */}
         </div>
       </div>
 

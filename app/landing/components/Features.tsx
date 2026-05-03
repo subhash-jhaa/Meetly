@@ -11,12 +11,12 @@ function FeaturesDiagonalSpacer() {
   return (
     <>
       {/* GAP */}
-      <div className="w-full h-[96px] flex justify-center">
-        <div className="w-full max-w-[1200px] h-full border-x border-white/12" />
-      </div>
+      {/* <div className="w-full h-[96px] flex justify-center">
+        <div className="w-full max-w-[1200px] h-full border-x border-white/12 mx-auto" />
+      </div> */}
       {/* DIAGONAL SPACER BODY */}
       <div className="flex justify-center w-full">
-        <div className="w-full max-w-[1200px] h-[100px] border-x border-y border-white/12 relative overflow-hidden">
+        <div className="w-full max-w-[1200px] h-[100px] border-x border-y border-white/12 relative overflow-hidden mx-auto">
           <div className="absolute inset-0 diagonal-mask" />
           <CrosshairCorners />
         </div>
@@ -28,7 +28,7 @@ function FeaturesDiagonalSpacer() {
 // ─── SECTION HEADER (below accordion) ────────────────────────────────────────
 function FeaturesHeader() {
   return (
-    <div className="w-full max-w-[1200px] border-x border-t border-white/12 p-[64px_48px] flex flex-col md:flex-row gap-[48px] md:items-end justify-between relative group">
+    <div className="w-full max-w-[1200px] border-x border-t border-white/12 p-[64px_48px] flex flex-col md:flex-row gap-[48px] md:items-end justify-between relative group mx-auto">
       <SectionCornerBrackets showBottom={false} />
       <div className="flex-[0.7] flex flex-col gap-[24px]">
         <Eyebrow text={FEATURES_SECTION.eyebrow} variant="bar" />
@@ -54,13 +54,13 @@ function FeaturesHeader() {
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 export default function Features() {
   return (
-    <section className="flex flex-col items-center w-full bg-[#0a0a0a]">
+    <section className="w-full bg-[#0a0a0a] relative">
 
       {/* SIDE BORDER SPACER */}
-      <div className="w-full max-w-[1200px] border-x border-white/12 h-40" />
+      <div className="w-full max-w-[1200px] border-x border-white/12 h-40 mx-auto" />
 
       {/* STICKY SCROLL CONTAINER */}
-      <div className="relative w-full max-w-[1200px] border-x border-t border-b border-white/12 group">
+      <div className="relative w-full max-w-[1200px] border-x border-t border-b border-white/12 group mx-auto">
         <SectionCornerBrackets showBottom={false} />
         {FEATURE_BLOCKS.map((block, i) => (
           <FeatureBlock key={i} index={i} {...block} />

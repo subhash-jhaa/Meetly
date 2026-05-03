@@ -11,7 +11,8 @@ interface FeatureBlockProps {
 }
 
 const FeatureBlock = ({ tag, title, description, img, icon, index }: FeatureBlockProps) => {
-  const topOffset = 80 + index * 24; // stagger the sticky offset so they peek behind each other
+  // Vertically center the 600px tall card in the viewport
+  const topOffset = 'calc(50vh - 300px)';
 
   // Unique minimalist colorful gradients for each feature card
   const gradients = [
@@ -23,10 +24,10 @@ const FeatureBlock = ({ tag, title, description, img, icon, index }: FeatureBloc
 
   return (
     <div
-      className="relative flex flex-col md:flex-row w-full border border-[#242424] bg-[#0a0908] mb-40 last:mb-0"
+      className="relative flex flex-col md:flex-row w-full border border-[#242424] bg-[#0a0908] mb-[30vh]"
       style={{
         position: 'sticky',
-        top: `${topOffset}px`,
+        top: topOffset,
         minHeight: '600px',
         zIndex: 10 + index,
       }}

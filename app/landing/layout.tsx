@@ -14,8 +14,7 @@ export default function LandingLayout({
         /* Local overrides for the landing page if needed */
         .landing-wrapper {
           min-height: 100vh;
-          display: flex;
-          flex-direction: column;
+          display: block;
         }
 
         /* Ensure smooth scrolling for the landing page */

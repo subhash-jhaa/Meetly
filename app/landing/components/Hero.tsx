@@ -45,86 +45,60 @@ function HeroCTAs() {
   );
 }
 
-function PartnerLogoGrid() {
-  return (
-    <div className="grid grid-cols-3 bg-[#0a0a0a] border-t border-white/12 mt-auto">
-      {HERO_DATA.partnerLogos.map((url, i) => (
-        <div
-          key={i}
-          className={[
-            'logo-cell h-[80px] flex items-center justify-center overflow-hidden bg-[#0a0a0a]',
-            i % 3 !== 0 ? 'border-l border-white/12' : '',
-            i >= 3 ? 'border-t border-white/12' : '',
-          ].join(' ')}
-        >
-          {/* Logo hidden for now */}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-// ─── INLINE SPACER (Hero-specific — no max-width centering) ──────────────────
-function HeroBottomSpacer() {
-  return (
-    <div className="flex justify-center w-full">
-      <div className="w-full max-w-[1200px] h-[90px] border-x border-b border-white/12 relative">
-        <div className="absolute inset-0 diagonal-mask" />
-      </div>
-    </div>
-  );
-}
+// function PartnerLogoGrid() {
+//   return (
+//     <div className="grid grid-cols-3 bg-[#0a0a0a] border-t border-white/12 mt-auto">
+//       {HERO_DATA.partnerLogos.map((url, i) => (
+//         <div
+//           key={i}
+//           className={[
+//             'logo-cell h-[80px] flex items-center justify-center overflow-hidden bg-[#0a0a0a]',
+//             i % 3 !== 0 ? 'border-l border-white/12' : '',
+//             i >= 3 ? 'border-t border-white/12' : '',
+//           ].join(' ')}
+//         >
+//           {/* Logo hidden for now */}
+//         </div>
+//       ))}
+//     </div>
+//   );
+// }
 
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 export default function Hero() {
   return (
-    <section className="section-container flex flex-col items-center">
-      {/* TOP SPACER GRID */}
-      <div id="hero" className="w-full max-w-[1200px] h-[48px] border-x border-b border-white/12 relative group">
-        <SectionCornerBrackets showBottom={false} />
+    <section id="hero" className="w-full flex flex-col items-center bg-[#0a0a0a]">
+      {/* TOP SPACER */}
+      <div className="w-full max-w-[1200px] h-[48px] border-x border-b border-white/12 relative">
         <div className="absolute inset-0 diagonal-mask opacity-40" />
       </div>
 
       <div className="relative group flex flex-col w-full max-w-[1200px] border-x border-white/12">
         <SectionCornerBrackets />
 
-        {/* HERO MAIN BODY - 2 COLUMN GRID */}
-        <div id="hero" className="flex flex-col md:flex-row border-b border-white/12">
+        {/* HERO MAIN BODY - FULL WIDTH (UN-COMPRESSED) */}
+        <div className="flex flex-col border-b border-white/12">
 
-          {/* LEFT COLUMN */}
-          <div className="flex-1 flex flex-col border-r border-white/12">
-
-            {/* HEADING AREA */}
-            <div className="p-[64px_32px_80px] flex flex-col gap-[24px] flex-1">
-              <YCBadge />
-              <h1 className="text-[clamp(36px,5vw,62px)] font-normal leading-none tracking-[-0.05em] text-[#fafafa]">
-                {HERO_DATA.headline}
-              </h1>
-              <p className="text-[16px] text-[#fafafa]/50 max-w-[400px] leading-[1.4]">
-                {HERO_DATA.subheadline}
-              </p>
-              <HeroCTAs />
-            </div>
-
-            <PartnerLogoGrid />
+          {/* HEADING AREA - NOW FULL WIDTH */}
+          <div className="p-[80px_48px_120px] md:p-[100px_64px_140px] flex flex-col gap-[32px] max-w-[1000px]">
+            <YCBadge />
+            <h1 className="text-[clamp(40px,6vw,84px)] font-normal leading-[1.05] tracking-[-0.05em] text-[#fafafa]">
+              {HERO_DATA.headline}
+            </h1>
+            <p className="text-[18px] md:text-[21px] text-[#fafafa]/50 max-w-[700px] leading-[1.5]">
+              {HERO_DATA.subheadline}
+            </p>
+            <HeroCTAs />
           </div>
 
-          {/* RIGHT COLUMN: VIDEO (FULL FRAME) */}
-          <div className="flex-1 overflow-hidden relative min-h-[400px] md:min-h-0 bg-[#0a0a0a]">
-            <video
-              src={HERO_DATA.videoSrc}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
-          </div>
+          {/* <PartnerLogoGrid /> */}
         </div>
       </div>
 
-      <HeroBottomSpacer />
+      {/* BOTTOM SPACER */}
+      <div className="w-full max-w-[1200px] h-[90px] border-x border-b border-white/12 relative">
+        <div className="absolute inset-0 diagonal-mask" />
+      </div>
     </section>
   );
 }

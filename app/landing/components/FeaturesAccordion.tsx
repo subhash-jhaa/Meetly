@@ -115,7 +115,7 @@ export default function FeaturesAccordion() {
   };
 
   return (
-    <div className="w-full max-w-[1200px] border-x border-white/12 flex flex-col items-center">
+    <div className="w-full max-w-[1200px] border-x border-white/12 flex flex-col items-center mx-auto">
       <div className="w-full p-[0_48px] flex flex-col gap-[12px] border-b border-white/12 pb-16 relative group">
         <SectionCornerBrackets showTop={false} />
         {ACCORDION_ITEMS.map((item, i) => (

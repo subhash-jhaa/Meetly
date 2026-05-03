@@ -69,7 +69,7 @@ function FAQSection() {
 // ─── LANDING PAGE ────────────────────────────────────────────────────────────
 export default function LandingPage() {
   return (
-    <div className="bg-[#0a0a0a] text-[#fafafa] selection:bg-white selection:text-black min-h-screen flex flex-col items-center">
+    <div className="bg-[#0a0a0a] text-[#fafafa] selection:bg-white selection:text-black min-h-screen relative">
       <Navbar />
       <Hero />
       <Features />

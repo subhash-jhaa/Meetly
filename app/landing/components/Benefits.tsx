@@ -106,7 +106,7 @@ export default function Benefits() {
         <SectionCornerBrackets />
 
         {/* SECTION HEADER */}
-        <div className="px-[48px] py-[80px] flex flex-col gap-[20px]">
+        <div className="px-6 md:px-[48px] py-[80px] flex flex-col gap-[20px]">
           <Eyebrow text={BENEFITS_SECTION.eyebrow} />
           <h2 className="text-[clamp(32px,5vw,56px)] font-normal tracking-[-0.05em] leading-[1.05] text-[#fafafa] max-w-3xl">
             {BENEFITS_SECTION.title}
@@ -114,7 +114,7 @@ export default function Benefits() {
         </div>
 
         {/* CARD GRID */}
-        <div className="px-[48px] pb-24 w-full">
+        <div className="px-6 md:px-[48px] pb-24 w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {BENEFIT_ITEMS.map((item, i) => (
               <BenefitCard key={i} index={i} {...item} />

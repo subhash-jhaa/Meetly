@@ -27,7 +27,7 @@ export default function CTA() {
       </div>
 
       <div className="relative z-10 w-full flex flex-col items-center">
-        <div className="section-container w-full border-x border-white/12 relative flex flex-col items-center px-6 pt-24 pb-24 group">
+        <div className="section-container w-full border-x border-white/12 relative flex flex-col items-center px-4 md:px-6 pt-24 pb-24 group">
           <SectionCornerBrackets />
 
           {/* Top Logo Mark */}

@@ -28,7 +28,7 @@ function FeaturesDiagonalSpacer() {
 // ─── SECTION HEADER (below accordion) ────────────────────────────────────────
 function FeaturesHeader() {
   return (
-    <div className="w-full max-w-[1200px] border-x border-t border-white/12 p-[64px_48px] flex flex-col md:flex-row gap-[48px] md:items-end justify-between relative group mx-auto">
+    <div className="w-full max-w-[1200px] border-x border-t border-white/12 p-[64px_24px] md:p-[64px_48px] flex flex-col md:flex-row gap-[48px] md:items-end justify-between relative group mx-auto">
       <SectionCornerBrackets showBottom={false} />
       <div className="flex-[0.7] flex flex-col gap-[24px]">
         <Eyebrow text={FEATURES_SECTION.eyebrow} variant="bar" />

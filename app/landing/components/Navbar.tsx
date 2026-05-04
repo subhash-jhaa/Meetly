@@ -65,7 +65,7 @@ export default function Navbar() {
 
               <Link
                 href={SITE.signUpUrl}
-                className="flex items-center justify-center bg-[#fafafa] rounded-[2px] px-[16px] py-[8px] no-underline transition-opacity hover:opacity-90"
+                className="hidden md:flex items-center justify-center bg-[#fafafa] rounded-[2px] px-[16px] py-[8px] no-underline transition-opacity hover:opacity-90"
               >
                 <span className="font-mono text-[13px] text-black">Start for free</span>
               </Link>

@@ -12,7 +12,7 @@ export default function Testimonials() {
         <SectionCornerBrackets />
 
         {/* SECTION HEADER */}
-        <div className="p-12 md:p-16">
+        <div className="p-6 md:p-16">
           <SectionHeader
             eyebrow={eyebrow}
             title={title}
@@ -20,7 +20,7 @@ export default function Testimonials() {
         </div>
 
         {/* MAIN GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-12 pb-24">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-6 md:px-12 pb-24">
           {testimonials.map((t, i) => (
             <CornerBox key={i} size="md" className={`flex flex-col border-none bg-[#171717]/40 relative overflow-hidden group`}>
               {/* TESTIMONIAL QUOTE */}

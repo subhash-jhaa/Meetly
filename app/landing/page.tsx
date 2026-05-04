@@ -29,7 +29,7 @@ function FAQSection() {
         <SectionCornerBrackets />
         <div className="flex flex-col md:flex-row border-b border-white/12">
           {/* LEFT: META */}
-          <div className="flex-1 p-[64px_32px] border-r border-white/12 border-b md:border-b-0">
+          <div className="flex-1 p-[48px_24px] md:p-[64px_32px] border-r border-white/12 border-b md:border-b-0">
             <div className="section-eyebrow flex items-center gap-[8px] text-[13px] font-mono text-[#fafafa]/50 mb-[16px]">
               <span className="eyebrow-line w-[12px] h-[1px] bg-[#fafafa]/40" />
               <span>{eyebrow}</span>
@@ -59,7 +59,7 @@ function FAQSection() {
           </div>
 
           {/* RIGHT: ACCORDION */}
-          <div className="flex-[2] p-[32px]">
+          <div className="flex-[2] p-4 md:p-[32px]">
             <FAQ />
           </div>
         </div>

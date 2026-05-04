@@ -134,7 +134,7 @@ export default function HowItWorks() {
         <SectionCornerBrackets />
 
         {/* ── Section header ── */}
-        <div className="px-[48px] py-[80px] flex flex-col gap-[20px]">
+        <div className="px-6 md:px-[48px] py-[80px] flex flex-col gap-[20px]">
           <Eyebrow text={eyebrow} />
           <h2 className="text-[clamp(32px,5vw,56px)] font-normal tracking-[-0.05em] leading-[1.05] text-[#fafafa]">
             {title}
@@ -142,7 +142,7 @@ export default function HowItWorks() {
         </div>
 
         {/* ── Steps grid (3 Columns) ── */}
-        <div className="px-[48px] pb-24 w-full">
+        <div className="px-6 md:px-[48px] pb-24 w-full">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {steps.slice(0, 3).map((s, i) => (
               <StepCard key={i} {...s} />

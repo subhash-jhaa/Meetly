@@ -200,6 +200,7 @@ function VideoConferenceComponent(props: {
   const e2eeEnabled = !!(e2eePassphrase && worker);
   const [e2eeSetupComplete, setE2eeSetupComplete] = React.useState(false);
   const [showParticipants, setShowParticipants] = React.useState(false);
+  const [connectionState, setConnectionState] = React.useState(room.state);
 
   const roomOptions = React.useMemo((): RoomOptions => {
     let videoCodec: VideoCodec | undefined = props.options.codec ?? 'vp9';
@@ -290,6 +291,12 @@ function VideoConferenceComponent(props: {
   }, []);
 
   React.useEffect(() => {
+    const updateState = () => setConnectionState(room.state);
+    room.on(RoomEvent.Connected, updateState);
+    room.on(RoomEvent.Disconnected, updateState);
+    room.on(RoomEvent.Reconnecting, updateState);
+    room.on(RoomEvent.Reconnected, updateState);
+ 
     room.on(RoomEvent.Disconnected, handleOnLeave);
     room.on(RoomEvent.EncryptionError, handleEncryptionError);
     room.on(RoomEvent.MediaDevicesError, handleError);
@@ -310,11 +317,15 @@ function VideoConferenceComponent(props: {
     }
 
     return () => {
+      room.off(RoomEvent.Connected, updateState);
+      room.off(RoomEvent.Disconnected, updateState);
+      room.off(RoomEvent.Reconnecting, updateState);
+      room.off(RoomEvent.Reconnected, updateState);
       room.off(RoomEvent.Disconnected, handleOnLeave);
       room.off(RoomEvent.EncryptionError, handleEncryptionError);
       room.off(RoomEvent.MediaDevicesError, handleError);
     };
-  }, [e2eeSetupComplete, room, props.connectionDetails]);
+  }, [e2eeSetupComplete, room, props.connectionDetails, handleOnLeave, handleEncryptionError, handleError]);
 
   const lowPowerMode = useLowCPUOptimizer(room);
 
@@ -324,10 +335,19 @@ function VideoConferenceComponent(props: {
         {/* Main meeting area */}
         <div style={{ flex: 1, minWidth: 0, height: '100%', position: 'relative' }}>
           <KeyboardShortcuts />
-          <VideoConference
-            chatMessageFormatter={formatChatMessageLinks}
-            SettingsComponent={SHOW_SETTINGS_MENU ? SettingsMenu : undefined}
-          />
+          {connectionState === 'connected' ? (
+            <VideoConference
+              chatMessageFormatter={formatChatMessageLinks}
+              SettingsComponent={SHOW_SETTINGS_MENU ? SettingsMenu : undefined}
+            />
+          ) : (
+            <div className="flex items-center justify-center h-full text-white/40 font-mono text-sm">
+              <div className="flex flex-col items-center gap-4">
+                <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                Initializing media stream...
+              </div>
+            </div>
+          )}
           <DebugMode />
           <RecordingIndicator />
           {/* ✅ Admit panel — only visible to host, polls for waiting participants */}

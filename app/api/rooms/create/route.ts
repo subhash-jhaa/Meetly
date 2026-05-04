@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Register room with host
-  await prisma.room.upsert({
+  const room = await prisma.room.upsert({
     where: { name: roomName },
     update: {},
     create: {
@@ -22,6 +22,8 @@ export async function POST(req: NextRequest) {
       hostId: session.user.id,
     },
   });
+
+  console.log('Room created with name:', room.name);
 
   // Check if a scheduled meeting already exists for this room
   const existingScheduled = await prisma.meeting.findFirst({

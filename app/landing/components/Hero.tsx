@@ -79,7 +79,7 @@ export default function Hero() {
         <div className="flex flex-col relative z-10 flex-1 justify-center">
 
           {/* HEADING AREA */}
-          <div className="p-[80px_48px_120px] md:p-[100px_64px_140px] flex flex-col gap-[32px] max-w-[1000px]">
+          <div className="p-[60px_24px_100px] md:p-[100px_64px_140px] flex flex-col gap-[32px] max-w-[1000px]">
             <YCBadge />
             <h1 className="text-[clamp(40px,6vw,84px)] font-normal leading-[1.05] tracking-[-0.05em] text-[#fafafa] drop-shadow-xl">
               {HERO_DATA.headline}

@@ -62,7 +62,7 @@ export default function Comparison() {
         <SectionCornerBrackets />
 
         {/* SECTION HEADER */}
-        <div className="p-[100px_48px_60px] flex flex-col items-center gap-6">
+        <div className="p-[60px_24px] md:p-[100px_48px_60px] flex flex-col items-center gap-6">
           <div className="flex items-center gap-2 mb-2">
             <div className="w-[1px] h-3 bg-white/40" />
             <span className="text-[12px] font-mono text-white/40 tracking-wider uppercase">{eyebrow}</span>
@@ -71,30 +71,32 @@ export default function Comparison() {
             {title}
           </h2>
         </div>
-
+ 
         {/* TABLE */}
-        <div className="px-6 md:px-12 pb-24 w-full max-w-[900px] mx-auto">
-          <div className="overflow-hidden bg-[#0d0d0d]/40 rounded-[4px] border border-white/[0.08] backdrop-blur-sm shadow-2xl relative">
-            {/* Standard crosshair corners in grey-500 */}
-            <CrosshairCorners size={8} color="bg-zinc-500" />
-            <table className="w-full border-collapse">
-              <thead>
-                <tr className="border-b border-white/[0.12] bg-white/[0.02]">
-                  <th className="p-6 border-r border-white/[0.08] w-1/3"></th>
-                  <th className="p-6 text-center text-[16px] md:text-[18px] font-medium text-white/90 border-r border-white/[0.08] w-1/3">
-                    Other tools
-                  </th>
-                  <th className="p-6 text-center text-[16px] md:text-[18px] font-medium text-white bg-white/[0.04] w-1/3">
-                    Meetly
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {COMPARISON_ROWS.map((row, i) => (
-                  <ComparisonRow key={i} {...row} />
-                ))}
-              </tbody>
-            </table>
+        <div className="px-4 md:px-12 pb-24 w-full max-w-[900px] mx-auto">
+          <div className="overflow-x-auto pb-4 md:pb-0">
+            <div className="min-w-[600px] md:min-w-0 overflow-hidden bg-[#0d0d0d]/40 rounded-[4px] border border-white/[0.08] backdrop-blur-sm shadow-2xl relative">
+              {/* Standard crosshair corners in grey-500 */}
+              <CrosshairCorners size={8} color="bg-zinc-500" />
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="border-b border-white/[0.12] bg-white/[0.02]">
+                    <th className="p-6 border-r border-white/[0.08] w-1/3"></th>
+                    <th className="p-6 text-center text-[16px] md:text-[18px] font-medium text-white/90 border-r border-white/[0.08] w-1/3">
+                      Other tools
+                    </th>
+                    <th className="p-6 text-center text-[16px] md:text-[18px] font-medium text-white bg-white/[0.04] w-1/3">
+                      Meetly
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {COMPARISON_ROWS.map((row, i) => (
+                    <ComparisonRow key={i} {...row} />
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
 
           {/* CUSTOM PLAN BANNER */}

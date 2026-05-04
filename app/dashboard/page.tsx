@@ -68,6 +68,58 @@ function Eyebrow({ text }: { text: string }) {
   );
 }
 
+function MobileMenu() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="md:hidden">
+      <button
+        onClick={() => setOpen(!open)}
+        className="relative w-10 h-10 border border-[#242424] bg-[#0a0908] flex items-center justify-center text-white/60 hover:text-white transition-colors"
+      >
+        <Corners size={5} opacity="20" />
+        {open ? (
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        ) : (
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        )}
+      </button>
+
+      {open && (
+        <div className="absolute top-[72px] right-0 left-0 border border-[#242424] bg-[#0a0908] p-4 flex flex-col gap-2 z-[100] shadow-2xl">
+          <Corners size={8} opacity="30" />
+          <a
+            href="/meetings/history"
+            className="flex items-center px-4 py-3 font-mono text-[13px] text-white/60 hover:text-white hover:bg-white/5 transition-colors border-b border-white/5"
+            onClick={() => setOpen(false)}
+          >
+            History
+          </a>
+          <a
+            href="/profile"
+            className="flex items-center px-4 py-3 font-mono text-[13px] text-white/60 hover:text-white hover:bg-white/5 transition-colors border-b border-white/5"
+            onClick={() => setOpen(false)}
+          >
+            Profile
+          </a>
+          <button
+            onClick={() => {
+              setOpen(false);
+              signOut({ callbackUrl: '/' });
+            }}
+            className="flex items-center px-4 py-3 font-mono text-[13px] text-red-400/60 hover:text-red-400 hover:bg-white/5 transition-colors text-left"
+          >
+            Sign out
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Dashboard() {
   const router = useRouter();
   const { data: session } = useSession();
@@ -150,26 +202,33 @@ export default function Dashboard() {
             <span className="font-mono text-[12px] text-white/40 hidden md:block">
               {session?.user?.name}
             </span>
-            <a
-              href="/meetings/history"
-              className="font-mono text-[12px] text-white/40 hover:text-white transition-colors"
-            >
-              History
-            </a>
-            <a
-              href="/profile"
-              className="relative border border-[#242424] bg-[#0a0908] px-4 py-2 font-mono text-[12px] text-white/60 hover:text-white hover:bg-white/5 transition-colors"
-            >
-              <Corners size={5} opacity="20" />
-              Profile
-            </a>
-            <button
-              onClick={() => signOut({ callbackUrl: '/' })}
-              className="relative border border-[#242424] bg-[#0a0908] px-4 py-2 font-mono text-[12px] text-white/60 hover:text-white hover:bg-white/5 transition-colors"
-            >
-              <Corners size={5} opacity="20" />
-              Sign out
-            </button>
+            
+            {/* Desktop Nav */}
+            <div className="hidden md:flex items-center gap-3">
+              <a
+                href="/meetings/history"
+                className="font-mono text-[12px] text-white/40 hover:text-white transition-colors"
+              >
+                History
+              </a>
+              <a
+                href="/profile"
+                className="relative border border-[#242424] bg-[#0a0908] px-4 py-2 font-mono text-[12px] text-white/60 hover:text-white hover:bg-white/5 transition-colors"
+              >
+                <Corners size={5} opacity="20" />
+                Profile
+              </a>
+              <button
+                onClick={() => signOut({ callbackUrl: '/' })}
+                className="relative border border-[#242424] bg-[#0a0908] px-4 py-2 font-mono text-[12px] text-white/60 hover:text-white hover:bg-white/5 transition-colors"
+              >
+                <Corners size={5} opacity="20" />
+                Sign out
+              </button>
+            </div>
+
+            {/* Mobile Nav Toggle */}
+            <MobileMenu />
           </div>
         </div>
       </nav>

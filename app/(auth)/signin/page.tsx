@@ -6,8 +6,23 @@ import { Suspense } from 'react';
 
 function SignInContent() {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') ?? '/dashboard';
+  const rawCallback = searchParams.get('callbackUrl');
   const error = searchParams.get('error');
+
+  // Sanitize callbackUrl — only allow same-origin paths
+  const callbackUrl = (() => {
+    if (!rawCallback) return '/dashboard';
+    try {
+      // If it's a relative path like /rooms/abc123 — safe to use
+      if (rawCallback.startsWith('/')) return rawCallback;
+      // If it's absolute, check it's same origin
+      const url = new URL(rawCallback);
+      if (url.origin === window.location.origin) return rawCallback;
+    } catch {
+      // Invalid URL
+    }
+    return '/dashboard';
+  })();
 
   return (
     <div className="flex flex-col gap-8 p-8 border border-white/10 bg-[#0a0908]/50 backdrop-blur-sm relative">

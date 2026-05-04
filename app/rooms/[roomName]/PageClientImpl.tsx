@@ -200,8 +200,6 @@ function VideoConferenceComponent(props: {
   const e2eeEnabled = !!(e2eePassphrase && worker);
   const [e2eeSetupComplete, setE2eeSetupComplete] = React.useState(false);
   const [showParticipants, setShowParticipants] = React.useState(false);
-  const [connectionState, setConnectionState] = React.useState(room.state);
-
   const roomOptions = React.useMemo((): RoomOptions => {
     let videoCodec: VideoCodec | undefined = props.options.codec ?? 'vp9';
     if (e2eeEnabled && (videoCodec === 'av1' || videoCodec === 'vp9')) videoCodec = undefined;
@@ -227,9 +225,11 @@ function VideoConferenceComponent(props: {
       e2ee: keyProvider && worker && e2eeEnabled ? { keyProvider, worker } : undefined,
       singlePeerConnection: true,
     };
-  }, [props.userChoices, props.options]);
+  }, [props.userChoices, props.options, e2eeEnabled, keyProvider, worker]);
 
-  const room = React.useMemo(() => new Room(roomOptions), []);
+  const room = React.useMemo(() => new Room(roomOptions), [roomOptions]);
+
+  const [connectionState, setConnectionState] = React.useState(room.state);
 
   React.useEffect(() => {
     if (e2eeEnabled) {

@@ -22,12 +22,9 @@ export default auth((req) => {
 
   if (isProtectedRoute && !isLoggedIn) {
     const signInUrl = new URL('/signin', nextUrl.origin);
-    // Preserve the full URL including query params so user lands
-    // back on /rooms/abc123 after signing in
-    signInUrl.searchParams.set(
-      'callbackUrl',
-      nextUrl.pathname + nextUrl.search
-    );
+    // ← KEY FIX: pass pathname only, NOT full URL with protocol
+    // Full URLs get blocked by NextAuth v5 security checks
+    signInUrl.searchParams.set('callbackUrl', nextUrl.pathname);
     return NextResponse.redirect(signInUrl);
   }
 

@@ -6,27 +6,13 @@ import { Suspense } from 'react';
 
 function SignInContent() {
   const searchParams = useSearchParams();
-  const rawCallback = searchParams.get('callbackUrl');
   const error = searchParams.get('error');
 
-  // Sanitize callbackUrl — only allow same-origin paths
-  const callbackUrl = (() => {
-    if (!rawCallback) return '/dashboard';
-    try {
-      // If it's a relative path like /rooms/abc123 — safe to use
-      if (rawCallback.startsWith('/')) return rawCallback;
-      // If it's absolute, check it's same origin
-      const url = new URL(rawCallback);
-      if (url.origin === window.location.origin) return rawCallback;
-    } catch {
-      // Invalid URL
-    }
-    return '/dashboard';
-  })();
+  // After Fix 2, callbackUrl is always a relative path like /rooms/abc1-def2
+  const callbackUrl = searchParams.get('callbackUrl') ?? '/dashboard';
 
   return (
     <div className="flex flex-col gap-8 p-8 border border-white/10 bg-[#0a0908]/50 backdrop-blur-sm relative">
-      {/* Corner markers — keep your existing decorations */}
       <div className="absolute -left-[1px] -top-[1px] h-[12px] w-[1px] bg-white/20" />
       <div className="absolute -left-[1px] -top-[1px] h-[1px] w-[12px] bg-white/20" />
       <div className="absolute -right-[1px] -top-[1px] h-[12px] w-[1px] bg-white/20" />
@@ -59,7 +45,6 @@ function SignInContent() {
         onClick={() => signIn('google', { callbackUrl })}
         className="group relative w-full flex items-center justify-center gap-3 bg-[#fafafa] py-3 transition-opacity hover:opacity-90"
       >
-        {/* Google icon */}
         <svg width="18" height="18" viewBox="0 0 18 18">
           <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/>
           <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/>

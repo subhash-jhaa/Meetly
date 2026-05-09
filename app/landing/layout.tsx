@@ -13,7 +13,7 @@ export default function LandingLayout({
       <style jsx global>{`
         /* Local overrides for the landing page if needed */
         .landing-wrapper {
-          min-height: 100vh;
+          min-height: 100dvh;
           display: block;
         }
 

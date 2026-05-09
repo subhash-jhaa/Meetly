@@ -27,19 +27,21 @@ function HeroCTAs() {
   return (
     <div className="flex gap-[12px] items-center pt-[8px]">
       <button
-        className="bg-[#fafafa] text-[#0a0a0a] border-none rounded-[2px] p-[11px_16px] text-[13px] font-mono cursor-pointer transition-opacity hover:opacity-85 active:scale-[0.98]"
+        className="relative bg-[#fafafa] text-[#0a0a0a] border-none rounded-[2px] p-[11px_16px] text-[13px] font-mono cursor-pointer transition-opacity hover:opacity-85 active:scale-[0.98]"
         onClick={() => router.push(SITE.signUpUrl)}
       >
-        {HERO_DATA.cta.primary}
+        <span className="relative z-10">{HERO_DATA.cta.primary}</span>
+        <CrosshairCorners color="bg-zinc-500" size={4} />
       </button>
       <button
-        className="bg-transparent text-[#fafafa] border border-white/20 rounded-[2px] p-[11px_16px] text-[13px] font-mono cursor-pointer flex items-center gap-[6px] transition-colors hover:border-white/40 active:scale-[0.98]"
+        className="relative bg-transparent text-[#fafafa] border border-white/20 rounded-[2px] p-[11px_16px] text-[13px] font-mono cursor-pointer flex items-center gap-[6px] transition-colors hover:border-white/40 active:scale-[0.98]"
         onClick={() => window.open(SITE.introVideoUrl, '_blank')}
       >
-        <svg className="w-[15px] h-[15px] fill-[#fafafa]" viewBox="0 0 24 24">
+        <svg className="relative z-10 w-[15px] h-[15px] fill-[#fafafa]" viewBox="0 0 24 24">
           <path d="M5 3.83v15.34c0 .79.875 1.267 1.541.84l11.151-7.17c.612-.393.612-1.289 0-1.682L6.541 3.99C5.875 3.563 5 4.04 5 4.83z" />
         </svg>
-        {HERO_DATA.cta.secondary}
+        <span className="relative z-10">{HERO_DATA.cta.secondary}</span>
+        <CrosshairCorners color="bg-zinc-500" size={4} />
       </button>
     </div>
   );
@@ -49,25 +51,25 @@ function HeroCTAs() {
 export default function Hero() {
   return (
     <section id="hero" className="w-full flex flex-col items-center bg-[#0a0a0a] min-h-screen">
-      
+
       {/* TOP SPACER */}
       <div className="w-full max-w-[1200px] h-[48px] border-x border-b border-white/12 relative">
         <div className="absolute inset-0 diagonal-mask" />
       </div>
 
       <div className="relative group flex flex-col w-full max-w-[1200px] border-x border-b border-white/12 flex-1 overflow-hidden">
-        
+
         {/* CINEMATIC BACKGROUND VIDEO */}
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
           className="absolute inset-0 w-full h-full object-cover z-0"
         >
           <source src="/hero-bg.mp4" type="video/mp4" />
         </video>
-        
+
         {/* DARK OVERLAY FOR TEXT LEGIBILITY */}
         <div className="absolute inset-0 bg-[#0a0a0a]/65 z-[1]" />
 

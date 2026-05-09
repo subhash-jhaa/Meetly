@@ -31,6 +31,7 @@ import {
   VideoCaptureOptions,
   DataPacket_Kind,
   RemoteParticipant,
+  ConnectionState,
 } from 'livekit-client';
 import { useRouter } from 'next/navigation';
 import { useSetupE2EE } from '@/lib/useSetupE2EE';
@@ -227,9 +228,15 @@ function VideoConferenceComponent(props: {
     };
   }, [props.userChoices, props.options, e2eeEnabled, keyProvider, worker]);
 
-  const room = React.useMemo(() => new Room(roomOptions), [roomOptions]);
+  const room = React.useMemo(() => new Room(roomOptions), []);
 
   const [connectionState, setConnectionState] = React.useState(room.state);
+
+  React.useEffect(() => {
+    return () => {
+      room.disconnect();
+    };
+  }, [room]);
 
   React.useEffect(() => {
     if (e2eeEnabled) {
@@ -301,19 +308,19 @@ function VideoConferenceComponent(props: {
     room.on(RoomEvent.EncryptionError, handleEncryptionError);
     room.on(RoomEvent.MediaDevicesError, handleError);
 
-    if (e2eeSetupComplete) {
+    if (e2eeSetupComplete && room.state === ConnectionState.Disconnected) {
       room.connect(
         props.connectionDetails.serverUrl,
         props.connectionDetails.participantToken,
         connectOptions,
-      ).catch(handleError);
-
-      if (props.userChoices.videoEnabled) {
-        room.localParticipant.setCameraEnabled(true).catch(handleError);
-      }
-      if (props.userChoices.audioEnabled) {
-        room.localParticipant.setMicrophoneEnabled(true).catch(handleError);
-      }
+      ).then(() => {
+        if (props.userChoices.videoEnabled) {
+          room.localParticipant.setCameraEnabled(true).catch(handleError);
+        }
+        if (props.userChoices.audioEnabled) {
+          room.localParticipant.setMicrophoneEnabled(true).catch(handleError);
+        }
+      }).catch(handleError);
     }
 
     return () => {
@@ -325,7 +332,7 @@ function VideoConferenceComponent(props: {
       room.off(RoomEvent.EncryptionError, handleEncryptionError);
       room.off(RoomEvent.MediaDevicesError, handleError);
     };
-  }, [e2eeSetupComplete, room, props.connectionDetails, handleOnLeave, handleEncryptionError, handleError]);
+  }, [e2eeSetupComplete, room, props.connectionDetails, handleOnLeave, handleEncryptionError, handleError, connectOptions, props.userChoices.videoEnabled, props.userChoices.audioEnabled]);
 
   const lowPowerMode = useLowCPUOptimizer(room);
 

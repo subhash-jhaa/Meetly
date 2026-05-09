@@ -45,17 +45,19 @@ export default function CTA() {
 
           <div className="mt-12 flex gap-4">
             <button
-              className="bg-white text-black px-8 py-3 rounded-[2px] font-mono text-[13px] hover:bg-white/90 transition-all active:scale-[0.98]"
+              className="relative bg-white text-black px-8 py-3 rounded-[2px] font-mono text-[13px] hover:bg-white/90 transition-all active:scale-[0.98]"
               onClick={() => router.push(SITE.signUpUrl)}
             >
-              {CTA_DATA.primaryCta}
+              <span className="relative z-10">{CTA_DATA.primaryCta}</span>
+              <CrosshairCorners color="bg-zinc-500" size={4} />
             </button>
             {CTA_DATA.secondaryCta && (
               <button
-                className="bg-white/5 text-white border border-white/10 px-8 py-3 rounded-[2px] font-mono text-[13px] hover:bg-white/10 transition-all backdrop-blur-md active:scale-[0.98]"
+                className="relative bg-white/5 text-white border border-white/10 px-8 py-3 rounded-[2px] font-mono text-[13px] hover:bg-white/10 transition-all backdrop-blur-md active:scale-[0.98]"
                 onClick={() => router.push(SITE.dashboardUrl)}
               >
-                {CTA_DATA.secondaryCta}
+                <span className="relative z-10">{CTA_DATA.secondaryCta}</span>
+                <CrosshairCorners color="bg-zinc-500" size={4} />
               </button>
             )}
           </div>

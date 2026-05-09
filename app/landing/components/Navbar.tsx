@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { SITE } from '../data/landingData';
+import { CrosshairCorners } from './ui/primitives';
 
 export default function Navbar() {
   const { data: session, status } = useSession();
@@ -53,21 +54,15 @@ export default function Navbar() {
                 className="group relative flex items-center justify-center border border-[#242424] bg-[#0a0908] px-[16px] py-[8px] no-underline transition-colors hover:bg-white/5"
               >
                 <span className="font-mono text-[13px] text-white">Sign in</span>
-                <div className="absolute -left-[1px] -top-[1px] h-[5px] w-[1px] bg-white/20 transition-colors group-hover:bg-white/40" />
-                <div className="absolute -left-[1px] -top-[1px] h-[1px] w-[5px] bg-white/20 transition-colors group-hover:bg-white/40" />
-                <div className="absolute -right-[1px] -top-[1px] h-[5px] w-[1px] bg-white/20 transition-colors group-hover:bg-white/40" />
-                <div className="absolute -right-[1px] -top-[1px] h-[1px] w-[5px] bg-white/20 transition-colors group-hover:bg-white/40" />
-                <div className="absolute -left-[1px] -bottom-[1px] h-[5px] w-[1px] bg-white/20 transition-colors group-hover:bg-white/40" />
-                <div className="absolute -left-[1px] -bottom-[1px] h-[1px] w-[5px] bg-white/20 transition-colors group-hover:bg-white/40" />
-                <div className="absolute -right-[1px] -bottom-[1px] h-[5px] w-[1px] bg-white/20 transition-colors group-hover:bg-white/40" />
-                <div className="absolute -right-[1px] -bottom-[1px] h-[1px] w-[5px] bg-white/20 transition-colors group-hover:bg-white/40" />
+                <CrosshairCorners color="bg-zinc-500" size={4} />
               </Link>
 
               <Link
                 href={SITE.signUpUrl}
-                className="hidden md:flex items-center justify-center bg-[#fafafa] rounded-[2px] px-[16px] py-[8px] no-underline transition-opacity hover:opacity-90"
+                className="hidden md:flex relative items-center justify-center bg-[#fafafa] rounded-[2px] px-[16px] py-[8px] no-underline transition-opacity hover:opacity-90"
               >
                 <span className="font-mono text-[13px] text-black">Start for free</span>
+                <CrosshairCorners color="bg-zinc-500" size={4} />
               </Link>
             </>
           )}
@@ -79,6 +74,7 @@ export default function Navbar() {
               className="group relative flex items-center justify-center bg-[#fafafa] rounded-[2px] px-[16px] py-[8px] no-underline transition-opacity hover:opacity-90"
             >
               <span className="font-mono text-[13px] text-black">Dashboard →</span>
+              <CrosshairCorners color="bg-zinc-500" size={4} />
             </Link>
           )}
 

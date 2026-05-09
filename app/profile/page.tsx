@@ -220,7 +220,7 @@ export default function ProfilePage() {
                     onChange={e => setName(e.target.value)}
                     maxLength={64}
                     placeholder="Your name"
-                    className="w-full bg-[#111] border border-[#242424] px-4 py-3 font-mono
+                    className="w-full bg-[#111] border border-white/10 px-4 py-3 font-mono
                                text-[13px] text-white placeholder-white/20
                                focus:outline-none focus:border-white/30 transition-colors"
                   />
@@ -251,7 +251,7 @@ export default function ProfilePage() {
               {!devicesLoaded && (
                 <button
                   onClick={loadDevices}
-                  className="font-mono text-[11px] text-white/40 border border-[#242424]
+                  className="font-mono text-[11px] text-white/40 border border-white/10
                              px-3 py-1.5 hover:text-white hover:border-white/30 transition-colors"
                 >
                   Detect devices
@@ -277,7 +277,7 @@ export default function ProfilePage() {
                     <select
                       value={prefs.audioDeviceId ?? ''}
                       onChange={e => setPrefs(p => ({ ...p, audioDeviceId: e.target.value }))}
-                      className="w-full bg-[#111] border border-[#242424] px-4 py-3 font-mono
+                      className="w-full bg-[#111] border border-white/10 px-4 py-3 font-mono
                                  text-[13px] text-white focus:outline-none focus:border-white/30
                                  transition-colors appearance-none"
                     >
@@ -296,7 +296,7 @@ export default function ProfilePage() {
                     <select
                       value={prefs.videoDeviceId ?? ''}
                       onChange={e => setPrefs(p => ({ ...p, videoDeviceId: e.target.value }))}
-                      className="w-full bg-[#111] border border-[#242424] px-4 py-3 font-mono
+                      className="w-full bg-[#111] border border-white/10 px-4 py-3 font-mono
                                  text-[13px] text-white focus:outline-none focus:border-white/30
                                  transition-colors appearance-none"
                     >
@@ -325,11 +325,13 @@ export default function ProfilePage() {
                         className={`w-9 h-5 border transition-colors flex-shrink-0 relative cursor-pointer
                           ${prefs[key as keyof Preferences]
                             ? 'bg-white border-white'
-                            : 'bg-transparent border-[#242424] hover:border-white/30'
+                            : 'bg-white/5 border-white/20 hover:border-white/40'
                           }`}
                       >
-                        <div className={`absolute top-[3px] w-[11px] h-[11px] bg-black transition-all
-                          ${prefs[key as keyof Preferences] ? 'left-[calc(100%-14px)]' : 'left-[3px]'}`}
+                        <div className={`absolute top-[3px] w-[11px] h-[11px] transition-all
+                          ${prefs[key as keyof Preferences] 
+                            ? 'bg-black left-[calc(100%-14px)]' 
+                            : 'bg-white/30 left-[3px]'}`}
                         />
                       </div>
                       <span className="font-mono text-[12px] text-white/50 group-hover:text-white/70 transition-colors">
@@ -373,7 +375,7 @@ export default function ProfilePage() {
               </div>
               <button
                 onClick={() => router.push('/api/auth/signout')}
-                className="font-mono text-[12px] text-white/40 border border-[#242424]
+                className="font-mono text-[12px] text-white/40 border border-white/10
                            px-4 py-2.5 hover:text-white hover:border-white/30 transition-colors"
               >
                 Sign out

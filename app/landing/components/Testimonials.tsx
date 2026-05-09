@@ -1,6 +1,6 @@
 'use client';
 
-import { CardCornerAccents, SectionHeader, SectionSpacer, CornerBox, SectionCornerBrackets } from './ui/primitives';
+import { CardCornerAccents, SectionHeader, SectionSpacer, CornerBox, SectionCornerBrackets, CrosshairCorners } from './ui/primitives';
 import { TESTIMONIALS_SECTION } from '../data/landingData';
 
 export default function Testimonials() {
@@ -22,7 +22,7 @@ export default function Testimonials() {
         {/* MAIN GRID */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 px-6 md:px-12 pb-24">
           {testimonials.map((t, i) => (
-            <CornerBox key={i} size="md" className={`flex flex-col border-none bg-[#171717]/40 relative overflow-hidden group`}>
+            <CornerBox key={i} size="md" className={`flex flex-col border border-[#242424] bg-[#171717]/40 relative group`}>
               {/* TESTIMONIAL QUOTE */}
               <div className="flex-1 p-10 md:p-12 relative overflow-hidden">
                 <div className="relative z-10 flex flex-col h-full justify-between gap-8">
@@ -41,6 +41,9 @@ export default function Testimonials() {
                   </svg>
                 </div>
               </div>
+
+              {/* CARD CORNER BORDERS */}
+              <CrosshairCorners color="bg-zinc-500" />
             </CornerBox>
           ))}
         </div>

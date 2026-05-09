@@ -3,14 +3,17 @@
 
 import React from 'react';
 
+// ─── TYPES ───────────────────────────────────────────────────────────────────
+type CornerPosition = 'tl' | 'tr' | 'bl' | 'br';
+
 // ─── CROSSHAIR CORNER MARKER ─────────────────────────────────────────────────
 interface CrosshairCornerProps {
-  position: 'tl' | 'tr' | 'bl' | 'br';
+  position: CornerPosition;
   size?: number;   // arm length in px
   color?: string;  // tailwind bg class
 }
 
-const CORNER_CLASSES: Record<CrosshairCornerProps['position'], string> = {
+const CROSSHAIR_POSITIONS: Record<CornerPosition, string> = {
   tl: '-left-[1px] -top-[1px]',
   tr: '-right-[1px] -top-[1px]',
   bl: '-left-[1px] -bottom-[1px]',
@@ -24,23 +27,80 @@ export function CrosshairCorner({
 }: CrosshairCornerProps) {
   return (
     <>
-      <div className={`absolute ${CORNER_CLASSES[position]} w-[1px] ${color} pointer-events-none z-10`} style={{ height: size }} />
-      <div className={`absolute ${CORNER_CLASSES[position]} h-[1px] ${color} pointer-events-none z-10`} style={{ width: size }} />
+      <div className={`absolute ${CROSSHAIR_POSITIONS[position]} w-[1px] ${color} pointer-events-none z-10`} style={{ height: size }} />
+      <div className={`absolute ${CROSSHAIR_POSITIONS[position]} h-[1px] ${color} pointer-events-none z-10`} style={{ width: size }} />
     </>
   );
 }
 
-// All four corners — convenience wrapper
 export function CrosshairCorners({
   size,
   color,
 }: Omit<CrosshairCornerProps, 'position'>) {
   return (
     <>
-      <CrosshairCorner position="tl" size={size} color={color} />
-      <CrosshairCorner position="tr" size={size} color={color} />
-      <CrosshairCorner position="bl" size={size} color={color} />
-      <CrosshairCorner position="br" size={size} color={color} />
+      {(['tl', 'tr', 'bl', 'br'] as const).map(pos => (
+        <CrosshairCorner key={pos} position={pos} size={size} color={color} />
+      ))}
+    </>
+  );
+}
+
+// ─── CORNER BRACKETS (L-SHAPED) ──────────────────────────────────────────────
+interface CornerBracketProps {
+  position: CornerPosition;
+  size?: number;
+  thickness?: number;
+  color?: string;
+  className?: string;
+}
+
+const BRACKET_POSITIONS: Record<CornerPosition, string> = {
+  tl: '-left-[1px] -top-[1px] border-t border-l',
+  tr: '-right-[1px] -top-[1px] border-t border-r',
+  bl: '-left-[1px] -bottom-[1px] border-b border-l',
+  br: '-right-[1px] -bottom-[1px] border-b border-r',
+};
+
+export function CornerBracket({
+  position,
+  size = 12,
+  color = 'border-zinc-500',
+  className = '',
+}: CornerBracketProps) {
+  return (
+    <div 
+      className={`absolute ${BRACKET_POSITIONS[position]} ${color} pointer-events-none z-10 ${className}`} 
+      style={{ width: size, height: size }} 
+    />
+  );
+}
+
+export function SectionCornerBrackets({
+  showTop = true,
+  showBottom = true,
+  color = 'border-zinc-500',
+  size = 12,
+}: {
+  showTop?: boolean;
+  showBottom?: boolean;
+  color?: string;
+  size?: number;
+}) {
+  return (
+    <>
+      {showTop && (
+        <>
+          <CornerBracket position="tl" color={color} size={size} />
+          <CornerBracket position="tr" color={color} size={size} />
+        </>
+      )}
+      {showBottom && (
+        <>
+          <CornerBracket position="bl" color={color} size={size} />
+          <CornerBracket position="br" color={color} size={size} />
+        </>
+      )}
     </>
   );
 }
@@ -52,14 +112,10 @@ interface EyebrowProps {
   variant?: 'bar' | 'dot';
 }
 
-export function Eyebrow({ text, className, variant = 'bar' }: EyebrowProps) {
+export function Eyebrow({ text, className = '', variant = 'bar' }: EyebrowProps) {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      {variant === 'bar' ? (
-        <div className="w-[1.5px] h-3 bg-white/40" />
-      ) : (
-        <div className="w-1 h-1 rounded-full bg-white/40" />
-      )}
+      <div className={variant === 'bar' ? "w-[1.5px] h-3 bg-white/40" : "w-1 h-1 rounded-full bg-white/40"} />
       <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/40">
         {text}
       </span>
@@ -73,6 +129,7 @@ interface SectionHeaderProps {
   title: string;
   eyebrowVariant?: EyebrowProps['variant'];
   className?: string;
+  align?: 'left' | 'center';
 }
 
 export function SectionHeader({
@@ -80,9 +137,11 @@ export function SectionHeader({
   title,
   eyebrowVariant = 'bar',
   className = '',
+  align = 'left',
 }: SectionHeaderProps) {
+  const alignClass = align === 'center' ? 'items-center text-center' : 'items-start text-left';
   return (
-    <div className={`flex flex-col gap-[16px] ${className}`}>
+    <div className={`flex flex-col gap-[16px] ${alignClass} ${className}`}>
       <Eyebrow text={eyebrow} variant={eyebrowVariant} />
       <h2 className="text-[clamp(28px,4vw,46px)] font-normal tracking-[-0.05em] leading-[1.1] text-[#fafafa]">
         {title}
@@ -91,72 +150,51 @@ export function SectionHeader({
   );
 }
 
-// ─── ICON BUTTON ─────────────────────────────────────────────────────────────
-interface IconButtonProps {
-  label: string;
-  onClick: () => void;
-  variant?: 'primary' | 'ghost';
+// ─── BUTTON ──────────────────────────────────────────────────────────────────
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
   icon?: React.ReactNode;
+  showCorners?: boolean;
 }
 
-export function IconButton({ label, onClick, variant = 'primary', icon }: IconButtonProps) {
-  const base = 'rounded-[2px] p-[11px_20px] text-[13px] font-mono cursor-pointer transition-all active:scale-[0.98]';
-  const styles =
-    variant === 'primary'
-      ? `bg-[#fafafa] text-[#0a0a0a] border-none hover:opacity-85 ${base}`
-      : `bg-transparent text-[#fafafa] border border-white/20 hover:border-white/40 flex items-center gap-[6px] ${base}`;
+export function Button({
+  variant = 'primary',
+  children,
+  className = '',
+  icon,
+  showCorners = true,
+  ...props
+}: ButtonProps) {
+  const base = 'relative px-6 py-3 font-mono text-[13px] uppercase tracking-wider transition-all active:scale-[0.98] rounded-[2px] flex items-center justify-center gap-2';
+  const variants = {
+    primary: 'bg-[#fafafa] text-[#0a0a0a] hover:bg-white border-none',
+    secondary: 'bg-[#18181b] text-white border border-white/10 hover:border-white/20',
+    outline: 'bg-transparent text-white border border-white/20 hover:border-white/40',
+    ghost: 'bg-transparent text-white/60 hover:text-white border-none',
+  };
 
   return (
-    <button className={styles} onClick={onClick}>
+    <button className={`${base} ${variants[variant]} ${className}`} {...props}>
       {icon}
-      {label}
+      <span className="relative z-10">{children}</span>
+      {showCorners && <CrosshairCorners color="bg-zinc-500" size={4} />}
     </button>
   );
 }
 
-// ─── CARD CORNER ACCENT ──────────────────────────────────────────────────────
-// Small L-shaped accent for boxed icon corners
-interface CardCornerAccentProps {
-  position: 'tl' | 'tr' | 'bl' | 'br';
-}
-
-const ACCENT_CLASSES: Record<CardCornerAccentProps['position'], string> = {
-  tl: '-left-[1px] -top-[1px] border-t border-l',
-  tr: '-right-[1px] -top-[1px] border-t border-r',
-  bl: '-left-[1px] -bottom-[1px] border-b border-l',
-  br: '-right-[1px] -bottom-[1px] border-b border-r',
-};
-
-export function CardCornerAccent({ position }: CardCornerAccentProps) {
-  return (
-    <div className={`absolute w-3 h-3 border-white/40 ${ACCENT_CLASSES[position]}`} />
-  );
-}
-
-export function CardCornerAccents() {
-  return (
-    <>
-      <CardCornerAccent position="tl" />
-      <CardCornerAccent position="tr" />
-      <CardCornerAccent position="bl" />
-      <CardCornerAccent position="br" />
-    </>
-  );
-}
+// Alias for backwards compatibility
+export const IconButton = ({ label, ...props }: any) => <Button {...props}>{label}</Button>;
 
 // ─── SECTION SPACER ──────────────────────────────────────────────────────────
-// Canonical implementation — all spacers use this.
-interface SectionSpacerProps {
-  hasGap?: boolean;
-  gapHeight?: string;
-  variant?: 'diagonal' | 'grid';
-}
-
 export function SectionSpacer({
   hasGap = true,
   gapHeight = 'h-[80px] md:h-[120px]',
   variant = 'diagonal',
-}: SectionSpacerProps) {
+}: {
+  hasGap?: boolean;
+  gapHeight?: string;
+  variant?: 'diagonal' | 'grid';
+}) {
   return (
     <div className="w-full flex flex-col items-center">
       {hasGap && (
@@ -185,51 +223,75 @@ export function Logo({ className = "h-7 w-7" }: { className?: string }) {
   );
 }
 
+// ─── LANDING SECTION WRAPPER ─────────────────────────────────────────────────
+export function LandingSection({ 
+  children, 
+  id, 
+  className = "", 
+  containerClassName = "",
+  showTopBrackets = true,
+  showBottomBrackets = true
+}: { 
+  children: React.ReactNode; 
+  id?: string; 
+  className?: string;
+  containerClassName?: string;
+  showTopBrackets?: boolean;
+  showBottomBrackets?: boolean;
+}) {
+  return (
+    <section id={id} className={`flex flex-col items-center w-full bg-[#0a0a0a] ${className}`}>
+      <div className={`w-full max-w-[1200px] border-x border-white/12 relative group ${containerClassName}`}>
+        <SectionCornerBrackets showTop={showTopBrackets} showBottom={showBottomBrackets} />
+        {children}
+      </div>
+    </section>
+  );
+}
+
+// ─── CARD ────────────────────────────────────────────────────────────────────
+export function Card({ 
+  children, 
+  className = "", 
+  showCorners = true 
+}: { 
+  children: React.ReactNode; 
+  className?: string;
+  showCorners?: boolean;
+}) {
+  return (
+    <div className={`relative border border-[#242424] bg-[#171717] p-6 group ${className}`}>
+      {children}
+      {showCorners && <CrosshairCorners color="bg-zinc-500" />}
+    </div>
+  );
+}
+
+// ─── ICON BOX ────────────────────────────────────────────────────────────────
+export function IconBox({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <div className={`relative w-12 h-12 bg-[#18181b] flex items-center justify-center ${className}`}>
+      {children}
+      <SectionCornerBrackets size={3} color="border-white/20" />
+    </div>
+  );
+}
+
+// Alias for backwards compatibility
+export const CardCornerAccents = () => <SectionCornerBrackets size={3} color="border-white/20" />;
+
 // ─── CORNER BOX (RESSL AI STYLE) ─────────────────────────────────────────────
-interface CornerBoxProps {
+export function CornerBox({ children, size = 'md', className = '', style }: {
   children: React.ReactNode;
   size?: 'sm' | 'md' | 'lg';
   className?: string;
   style?: React.CSSProperties;
-}
-
-export function CornerBox({ children, size = 'md', className = '', style }: CornerBoxProps) {
-  const sizeClass = {
-    sm: 'corner-box-sm',
-    md: 'corner-box-md',
-    lg: 'corner-box-lg',
-  }[size];
-
+}) {
+  const sizeClass = { sm: 'corner-box-sm', md: 'corner-box-md', lg: 'corner-box-lg' }[size];
   return (
     <div className={`corner-box ${sizeClass} ${className}`} style={style}>
       <span className="cb"></span>
       {children}
     </div>
-  );
-}
-
-// ─── SECTION CORNER BRACKETS (NORMAL STATE) ──────────────────────────────────
-export function SectionCornerBrackets({
-  showTop = true,
-  showBottom = true
-}: {
-  showTop?: boolean;
-  showBottom?: boolean
-}) {
-  return (
-    <>
-      {showTop && (
-        <>
-          <div className="absolute -top-[1px] -left-[1px] w-3 h-3 border-t border-l border-zinc-500 pointer-events-none z-50" />
-          <div className="absolute -top-[1px] -right-[1px] w-3 h-3 border-t border-r border-zinc-500 pointer-events-none z-50" />
-        </>
-      )}
-      {showBottom && (
-        <>
-          <div className="absolute -bottom-[1px] -left-[1px] w-3 h-3 border-b border-l border-zinc-500 pointer-events-none z-50" />
-          <div className="absolute -bottom-[1px] -right-[1px] w-3 h-3 border-b border-r border-zinc-500 pointer-events-none z-50" />
-        </>
-      )}
-    </>
   );
 }

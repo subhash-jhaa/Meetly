@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { FAQ_ITEMS } from '../data/landingData';
+import { CrosshairCorners } from './ui/primitives';
 
 // ─── FAQ ITEM ─────────────────────────────────────────────────────────────────
 interface FAQItemProps {
@@ -40,7 +41,8 @@ function FAQItem({ number, question, answer }: FAQItemProps) {
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 export default function FAQ() {
   return (
-    <div className="border border-[#d4d4d4]/15">
+    <div className="border border-[#d4d4d4]/15 relative">
+      <CrosshairCorners color="bg-zinc-500" />
       {FAQ_ITEMS.map((faq, i) => (
         <FAQItem key={i} {...faq} />
       ))}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SectionCornerBrackets } from './ui/primitives';
+import { SectionCornerBrackets, CrosshairCorners } from './ui/primitives';
 
 interface FeatureBlockProps {
   tag: string;
@@ -119,6 +119,7 @@ const FeatureBlock = ({ tag, title, description, img, icon, index }: FeatureBloc
 
       {/* SECTION CORNER BRACKETS */}
       <SectionCornerBrackets />
+      <CrosshairCorners color="bg-zinc-500" />
     </div>
   );
 };

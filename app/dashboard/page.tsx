@@ -202,7 +202,7 @@ export default function Dashboard() {
             <span className="font-mono text-[12px] text-white/40 hidden md:block">
               {session?.user?.name}
             </span>
-            
+
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-3">
               <a

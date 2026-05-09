@@ -42,9 +42,10 @@ function FeaturesHeader() {
         </p>
         <a
           href="#"
-          className="w-fit px-[24px] py-[12px] border border-white/12 bg-[#fafafa] text-[#0a0a0a] text-[14px] font-medium rounded-[2px] hover:bg-white transition-colors active:scale-[0.98]"
+          className="relative w-fit px-[24px] py-[12px] border border-white/12 bg-[#fafafa] text-[#0a0a0a] text-[14px] font-medium rounded-[2px] hover:bg-white transition-colors active:scale-[0.98]"
         >
-          {FEATURES_SECTION.cta}
+          <span className="relative z-10">{FEATURES_SECTION.cta}</span>
+          <CrosshairCorners color="bg-zinc-500" size={4} />
         </a>
       </div>
     </div>

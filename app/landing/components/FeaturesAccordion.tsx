@@ -49,7 +49,7 @@ function AccordionItem({ title, description, iconPath, isActive, progress, onCli
     <div
       onClick={onClick}
       className={[
-        'group cursor-pointer border border-white/10 transition-all duration-300 overflow-hidden rounded-[4px]',
+        'group cursor-pointer border border-white/10 transition-all duration-300 rounded-[4px] relative',
         isActive ? 'bg-[#18181b] border-white/20' : 'bg-[#171717] hover:bg-[#1a1a1a] opacity-80',
       ].join(' ')}
     >
@@ -77,6 +77,7 @@ function AccordionItem({ title, description, iconPath, isActive, progress, onCli
           </div>
         )}
       </div>
+      <CrosshairCorners color="bg-zinc-500" />
     </div>
   );
 }

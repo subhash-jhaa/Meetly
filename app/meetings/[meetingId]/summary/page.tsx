@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
 interface PageProps {
-  params: { meetingId: string };
+  params: Promise<{ meetingId: string }>;
 }
 
 function Eyebrow({ text }: { text: string }) {
@@ -28,11 +28,12 @@ function Section({ label, children }: { label: string; children: React.ReactNode
 }
 
 export default async function SummaryPage({ params }: PageProps) {
+  const { meetingId } = await params;
   const session = await auth();
   if (!session?.user?.id) redirect('/signin');
 
   const meeting = await prisma.meeting.findFirst({
-    where: { id: params.meetingId, hostId: session.user.id },
+    where: { id: meetingId, hostId: session.user.id },
     include: { summary: true },
   });
 

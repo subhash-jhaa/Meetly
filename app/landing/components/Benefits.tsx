@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { BENEFIT_ITEMS, BENEFITS_SECTION } from '../data/landingData';
-import { CardCornerAccents, Eyebrow, SectionSpacer, SectionCornerBrackets } from './ui/primitives';
+import { CardCornerAccents, Eyebrow, SectionSpacer, SectionCornerBrackets, CrosshairCorners } from './ui/primitives';
 
 // ─── ICON MAP ─────────────────────────────────────────────────────────────────
 const ICON_MAP: Record<string, React.ReactNode> = {
@@ -78,21 +78,8 @@ function BenefitCard({ title, desc, iconPath }: BenefitCardProps) {
         </div>
       </div>
 
-      {/* Desktop Card Corner Accents (8 divs) */}
-      {(['tl', 'tr', 'bl', 'br'] as const).map((pos) => {
-        const cls = {
-          tl: '-left-[1px] -top-[1px]',
-          tr: '-right-[1px] -top-[1px]',
-          bl: '-left-[1px] -bottom-[1px]',
-          br: '-right-[1px] -bottom-[1px]',
-        }[pos];
-        return (
-          <React.Fragment key={`card-${pos}`}>
-            <div className={`absolute ${cls} w-[1px] h-[3px] bg-white/20 pointer-events-none z-10`} />
-            <div className={`absolute ${cls} h-[1px] w-[3px] bg-white/20 pointer-events-none z-10`} />
-          </React.Fragment>
-        );
-      })}
+      {/* Main Card Corner Accents */}
+      <CrosshairCorners color="bg-zinc-500" />
 
     </div>
   );

@@ -12,10 +12,10 @@ import Testimonials from './components/Testimonials';
 import CTA from './components/CTA';
 import { FlickeringFooter } from '@/components/ui/flickering-footer';
 import FAQ from './components/FAQ';
-import { SectionSpacer, SectionCornerBrackets } from './components/ui/primitives';
+import { SectionSpacer, SectionCornerBrackets, CrosshairCorners } from './components/ui/primitives';
 import { FAQ_SECTION, SITE } from './data/landingData';
 import { useSession } from 'next-auth/react';  // ← ADD
-import { useEffect } from 'react'; 
+import { useEffect } from 'react';
 
 
 // ─── FAQ WRAPPER (lives in page.tsx since it spans two columns) ───────────────
@@ -51,10 +51,11 @@ function FAQSection() {
               ))}
             </p>
             <button
-              className="btn-outline mt-[24px] rounded-[4px] border border-white/20 px-[16px] py-[8px] font-mono text-[13px] text-[#fafafa] transition-colors hover:border-white/40 bg-transparent"
+              className="relative btn-outline mt-[24px] rounded-[4px] border border-white/20 px-[16px] py-[8px] font-mono text-[13px] text-[#fafafa] transition-colors hover:border-white/40 bg-transparent"
               onClick={() => router.push(SITE.signUpUrl)}
             >
-              {cta}
+              <span className="relative z-10">{cta}</span>
+              <CrosshairCorners color="bg-zinc-500" size={4} />
             </button>
           </div>
 

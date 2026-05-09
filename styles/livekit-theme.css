@@ -71,3 +71,103 @@
   --lk-control-bar-height: 64px;
   --lk-chat-header-height: 64px;
 }
+
+/* ─── Prejoin Overrides ─────────────────────────────────────────────────── */
+.lk-prejoin {
+  background-color: transparent !important;
+}
+
+.lk-prejoin input,
+.lk-prejoin select,
+.lk-prejoin .lk-button:not(.lk-button-primary) {
+  background-color: #111 !important;
+  color: #fafafa !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 0px !important;
+  font-family: var(--lk-font-family) !important;
+  font-size: 13px !important;
+  padding: 12px 16px !important;
+  transition: border-color 0.2s ease !important;
+}
+
+.lk-prejoin input:focus,
+.lk-prejoin select:focus {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  outline: none !important;
+}
+
+.lk-prejoin .lk-button-primary {
+  background-color: #fafafa !important;
+  color: #0a0a0a !important;
+  border: none !important;
+  border-radius: 0px !important;
+  font-weight: 500 !important;
+  font-family: var(--lk-font-family) !important;
+  text-transform: none !important;
+  height: 48px !important;
+  margin-top: 16px !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.lk-prejoin .lk-button-primary:hover {
+  opacity: 0.9 !important;
+}
+
+/* Fix for select dropdown arrows */
+.lk-prejoin select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E") !important;
+  background-position: right 12px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 16px !important;
+  padding-right: 40px !important;
+  appearance: none !important;
+}
+
+/* ─── Control Bar Overrides ─────────────────────────────────────────────── */
+.lk-control-bar {
+  background-color: #0a0a0a !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  padding: 12px !important;
+}
+
+.lk-control-bar .lk-button,
+.lk-button-group-container .lk-button {
+  background-color: #111 !important;
+  color: #fafafa !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 2px !important;
+  transition: all 0.2s ease !important;
+}
+
+.lk-control-bar .lk-button:hover:not(:disabled),
+.lk-button-group-container .lk-button:hover:not(:disabled) {
+  background-color: #1a1a1a !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Active states (e.g. Mic ON, Camera ON) */
+.lk-control-bar .lk-button[data-lk-active="true"],
+.lk-button-group-container .lk-button[data-lk-active="true"] {
+  background-color: #fafafa !important;
+  color: #0a0a0a !important;
+  border-color: #fafafa !important;
+}
+
+/* Specific fix for dropdown arrows in button groups */
+.lk-button-group-container .lk-button-group-menu-button {
+  border-left: none !important;
+  margin-left: -1px !important;
+}
+
+/* Disconnect button override */
+.lk-disconnect-button {
+  border-color: rgba(229, 62, 62, 0.4) !important;
+  color: #e53e3e !important;
+  background-color: transparent !important;
+}
+
+.lk-disconnect-button:hover {
+  background-color: rgba(229, 62, 62, 0.1) !important;
+  border-color: #e53e3e !important;
+}
+

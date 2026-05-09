@@ -71,11 +71,11 @@ export default function Comparison() {
             {title}
           </h2>
         </div>
- 
+
         {/* TABLE */}
         <div className="px-4 md:px-12 pb-24 w-full max-w-[900px] mx-auto">
           <div className="overflow-x-auto pb-4 md:pb-0">
-            <div className="min-w-[600px] md:min-w-0 overflow-hidden bg-[#0d0d0d]/40 rounded-[4px] border border-white/[0.08] backdrop-blur-sm shadow-2xl relative">
+            <div className="min-w-[600px] md:min-w-0 bg-[#0d0d0d]/40 rounded-[4px] border border-white/[0.08] backdrop-blur-sm shadow-2xl relative">
               {/* Standard crosshair corners in grey-500 */}
               <CrosshairCorners size={8} color="bg-zinc-500" />
               <table className="w-full border-collapse">
@@ -117,7 +117,8 @@ export default function Comparison() {
                 className="px-8 py-3 bg-transparent text-white font-mono text-[13px] font-medium tracking-tight uppercase border border-white/20 rounded-[2px] hover:bg-white hover:text-black transition-all duration-300 active:scale-[0.98] whitespace-nowrap relative"
                 onClick={() => window.open(SITE.signUpUrl, '_blank')}
               >
-                {customPlan.cta}
+                <span className="relative z-10">{customPlan.cta}</span>
+                <CrosshairCorners color="bg-zinc-500" size={4} />
               </button>
             </div>
           </div>

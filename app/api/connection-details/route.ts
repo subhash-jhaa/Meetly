@@ -116,10 +116,10 @@ function createParticipantToken(
     room: roomName,
     roomJoin: true,
     canSubscribe: true,       // everyone can watch/listen
-    canPublish: isHost,       // ✅ only host can publish by default
+    canPublish: true,         // everyone can share camera/mic
     canPublishData: true,     // everyone can send chat/data messages
-    roomAdmin: isHost,        // ✅ host can mute/kick participants
-    roomRecord: isHost,       // ✅ host can trigger recordings
+    roomAdmin: isHost,        // host can mute/kick participants
+    roomRecord: isHost,       // host can trigger recordings
   };
 
   at.addGrant(grant);

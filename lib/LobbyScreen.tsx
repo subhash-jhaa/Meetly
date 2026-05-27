@@ -1,40 +1,47 @@
 'use client';
 
 import React from 'react';
+import { Room, RoomEvent } from 'livekit-client';
 
 export function LobbyScreen({
   displayName,
   roomName,
+  lobbyToken,
+  serverUrl,
   onAdmitted,
   onLeave,
 }: {
   displayName: string;
   roomName: string;
+  lobbyToken: string;
+  serverUrl: string;
   onAdmitted: () => void;
   onLeave: () => void;
 }) {
   React.useEffect(() => {
-    // Poll every 3 seconds to check if admitted
-    const interval = setInterval(async () => {
-      try {
-        const res = await fetch(
-          `/api/connection-details?roomName=${roomName}`
-        );
-        // If we get a 200 with a token, we've been admitted
-        if (res.ok) {
-          const data = await res.json();
-          if (data.participantToken) {
-            clearInterval(interval);
-            onAdmitted();
-          }
-        }
-      } catch (e) {
-        // Keep polling
+    const room = new Room();
+    
+    const handlePermissionsChanged = () => {
+      if (room.localParticipant.permissions?.canPublish) {
+        room.disconnect();
+        onAdmitted();
       }
-    }, 3000);
+    };
 
-    return () => clearInterval(interval);
-  }, [roomName, onAdmitted]);
+    room.on(RoomEvent.ParticipantPermissionsChanged, handlePermissionsChanged);
+
+    room.connect(serverUrl, lobbyToken).then(() => {
+      if (room.localParticipant.permissions?.canPublish) {
+        room.disconnect();
+        onAdmitted();
+      }
+    }).catch(console.error);
+
+    return () => {
+      room.off(RoomEvent.ParticipantPermissionsChanged, handlePermissionsChanged);
+      room.disconnect();
+    };
+  }, [serverUrl, lobbyToken, onAdmitted]);
 
   return (
     <div className="fixed inset-0 bg-[#0c0c0e] flex items-center justify-center">

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { ACCORDION_ITEMS } from '../data/landingData';
-import { CrosshairCorners, SectionCornerBrackets } from './ui/primitives';
+import { CrosshairCorners, SectionCornerBrackets } from '@/components/ui/primitives';
 
 // ─── ICON MAP ─────────────────────────────────────────────────────────────────
 // Keeps SVG markup out of the data file while still being driven by data.
@@ -50,7 +50,7 @@ function AccordionItem({ title, description, iconPath, isActive, progress, onCli
       onClick={onClick}
       className={[
         'group cursor-pointer border border-white/10 transition-all duration-300 rounded-[4px] relative',
-        isActive ? 'bg-[#18181b] border-white/20' : 'bg-[#171717] hover:bg-[#1a1a1a] opacity-80',
+        isActive ? 'bg-[#18181b] border-white/20' : 'bg-surface-card hover:bg-[#1a1a1a] opacity-80',
       ].join(' ')}
     >
       <div className="p-6 flex flex-col gap-4 relative">

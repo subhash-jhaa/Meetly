@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { COMPARISON_ROWS, COMPARISON_SECTION, SITE } from '../data/landingData';
-import { SectionSpacer, CornerBox, SectionCornerBrackets, CrosshairCorners } from './ui/primitives';
+import { SectionSpacer, CornerBox, SectionCornerBrackets, CrosshairCorners } from '@/components/ui/primitives';
 
 // ─── TABLE ROW ────────────────────────────────────────────────────────────────
 function ComparisonRow({
@@ -57,7 +57,7 @@ export default function Comparison() {
   const { title, customPlan, eyebrow } = COMPARISON_SECTION;
 
   return (
-    <section className="flex flex-col items-center w-full bg-[#0a0a0a]">
+    <section className="flex flex-col items-center w-full bg-background">
       <div className="section-container w-full border-x border-white/12 relative group">
         <SectionCornerBrackets />
 
@@ -67,7 +67,7 @@ export default function Comparison() {
             <div className="w-[1px] h-3 bg-white/40" />
             <span className="text-[12px] font-mono text-white/40 tracking-wider uppercase">{eyebrow}</span>
           </div>
-          <h2 className="text-[clamp(36px,6vw,64px)] font-normal tracking-[-0.03em] leading-[1.1] text-[#fafafa] text-center max-w-4xl">
+          <h2 className="text-[clamp(36px,6vw,64px)] font-normal tracking-[-0.03em] leading-[1.1] text-foreground text-center max-w-4xl">
             {title}
           </h2>
         </div>

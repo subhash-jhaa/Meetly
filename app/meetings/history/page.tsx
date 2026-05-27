@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { Corners, Eyebrow } from '@/components/ui/primitives';
+import { AppNavbar } from '@/components/ui/AppNavbar';
 
 type Participant = {
   displayName: string;
@@ -50,29 +52,7 @@ function formatTime(iso: string) {
   });
 }
 
-function Corners() {
-  return (
-    <>
-      <div className="absolute -left-px -top-px h-[7px] w-px bg-white/10" />
-      <div className="absolute -left-px -top-px h-px w-[7px] bg-white/10" />
-      <div className="absolute -right-px -top-px h-[7px] w-px bg-white/10" />
-      <div className="absolute -right-px -top-px h-px w-[7px] bg-white/10" />
-      <div className="absolute -left-px -bottom-px h-[7px] w-px bg-white/10" />
-      <div className="absolute -left-px -bottom-px h-px w-[7px] bg-white/10" />
-      <div className="absolute -right-px -bottom-px h-[7px] w-px bg-white/10" />
-      <div className="absolute -right-px -bottom-px h-px w-[7px] bg-white/10" />
-    </>
-  );
-}
 
-function Eyebrow({ text }: { text: string }) {
-  return (
-    <div className="flex items-center gap-2 font-mono text-[11px] text-white/40 uppercase tracking-widest mb-1">
-      <span className="w-3 h-px bg-white/30" />
-      {text}
-    </div>
-  );
-}
 
 function StatusBadge({ status }: { status: string }) {
   const map: Record<string, string> = {
@@ -138,7 +118,7 @@ export default function HistoryPage() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/meetings/history?page=${page}`)
+    fetch(`/api/meeting/history?page=${page}`)
       .then(r => r.json())
       .then(d => {
         setMeetings(d.meetings ?? []);
@@ -148,49 +128,31 @@ export default function HistoryPage() {
   }, [page]);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-white selection:text-black">
+    <div className="min-h-screen bg-background text-white selection:bg-white selection:text-black">
 
       {/* NAV */}
-      <nav className="sticky top-0 z-50 w-full flex justify-center bg-[#0a0a0a]/90 backdrop-blur-md pt-4 px-4">
-        <div className="relative flex w-full max-w-[1200px] h-[64px] items-center justify-between border border-[#242424] bg-[#0a0908] px-6">
-          <Corners />
-          <Link href="/#hero">
-            <img
-              src="https://framerusercontent.com/images/E1cdDQforYmgVbu5AtpZDN1cjVs.png?width=512&height=512"
-              alt="Meetly"
-              className="h-7 w-7 rounded-[4px] object-contain cursor-pointer"
-            />
-          </Link>
-
-          <a
-            href="/dashboard"
-            className="font-mono text-[12px] text-white/40 hover:text-white transition-colors"
-          >
-            ← Dashboard
-          </a>
-        </div>
-      </nav>
+      <AppNavbar backTo={{ label: 'Dashboard', href: '/dashboard' }} />
 
       <div className="flex flex-col items-center px-4 pb-20">
         <div className="w-full max-w-[1200px]">
 
           {/* HEADER */}
-          <div className="border-x border-[#242424] px-8 pt-16 pb-10">
-            <Eyebrow text="Archive" />
+          <div className="border-x border-white/12 px-8 pt-16 pb-10">
+            <Eyebrow text="Archive" variant="line" className="mb-3" />
             <h1 className="text-[clamp(28px,4vw,48px)] font-normal tracking-[-0.04em] leading-[1.1]">
               Meeting History
             </h1>
             {pagination && (
-              <p className="font-mono text-[12px] text-white/30 mt-2">
+              <p className="font-mono text-[13px] text-white/30 mt-2">
                 {pagination.total} meeting{pagination.total !== 1 ? 's' : ''} total
               </p>
             )}
           </div>
 
           {/* TABLE HEADER */}
-          <div className="border border-[#242424] border-t-0 hidden md:grid
+          <div className="border border-white/12 border-t-0 hidden md:grid
                           grid-cols-[1fr_120px_140px_100px_160px] gap-0
-                          px-8 py-3 bg-[#0a0908]">
+                          px-8 py-3 bg-surface">
             {['Meeting', 'Date', 'Participants', 'Duration', 'Actions'].map(h => (
               <span key={h} className="font-mono text-[10px] text-white/30 uppercase tracking-widest">
                 {h}
@@ -200,17 +162,17 @@ export default function HistoryPage() {
 
           {/* LOADING */}
           {loading && (
-            <div className="border border-[#242424] border-t-0 px-8 py-16 text-center">
+            <div className="border border-white/12 border-t-0 px-8 py-16 text-center">
               <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin mx-auto" />
             </div>
           )}
 
           {/* EMPTY */}
           {!loading && meetings.length === 0 && (
-            <div className="border border-[#242424] border-t-0 px-8 py-20 text-center">
-              <Eyebrow text="Empty" />
+            <div className="border border-white/12 border-t-0 px-8 py-20 text-center">
+              <Eyebrow text="Empty" variant="line" />
               <p className="text-[14px] text-white/40">No completed meetings yet.</p>
-              <p className="font-mono text-[12px] text-white/20 mt-1">
+              <p className="font-mono text-[13px] text-white/20 mt-1">
                 Start a meeting from the dashboard.
               </p>
             </div>
@@ -220,7 +182,7 @@ export default function HistoryPage() {
           {!loading && meetings.map((m, i) => {
             const isExpanded = expanded === m.id;
             return (
-              <div key={m.id} className="border border-[#242424] border-t-0">
+              <div key={m.id} className="border border-white/12 border-t-0">
 
                 {/* Main row */}
                 <div
@@ -273,7 +235,7 @@ export default function HistoryPage() {
                           router.push(`/meetings/${m.id}/summary`);
                         }}
                         className="font-mono text-[11px] text-white/50 border
-                                   border-[#242424] px-3 py-1.5 hover:text-white
+                                   border-white/12 px-3 py-1.5 rounded-[2px] hover:text-white
                                    hover:border-white/30 transition-colors whitespace-nowrap"
                       >
                         Summary →
@@ -286,7 +248,7 @@ export default function HistoryPage() {
                         rel="noopener noreferrer"
                         onClick={e => e.stopPropagation()}
                         className="font-mono text-[11px] text-white/50 border
-                                   border-[#242424] px-3 py-1.5 hover:text-white
+                                   border-white/12 px-3 py-1.5 rounded-[2px] hover:text-white
                                    hover:border-white/30 transition-colors"
                       >
                         Recording
@@ -300,14 +262,14 @@ export default function HistoryPage() {
 
                 {/* Expanded detail */}
                 {isExpanded && (
-                  <div className="border-t border-[#242424] px-8 py-6 bg-[#0a0908]">
+                  <div className="border-t border-white/12 px-8 py-6 bg-surface">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
                       {/* Participants list */}
                       <div>
-                        <Eyebrow text="Participants" />
+                        <Eyebrow text="Participants" variant="line" className="mb-3" />
                         {m.participants.length === 0 ? (
-                          <p className="font-mono text-[12px] text-white/20">None recorded</p>
+                          <p className="font-mono text-[13px] text-white/20">None recorded</p>
                         ) : (
                           <ul className="flex flex-col gap-2">
                             {m.participants.map((p, j) => {
@@ -340,7 +302,7 @@ export default function HistoryPage() {
 
                       {/* AI Summary preview */}
                       <div className="md:col-span-2">
-                        <Eyebrow text="Summary preview" />
+                        <Eyebrow text="Summary preview" variant="line" className="mb-3" />
                         {m.summary?.content ? (
                           <>
                             <p className="text-[13px] text-white/50 leading-[1.7] line-clamp-4">
@@ -355,11 +317,11 @@ export default function HistoryPage() {
                             </button>
                           </>
                         ) : m.status === 'PROCESSING' ? (
-                          <p className="font-mono text-[12px] text-amber-400/50">
+                          <p className="font-mono text-[13px] text-amber-400/50">
                             AI is generating your summary…
                           </p>
                         ) : (
-                          <p className="font-mono text-[12px] text-white/20">
+                          <p className="font-mono text-[13px] text-white/20">
                             No summary available.
                           </p>
                         )}
@@ -375,7 +337,7 @@ export default function HistoryPage() {
 
           {/* PAGINATION */}
           {pagination && pagination.pages > 1 && (
-            <div className="border border-[#242424] border-t-0 px-8 py-5
+            <div className="border border-white/12 border-t-0 px-8 py-5
                             flex items-center justify-between">
               <span className="font-mono text-[11px] text-white/30">
                 Page {pagination.page} of {pagination.pages}
@@ -384,8 +346,8 @@ export default function HistoryPage() {
                 <button
                   onClick={() => setPage(p => p - 1)}
                   disabled={!pagination.hasPrev}
-                  className="font-mono text-[11px] text-white/40 border border-[#242424]
-                             px-3 py-1.5 hover:text-white hover:border-white/30
+                  className="font-mono text-[11px] text-white/40 border border-white/12
+                             px-3 py-1.5 rounded-[2px] hover:text-white hover:border-white/30
                              transition-colors disabled:opacity-20 disabled:cursor-not-allowed"
                 >
                   ← Prev
@@ -393,8 +355,8 @@ export default function HistoryPage() {
                 <button
                   onClick={() => setPage(p => p + 1)}
                   disabled={!pagination.hasNext}
-                  className="font-mono text-[11px] text-white/40 border border-[#242424]
-                             px-3 py-1.5 hover:text-white hover:border-white/30
+                  className="font-mono text-[11px] text-white/40 border border-white/12
+                             px-3 py-1.5 rounded-[2px] hover:text-white hover:border-white/30
                              transition-colors disabled:opacity-20 disabled:cursor-not-allowed"
                 >
                   Next →

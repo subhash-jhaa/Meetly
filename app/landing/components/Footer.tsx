@@ -7,9 +7,9 @@ import { FOOTER_DATA, SITE } from '../data/landingData';
 const LOGO_SRC = 'https://framerusercontent.com/images/E1cdDQforYmgVbu5AtpZDN1cjVs.png';
 
 const LINK_CLASS =
-  'font-mono text-[13px] text-[#fafafa]/40 transition-colors hover:text-[#fafafa]/80 tracking-[-0.01em]';
+  'font-mono text-[13px] text-foreground/40 transition-colors hover:text-foreground/80 tracking-[-0.01em]';
 const HEAD_CLASS =
-  'text-[13px] font-normal tracking-widest uppercase text-[#fafafa]/30 font-mono mb-[16px]';
+  'text-[13px] font-normal tracking-widest uppercase text-foreground/30 font-mono mb-[16px]';
 
 export default function Footer() {
   return (
@@ -22,7 +22,7 @@ export default function Footer() {
           {/* BRAND COL */}
           <div className="p-[40px_32px] border-b border-white/12 md:border-b-0 md:border-r border-white/12 flex flex-col gap-[16px]">
             <img src={LOGO_SRC} alt={SITE.name} className="w-[28px] h-[28px] rounded-[3px]" />
-            <p className="text-[14px] text-[#fafafa]/40 leading-[1.6] max-w-[220px]">
+            <p className="text-[14px] text-foreground/40 leading-[1.6] max-w-[220px]">
               {FOOTER_DATA.tagline}
             </p>
             <div className="flex flex-col gap-[10px] mt-[8px]">
@@ -57,7 +57,7 @@ export default function Footer() {
 
         {/* BOTTOM BAR */}
         <div className="p-[16px_24px] flex items-center justify-between flex-wrap gap-[8px]">
-          <span className="text-[13px] text-[#fafafa]/20 font-mono tracking-[-0.01em]">
+          <span className="text-[13px] text-foreground/20 font-mono tracking-[-0.01em]">
             © {new Date().getFullYear()} {SITE.name}. All rights reserved.
           </span>
           <div className="flex gap-[20px]">
@@ -65,7 +65,7 @@ export default function Footer() {
               <Link
                 key={item}
                 href={`#${item.toLowerCase()}`}
-                className="text-[12px] text-[#fafafa]/20 font-mono hover:text-[#fafafa]/40 transition-colors"
+                className="text-[12px] text-foreground/20 font-mono hover:text-foreground/40 transition-colors"
               >
                 {item}
               </Link>

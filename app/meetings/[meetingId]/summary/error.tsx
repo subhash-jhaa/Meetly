@@ -7,7 +7,7 @@ export default function SummaryError({
   reset: () => void;
 }) {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white flex items-center justify-center px-4">
+    <div className="min-h-screen bg-background text-white flex items-center justify-center px-4">
       <div className="text-center">
         <div className="flex items-center justify-center gap-2 font-mono
                         text-[11px] text-white/30 uppercase tracking-widest mb-4">
@@ -20,15 +20,15 @@ export default function SummaryError({
         <div className="flex gap-2 justify-center">
           <button
             onClick={reset}
-            className="border border-[#242424] px-5 py-2.5 font-mono
-                       text-[12px] text-white hover:bg-white/5 transition-colors"
+            className="border border-white/12 px-5 py-2.5 font-mono
+                       text-[13px] text-white rounded-[2px] hover:bg-white/5 transition-colors"
           >
             Retry
           </button>
           
            <a href="/dashboard"
-            className="border border-[#242424] px-5 py-2.5 font-mono
-                       text-[12px] text-white/40 hover:text-white
+            className="border border-white/12 px-5 py-2.5 font-mono
+                       text-[13px] text-white/40 hover:text-white rounded-[2px]
                        hover:bg-white/5 transition-colors"
           >
             Dashboard

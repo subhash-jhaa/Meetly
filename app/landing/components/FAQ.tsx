@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { FAQ_ITEMS } from '../data/landingData';
-import { CrosshairCorners } from './ui/primitives';
+import { CrosshairCorners } from '@/components/ui/primitives';
 
 // ─── FAQ ITEM ─────────────────────────────────────────────────────────────────
 interface FAQItemProps {
@@ -20,8 +20,8 @@ function FAQItem({ number, question, answer }: FAQItemProps) {
       onClick={() => setIsOpen(!isOpen)}
     >
       <div className="flex items-center justify-between gap-[16px]">
-        <span className="min-w-[28px] font-mono text-[12px] text-[#fafafa]/40">{number}</span>
-        <span className="flex-1 text-[18px] font-normal tracking-[-0.02em] text-[#fafafa] md:text-[20px]">
+        <span className="min-w-[28px] font-mono text-[12px] text-foreground/40">{number}</span>
+        <span className="flex-1 text-[18px] font-normal tracking-[-0.02em] text-foreground md:text-[20px]">
           {question}
         </span>
         <svg
@@ -32,7 +32,7 @@ function FAQItem({ number, question, answer }: FAQItemProps) {
         </svg>
       </div>
       <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[200px] pt-[16px]' : 'max-h-0 pt-0'}`}>
-        <p className="text-[15px] leading-[1.5] text-[#fafafa]/50 font-normal">{answer}</p>
+        <p className="text-[15px] leading-[1.5] text-foreground/50 font-normal">{answer}</p>
       </div>
     </div>
   );

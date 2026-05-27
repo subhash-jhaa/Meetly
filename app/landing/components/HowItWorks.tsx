@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { HOW_IT_WORKS_SECTION, HOW_IT_WORKS_STEPS } from '../data/landingData';
-import { CrosshairCorners, Eyebrow, SectionSpacer, SectionCornerBrackets } from './ui/primitives';
+import { CrosshairCorners, Eyebrow, SectionSpacer, SectionCornerBrackets } from '@/components/ui/primitives';
 
 // ── Compact visual mockups (Grayscale / Technical style) ──────────────────────
 function LinkMockup() {
@@ -62,9 +62,9 @@ const MOCKUPS: Record<number, React.ReactNode> = { 1: <LinkMockup />, 2: <Record
 // ── Card ──────────────────────────────────────────────────────────────────────
 function StepCard({ step, title, desc, img }: { step: number; title: string; desc: string; img?: string }) {
   return (
-    <div className="relative flex flex-col border border-[#242424] bg-[#171717] h-full">
+    <div className="relative flex flex-col border border-white/12 bg-surface-card h-full">
       {/* Top Visual Area (Image Container) */}
-      <div className="h-[280px] w-full border-b border-[#242424] relative flex items-center justify-center bg-[#171717] overflow-hidden grayscale">
+      <div className="h-[280px] w-full border-b border-white/12 relative flex items-center justify-center bg-surface-card overflow-hidden grayscale">
         {/* Dithered image background simulation */}
         <div className="absolute inset-0 diagonal-mask opacity-50" />
 
@@ -88,7 +88,7 @@ function StepCard({ step, title, desc, img }: { step: number; title: string; des
       <div className="p-8 flex flex-col gap-6 relative flex-1">
         {/* Step Badge (Label) with its own corner accents */}
         <div className="w-fit px-3 py-1 bg-[#18181b] relative">
-          <span className="font-mono text-[11px] text-[#fafafa] uppercase tracking-wider relative z-10">
+          <span className="font-mono text-[11px] text-foreground uppercase tracking-wider relative z-10">
             Step {step}
           </span>
           {/* Label Corner Accents */}
@@ -110,7 +110,7 @@ function StepCard({ step, title, desc, img }: { step: number; title: string; des
 
         {/* Title + Sub (Title + Sub Container) */}
         <div className="flex flex-col gap-3">
-          <h4 className="text-[20px] font-normal text-[#fafafa] tracking-tight leading-tight">
+          <h4 className="text-[20px] font-normal text-foreground tracking-tight leading-tight">
             {title}
           </h4>
           <p className="text-[14px] text-[#a1a1aa] leading-[1.6] max-w-[320px]">{desc}</p>
@@ -129,14 +129,14 @@ export default function HowItWorks() {
   const steps = HOW_IT_WORKS_STEPS;
 
   return (
-    <section id="how-it-works" className="flex flex-col items-center w-full bg-[#0a0a0a]">
+    <section id="how-it-works" className="flex flex-col items-center w-full bg-background">
       <div className="w-full max-w-[1200px] border-x border-white/12 relative group">
         <SectionCornerBrackets />
 
         {/* ── Section header ── */}
         <div className="px-6 md:px-[48px] py-[80px] flex flex-col gap-[20px]">
           <Eyebrow text={eyebrow} />
-          <h2 className="text-[clamp(32px,5vw,56px)] font-normal tracking-[-0.05em] leading-[1.05] text-[#fafafa]">
+          <h2 className="text-[clamp(32px,5vw,56px)] font-normal tracking-[-0.05em] leading-[1.05] text-foreground">
             {title}
           </h2>
         </div>

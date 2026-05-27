@@ -4,6 +4,8 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { Corners, Eyebrow } from '@/components/ui/primitives';
+import { AppNavbar } from '@/components/ui/AppNavbar';
 
 type Preferences = {
   audioDeviceId?: string;
@@ -23,41 +25,7 @@ type UserProfile = {
 
 type MediaDevice = { deviceId: string; label: string };
 
-function Corners() {
-  return (
-    <>
-      <div className="absolute -left-px -top-px h-[7px] w-px bg-white/10" />
-      <div className="absolute -left-px -top-px h-px w-[7px] bg-white/10" />
-      <div className="absolute -right-px -top-px h-[7px] w-px bg-white/10" />
-      <div className="absolute -right-px -top-px h-px w-[7px] bg-white/10" />
-      <div className="absolute -left-px -bottom-px h-[7px] w-px bg-white/10" />
-      <div className="absolute -left-px -bottom-px h-px w-[7px] bg-white/10" />
-      <div className="absolute -right-px -bottom-px h-[7px] w-px bg-white/10" />
-      <div className="absolute -right-px -bottom-px h-px w-[7px] bg-white/10" />
-    </>
-  );
-}
 
-function Eyebrow({ text }: { text: string }) {
-  return (
-    <div className="flex items-center gap-2 font-mono text-[11px] text-white/40 uppercase tracking-widest mb-4">
-      <span className="w-3 h-px bg-white/30" />
-      {text}
-    </div>
-  );
-}
-
-function Toast({ message, type }: { message: string; type: 'success' | 'error' }) {
-  return (
-    <div className={`fixed bottom-6 right-6 z-50 font-mono text-[12px] px-4 py-3
-      border ${type === 'success'
-        ? 'border-white/20 text-white/70 bg-[#111]'
-        : 'border-red-500/30 text-red-400 bg-[#111]'
-      }`}>
-      {message}
-    </div>
-  );
-}
 
 export default function ProfilePage() {
   const { data: session, update: updateSession } = useSession();
@@ -146,48 +114,29 @@ export default function ProfilePage() {
     : '—';
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-white selection:text-black">
+    <div className="min-h-screen bg-background text-white selection:bg-white selection:text-black">
 
       {/* NAV */}
-      <nav className="sticky top-0 z-50 w-full flex justify-center bg-[#0a0a0a]/90 backdrop-blur-md pt-4 px-4">
-        <div className="relative flex w-full max-w-[1200px] h-[64px] items-center justify-between border border-[#242424] bg-[#0a0908] px-6">
-          <Corners />
-          <div className="flex items-center gap-2">
-            <Link href="/#hero">
-              <img
-                src="https://framerusercontent.com/images/E1cdDQforYmgVbu5AtpZDN1cjVs.png?width=512&height=512"
-                alt="Meetly"
-                className="h-7 w-7 rounded-[4px] object-contain cursor-pointer"
-              />
-            </Link>
-          </div>
-
-          <a href="/dashboard"
-            className="font-mono text-[12px] text-white/40 hover:text-white transition-colors"
-          >
-            ← Dashboard
-          </a>
-        </div>
-      </nav>
+      <AppNavbar backTo={{ label: 'Dashboard', href: '/dashboard' }} />
 
       <div className="flex flex-col items-center px-4 pb-20">
         <div className="w-full max-w-[1200px]">
 
           {/* HEADER */}
-          <div className="border-x border-[#242424] px-8 pt-16 pb-10">
-            <Eyebrow text="Settings" />
+          <div className="border-x border-white/12 px-8 pt-16 pb-10">
+            <Eyebrow text="Settings" variant="line" className="mb-3" />
             <h1 className="text-[clamp(28px,4vw,48px)] font-normal tracking-[-0.04em] leading-[1.1]">
               Profile & Preferences
             </h1>
-            <p className="font-mono text-[12px] text-white/30 mt-2">
+            <p className="font-mono text-[13px] text-white/30 mt-2">
               Member since {memberSince}
             </p>
           </div>
 
           {/* IDENTITY */}
-          <div className="border border-[#242424] border-t-0">
-            <div className="border-b border-[#242424] px-8 py-5">
-              <Eyebrow text="Identity" />
+          <div className="border border-white/12 border-t-0">
+            <div className="border-b border-white/12 px-8 py-5">
+              <Eyebrow text="Identity" variant="line" />
             </div>
             <div className="px-8 py-8 flex flex-col md:flex-row gap-8">
 
@@ -197,10 +146,10 @@ export default function ProfilePage() {
                   <img
                     src={profile.image}
                     alt={profile.name ?? 'Avatar'}
-                    className="w-16 h-16 rounded-full border border-[#242424] object-cover"
+                    className="w-16 h-16 rounded-full border border-white/12 object-cover"
                   />
                 ) : (
-                  <div className="w-16 h-16 border border-[#242424] bg-[#111] flex items-center justify-center font-mono text-white/40 text-xl">
+                  <div className="w-16 h-16 border border-white/12 bg-surface-raised flex items-center justify-center font-mono text-white/40 text-xl">
                     {name.charAt(0).toUpperCase() || '?'}
                   </div>
                 )}
@@ -220,8 +169,8 @@ export default function ProfilePage() {
                     onChange={e => setName(e.target.value)}
                     maxLength={64}
                     placeholder="Your name"
-                    className="w-full bg-[#111] border border-white/10 px-4 py-3 font-mono
-                               text-[13px] text-white placeholder-white/20
+                    className="w-full bg-surface-raised border border-white/12 px-4 py-3 font-mono
+                               text-[13px] text-white placeholder-white/20 rounded-[2px]
                                focus:outline-none focus:border-white/30 transition-colors"
                   />
                   <p className="font-mono text-[10px] text-white/20 mt-1">
@@ -233,7 +182,7 @@ export default function ProfilePage() {
                   <label className="font-mono text-[11px] text-white/40 uppercase tracking-widest block mb-2">
                     Email
                   </label>
-                  <div className="w-full bg-[#0a0a0a] border border-[#1a1a1a] px-4 py-3 font-mono text-[13px] text-white/30">
+                  <div className="w-full bg-background border border-[#1a1a1a] px-4 py-3 font-mono text-[13px] text-white/30">
                     {profile?.email ?? '—'}
                   </div>
                   <p className="font-mono text-[10px] text-white/20 mt-1">
@@ -245,14 +194,14 @@ export default function ProfilePage() {
           </div>
 
           {/* DEVICE PREFERENCES */}
-          <div className="border border-[#242424] border-t-0">
-            <div className="border-b border-[#242424] px-8 py-5 flex items-center justify-between">
-              <Eyebrow text="Device preferences" />
+          <div className="border border-white/12 border-t-0">
+            <div className="border-b border-white/12 px-8 py-5 flex items-center justify-between">
+              <Eyebrow text="Device preferences" variant="line" />
               {!devicesLoaded && (
                 <button
                   onClick={loadDevices}
-                  className="font-mono text-[11px] text-white/40 border border-white/10
-                             px-3 py-1.5 hover:text-white hover:border-white/30 transition-colors"
+                  className="font-mono text-[11px] text-white/40 border border-white/12
+                             px-3 py-1.5 rounded-[2px] hover:text-white hover:border-white/30 transition-colors"
                 >
                   Detect devices
                 </button>
@@ -277,8 +226,8 @@ export default function ProfilePage() {
                     <select
                       value={prefs.audioDeviceId ?? ''}
                       onChange={e => setPrefs(p => ({ ...p, audioDeviceId: e.target.value }))}
-                      className="w-full bg-[#111] border border-white/10 px-4 py-3 font-mono
-                                 text-[13px] text-white focus:outline-none focus:border-white/30
+                      className="w-full bg-surface-raised border border-white/12 px-4 py-3 font-mono
+                                 text-[13px] text-white rounded-[2px] focus:outline-none focus:border-white/30
                                  transition-colors appearance-none"
                     >
                       <option value="">System default</option>
@@ -296,8 +245,8 @@ export default function ProfilePage() {
                     <select
                       value={prefs.videoDeviceId ?? ''}
                       onChange={e => setPrefs(p => ({ ...p, videoDeviceId: e.target.value }))}
-                      className="w-full bg-[#111] border border-white/10 px-4 py-3 font-mono
-                                 text-[13px] text-white focus:outline-none focus:border-white/30
+                      className="w-full bg-surface-raised border border-white/12 px-4 py-3 font-mono
+                                 text-[13px] text-white rounded-[2px] focus:outline-none focus:border-white/30
                                  transition-colors appearance-none"
                     >
                       <option value="">System default</option>
@@ -345,15 +294,15 @@ export default function ProfilePage() {
           </div>
 
           {/* SAVE */}
-          <div className="border border-[#242424] border-t-0 px-8 py-6 flex items-center justify-between">
+          <div className="border border-white/12 border-t-0 px-8 py-6 flex items-center justify-between">
             <p className="font-mono text-[11px] text-white/20">
               Changes apply to your next meeting
             </p>
             <button
               onClick={handleSave}
               disabled={saving}
-              className="relative bg-white text-black font-mono text-[12px] uppercase
-                         tracking-widest px-6 py-3 hover:opacity-90 transition-opacity
+              className="relative bg-white text-black font-mono text-[13px] uppercase
+                         tracking-wider px-6 py-3 rounded-[2px] hover:opacity-90 transition-opacity
                          disabled:opacity-30"
             >
               <Corners />
@@ -362,9 +311,9 @@ export default function ProfilePage() {
           </div>
 
           {/* DANGER ZONE */}
-          <div className="border border-[#242424] border-t-0">
-            <div className="border-b border-[#242424] px-8 py-5">
-              <Eyebrow text="Account" />
+          <div className="border border-white/12 border-t-0">
+            <div className="border-b border-white/12 px-8 py-5">
+              <Eyebrow text="Account" variant="line" />
             </div>
             <div className="px-8 py-6 flex items-center justify-between">
               <div>
@@ -375,8 +324,8 @@ export default function ProfilePage() {
               </div>
               <button
                 onClick={() => router.push('/api/auth/signout')}
-                className="font-mono text-[12px] text-white/40 border border-white/10
-                           px-4 py-2.5 hover:text-white hover:border-white/30 transition-colors"
+                className="font-mono text-[13px] text-white/40 border border-white/12
+                           px-4 py-2.5 rounded-[2px] hover:text-white hover:border-white/30 transition-colors"
               >
                 Sign out
               </button>
@@ -387,7 +336,15 @@ export default function ProfilePage() {
       </div>
 
       {/* Toast */}
-      {toast && <Toast message={toast.message} type={toast.type} />}
+      {toast && (
+        <div className={`fixed bottom-6 right-6 z-50 font-mono text-[13px] px-4 py-3
+          border ${toast.type === 'success'
+            ? 'border-white/20 text-white/70 bg-surface-raised'
+            : 'border-red-500/30 text-red-400 bg-surface-raised'
+          }`}>
+          {toast.message}
+        </div>
+      )}
     </div>
   );
 }

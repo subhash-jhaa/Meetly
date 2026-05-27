@@ -1,5 +1,5 @@
 import React from 'react';
-import { SectionCornerBrackets, CrosshairCorners } from './ui/primitives';
+import { SectionCornerBrackets, CrosshairCorners } from '@/components/ui/primitives';
 
 interface FeatureBlockProps {
   tag: string;
@@ -24,7 +24,7 @@ const FeatureBlock = ({ tag, title, description, img, icon, index }: FeatureBloc
 
   return (
     <div
-      className="relative flex flex-col md:flex-row w-full border border-[#242424] bg-[#0a0908] mb-[30vh]"
+      className="relative flex flex-col md:flex-row w-full border border-white/12 bg-surface mb-[30vh]"
       style={{
         position: 'sticky',
         top: topOffset,
@@ -33,9 +33,9 @@ const FeatureBlock = ({ tag, title, description, img, icon, index }: FeatureBloc
       }}
     >
       {/* IMAGE / VISUAL AREA */}
-      <div className="flex flex-1 items-center justify-center overflow-hidden bg-[#0d0d0d] min-h-[300px] md:min-h-0 border-b md:border-b-0 md:border-r border-[#242424]">
+      <div className="flex flex-1 items-center justify-center overflow-hidden bg-[#0d0d0d] min-h-[300px] md:min-h-0 border-b md:border-b-0 md:border-r border-white/12">
         <div className="relative flex h-full w-full items-center justify-center p-[36px]">
-          <div className="w-full h-full min-h-[320px] rounded-[16px] bg-[#111] border border-white/[0.06] flex flex-col items-center justify-center overflow-hidden relative group">
+          <div className="w-full h-full min-h-[320px] rounded-[16px] bg-surface-raised border border-white/[0.06] flex flex-col items-center justify-center overflow-hidden relative group">
 
             {img ? (
               <img
@@ -107,7 +107,7 @@ const FeatureBlock = ({ tag, title, description, img, icon, index }: FeatureBloc
         </div>
 
         {/* TITLE */}
-        <h3 className="text-[clamp(28px,4vw,40px)] font-normal leading-[1.15] tracking-[-0.04em] text-[#fafafa]">
+        <h3 className="text-[clamp(28px,4vw,40px)] font-normal leading-[1.15] tracking-[-0.04em] text-foreground">
           {title}
         </h3>
 

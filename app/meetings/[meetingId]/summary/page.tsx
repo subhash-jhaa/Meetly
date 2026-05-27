@@ -2,6 +2,7 @@ import { auth } from '@/auth';
 import { prisma } from '@/lib/prisma';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
+import { AppNavbar } from '@/components/ui/AppNavbar';
 
 interface PageProps {
   params: Promise<{ meetingId: string }>;
@@ -18,8 +19,8 @@ function Eyebrow({ text }: { text: string }) {
 
 function Section({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="border border-[#242424] border-t-0">
-      <div className="px-8 py-5 border-b border-[#242424]">
+    <div className="border border-white/12 border-t-0">
+      <div className="px-8 py-5 border-b border-white/12">
         <Eyebrow text={label} />
       </div>
       <div className="px-8 py-6">{children}</div>
@@ -48,34 +49,16 @@ export default async function SummaryPage({ params }: PageProps) {
   });
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-white selection:text-black">
+    <div className="min-h-screen bg-background text-white selection:bg-white selection:text-black">
 
       {/* NAV */}
-      <nav className="sticky top-0 z-50 w-full flex justify-center bg-[#0a0a0a]/90 backdrop-blur-md pt-4 px-4">
-        <div className="relative flex w-full max-w-[1200px] h-[64px] items-center justify-between border border-[#242424] bg-[#0a0908] px-6">
-          <div className="flex items-center gap-4">
-            <Link href="/#hero">
-              <img
-                src="https://framerusercontent.com/images/E1cdDQforYmgVbu5AtpZDN1cjVs.png?width=512&height=512"
-                alt="Meetly"
-                className="h-7 w-7 rounded-[4px] object-contain cursor-pointer"
-              />
-            </Link>
-          </div>
-
-          <a href="/dashboard"
-            className="font-mono text-[12px] text-white/40 hover:text-white transition-colors"
-          >
-            ← Dashboard
-          </a>
-        </div>
-      </nav>
+      <AppNavbar backTo={{ label: 'Dashboard', href: '/dashboard' }} />
 
       <div className="flex flex-col items-center px-4 pb-20">
         <div className="w-full max-w-[1200px]">
 
           {/* HEADER */}
-          <div className="border-x border-[#242424] px-8 pt-16 pb-10 relative">
+          <div className="border-x border-white/12 px-8 pt-16 pb-10 relative">
             <div className="absolute inset-0 repeating-grid-subtle pointer-events-none" />
             <Eyebrow text="Meeting summary" />
             <h1 className="text-[clamp(24px,3.5vw,42px)] font-normal tracking-[-0.04em] leading-[1.1]">
@@ -86,7 +69,7 @@ export default async function SummaryPage({ params }: PageProps) {
 
           {/* PROCESSING */}
           {isProcessing && (
-            <div className="border border-[#242424] border-t-0 px-8 py-16 text-center relative">
+            <div className="border border-white/12 border-t-0 px-8 py-16 text-center relative">
               <meta httpEquiv="refresh" content="10" />
               <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin mx-auto mb-4" />
               <Eyebrow text="Processing" />
@@ -101,7 +84,7 @@ export default async function SummaryPage({ params }: PageProps) {
 
           {/* FAILED */}
           {isFailed && (
-            <div className="border border-[#242424] border-t-0 px-8 py-16 text-center">
+            <div className="border border-white/12 border-t-0 px-8 py-16 text-center">
               <Eyebrow text="Error" />
               <p className="text-[14px] text-white/60">AI processing failed.</p>
               <p className="font-mono text-[12px] text-white/20 mt-2">
@@ -119,8 +102,8 @@ export default async function SummaryPage({ params }: PageProps) {
               </Section>
 
               {/* Two-column: Decisions + Actions */}
-              <div className="flex flex-col md:flex-row border border-[#242424] border-t-0">
-                <div className="flex-1 border-b md:border-b-0 md:border-r border-[#242424] px-8 py-6">
+              <div className="flex flex-col md:flex-row border border-white/12 border-t-0">
+                <div className="flex-1 border-b md:border-b-0 md:border-r border-white/12 px-8 py-6">
                   <Eyebrow text="Key decisions" />
                   {summary.keyDecisions.length === 0 ? (
                     <p className="font-mono text-[12px] text-white/20">None recorded</p>
@@ -172,13 +155,13 @@ export default async function SummaryPage({ params }: PageProps) {
 
               {/* Transcript */}
               {summary.transcript && (
-                <details className="border border-[#242424] border-t-0 group">
+                <details className="border border-white/12 border-t-0 group">
                   <summary className="px-8 py-5 font-mono text-[11px] text-white/40 uppercase tracking-widest cursor-pointer hover:text-white/60 transition-colors list-none flex items-center gap-2">
                     <span className="w-3 h-px bg-white/30" />
                     Full transcript
                     <span className="ml-auto text-white/20 group-open:rotate-180 transition-transform">↓</span>
                   </summary>
-                  <div className="border-t border-[#242424] px-8 py-6">
+                  <div className="border-t border-white/12 px-8 py-6">
                     <pre className="font-mono text-[12px] text-white/40 whitespace-pre-wrap leading-[1.8]">
                       {summary.transcript}
                     </pre>

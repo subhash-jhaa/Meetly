@@ -1,28 +1,14 @@
 import { Skeleton } from '@/components/ui/Skeleton';
-
-function Corners() {
-  return (
-    <>
-      <div className="absolute -left-px -top-px h-[7px] w-px bg-white/10" />
-      <div className="absolute -left-px -top-px h-px w-[7px] bg-white/10" />
-      <div className="absolute -right-px -top-px h-[7px] w-px bg-white/10" />
-      <div className="absolute -right-px -top-px h-px w-[7px] bg-white/10" />
-      <div className="absolute -left-px -bottom-px h-[7px] w-px bg-white/10" />
-      <div className="absolute -left-px -bottom-px h-px w-[7px] bg-white/10" />
-      <div className="absolute -right-px -bottom-px h-[7px] w-px bg-white/10" />
-      <div className="absolute -right-px -bottom-px h-px w-[7px] bg-white/10" />
-    </>
-  );
-}
+import { Corners } from '@/components/ui/primitives';
 
 export default function DashboardLoading() {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white">
+    <div className="min-h-screen bg-background text-white">
 
       {/* Nav skeleton */}
-      <div className="sticky top-0 z-50 w-full flex justify-center bg-[#0a0a0a]/90 pt-4 px-4">
+      <div className="sticky top-0 z-50 w-full flex justify-center bg-background/90 pt-4 px-4">
         <div className="relative flex w-full max-w-[1200px] h-[64px] items-center
-                        justify-between border border-[#242424] bg-[#0a0908] px-6">
+                        justify-between border border-white/12 bg-surface px-6">
           <Corners />
           <Skeleton className="h-7 w-7" />
           <Skeleton className="h-4 w-20" />
@@ -33,15 +19,15 @@ export default function DashboardLoading() {
         <div className="w-full max-w-[1200px]">
 
           {/* Header skeleton */}
-          <div className="border-x border-[#242424] px-8 pt-16 pb-10">
+          <div className="border-x border-white/12 px-8 pt-16 pb-10">
             <Skeleton className="h-3 w-20 mb-4" />
             <Skeleton className="h-10 w-64 mb-3" />
             <Skeleton className="h-3 w-40" />
           </div>
 
           {/* New meeting + join panels */}
-          <div className="border border-[#242424] border-t-0 flex flex-col md:flex-row">
-            <div className="flex-1 border-b md:border-b-0 md:border-r border-[#242424] p-8">
+          <div className="border border-white/12 border-t-0 flex flex-col md:flex-row">
+            <div className="flex-1 border-b md:border-b-0 md:border-r border-white/12 p-8">
               <Skeleton className="h-3 w-24 mb-6" />
               <div className="flex gap-0 mb-6 w-fit">
                 <Skeleton className="h-9 w-20" />
@@ -62,15 +48,15 @@ export default function DashboardLoading() {
           </div>
 
           {/* History rows */}
-          <div className="border border-[#242424] border-t-0">
-            <div className="border-b border-[#242424] px-8 py-5">
+          <div className="border border-white/12 border-t-0">
+            <div className="border-b border-white/12 px-8 py-5">
               <Skeleton className="h-3 w-28" />
             </div>
             {[1, 2, 3, 4].map(i => (
               <div
                 key={i}
                 className="flex items-center justify-between px-8 py-5
-                           border-b border-[#242424] last:border-0"
+                           border-b border-white/12 last:border-0"
               >
                 <div className="flex flex-col gap-2">
                   <Skeleton className="h-3.5 w-48" />

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { FEATURES_SECTION, FEATURE_BLOCKS } from '../data/landingData';
-import { Eyebrow, SectionSpacer, CrosshairCorners, SectionCornerBrackets } from './ui/primitives';
+import { Eyebrow, SectionSpacer, CrosshairCorners, SectionCornerBrackets } from '@/components/ui/primitives';
 import FeatureBlock from './FeatureBlock';
 import FeaturesAccordion from './FeaturesAccordion';
 
@@ -32,7 +32,7 @@ function FeaturesHeader() {
       <SectionCornerBrackets showBottom={false} />
       <div className="flex-[0.7] flex flex-col gap-[24px]">
         <Eyebrow text={FEATURES_SECTION.eyebrow} variant="bar" />
-        <h2 className="text-[clamp(32px,4vw,56px)] font-normal leading-[1.1] tracking-[-0.04em] text-[#fafafa] max-w-[700px]">
+        <h2 className="text-[clamp(32px,4vw,56px)] font-normal leading-[1.1] tracking-[-0.04em] text-foreground max-w-[700px]">
           {FEATURES_SECTION.title}
         </h2>
       </div>
@@ -55,7 +55,7 @@ function FeaturesHeader() {
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 export default function Features() {
   return (
-    <section className="w-full bg-[#0a0a0a] relative">
+    <section className="w-full bg-background relative">
 
       {/* SIDE BORDER SPACER */}
       <div className="w-full max-w-[1200px] border-x border-white/12 h-40 mx-auto" />

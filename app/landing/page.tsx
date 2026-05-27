@@ -12,7 +12,7 @@ import Testimonials from './components/Testimonials';
 import CTA from './components/CTA';
 import { FlickeringFooter } from '@/components/ui/flickering-footer';
 import FAQ from './components/FAQ';
-import { SectionSpacer, SectionCornerBrackets, CrosshairCorners } from './components/ui/primitives';
+import { SectionSpacer, SectionCornerBrackets, CrosshairCorners } from '@/components/ui/primitives';
 import { FAQ_SECTION, SITE } from './data/landingData';
 import { useSession } from 'next-auth/react';  // ← ADD
 import { useEffect } from 'react';
@@ -30,7 +30,7 @@ function FAQSection() {
         <div className="flex flex-col md:flex-row border-b border-white/12">
           {/* LEFT: META */}
           <div className="flex-1 p-[48px_24px] md:p-[64px_32px] border-r border-white/12 border-b md:border-b-0">
-            <div className="section-eyebrow flex items-center gap-[8px] text-[13px] font-mono text-[#fafafa]/50 mb-[16px]">
+            <div className="section-eyebrow flex items-center gap-[8px] text-[13px] font-mono text-foreground/50 mb-[16px]">
               <span className="eyebrow-line w-[12px] h-[1px] bg-[#fafafa]/40" />
               <span>{eyebrow}</span>
             </div>
@@ -42,7 +42,7 @@ function FAQSection() {
                 </React.Fragment>
               ))}
             </h2>
-            <p className="text-[14px] text-[#fafafa]/40 mt-[16px] leading-[1.5]">
+            <p className="text-[14px] text-foreground/40 mt-[16px] leading-[1.5]">
               {subtext.split('\n').map((line, i) => (
                 <React.Fragment key={i}>
                   {line}
@@ -51,7 +51,7 @@ function FAQSection() {
               ))}
             </p>
             <button
-              className="relative btn-outline mt-[24px] rounded-[4px] border border-white/20 px-[16px] py-[8px] font-mono text-[13px] text-[#fafafa] transition-colors hover:border-white/40 bg-transparent"
+              className="relative btn-outline mt-[24px] rounded-[2px] border border-white/20 px-[16px] py-[8px] font-mono text-[13px] text-foreground transition-colors hover:border-white/40 bg-transparent"
               onClick={() => router.push(SITE.signUpUrl)}
             >
               <span className="relative z-10">{cta}</span>
@@ -86,14 +86,14 @@ export default function LandingPage() {
   // Show nothing while checking session
   if (status === 'loading') {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="bg-[#0a0a0a] text-[#fafafa] selection:bg-white selection:text-black min-h-screen relative">
+    <div className="bg-background text-foreground selection:bg-white selection:text-black min-h-screen relative">
       <Navbar />
       <Hero />
       <Features />

@@ -3,6 +3,7 @@
 import { signIn } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
+import { Corners } from '@/components/ui/primitives';
 
 function SignInContent() {
   const searchParams = useSearchParams();
@@ -12,15 +13,8 @@ function SignInContent() {
   const callbackUrl = searchParams.get('callbackUrl') ?? '/dashboard';
 
   return (
-    <div className="flex flex-col gap-8 p-8 border border-white/10 bg-[#0a0908]/50 backdrop-blur-sm relative">
-      <div className="absolute -left-[1px] -top-[1px] h-[12px] w-[1px] bg-white/20" />
-      <div className="absolute -left-[1px] -top-[1px] h-[1px] w-[12px] bg-white/20" />
-      <div className="absolute -right-[1px] -top-[1px] h-[12px] w-[1px] bg-white/20" />
-      <div className="absolute -right-[1px] -top-[1px] h-[1px] w-[12px] bg-white/20" />
-      <div className="absolute -left-[1px] -bottom-[1px] h-[12px] w-[1px] bg-white/20" />
-      <div className="absolute -left-[1px] -bottom-[1px] h-[1px] w-[12px] bg-white/20" />
-      <div className="absolute -right-[1px] -bottom-[1px] h-[12px] w-[1px] bg-white/20" />
-      <div className="absolute -right-[1px] -bottom-[1px] h-[1px] w-[12px] bg-white/20" />
+    <div className="flex flex-col gap-8 p-8 border border-white/12 bg-surface/50 backdrop-blur-sm relative">
+      <Corners size={12} color="bg-white/20" />
 
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-2 text-white/40 font-mono text-[12px] uppercase tracking-widest">
@@ -43,7 +37,7 @@ function SignInContent() {
 
       <button
         onClick={() => signIn('google', { callbackUrl })}
-        className="group relative w-full flex items-center justify-center gap-3 bg-[#fafafa] py-3 transition-opacity hover:opacity-90"
+        className="group relative w-full flex items-center justify-center gap-3 bg-[#fafafa] py-3 transition-opacity hover:opacity-90 rounded-[2px]"
       >
         <svg width="18" height="18" viewBox="0 0 18 18">
           <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/>

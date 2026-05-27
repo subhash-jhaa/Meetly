@@ -1,5 +1,6 @@
-// Shared primitive UI atoms used across all landing page sections.
-// Import from here — never duplicate these in individual components.
+// ─── Shared primitive UI atoms ──────────────────────────────────────────────
+// Single source of truth for all UI primitives used across the entire app.
+// Import from '@/components/ui/primitives' — never duplicate in individual pages.
 
 import React from 'react';
 
@@ -105,17 +106,39 @@ export function SectionCornerBrackets({
   );
 }
 
+// ─── CORNERS (APP-WIDE SHORTHAND) ────────────────────────────────────────────
+// Used on dashboard, profile, error, 404, history pages.
+// Uses inline style for size to avoid dynamic Tailwind class issues.
+export function Corners({ size = 7, color = 'bg-white/10' }: { size?: number; color?: string }) {
+  return (
+    <>
+      {(['tl', 'tr', 'bl', 'br'] as const).map(pos => (
+        <React.Fragment key={pos}>
+          <div className={`absolute ${CROSSHAIR_POSITIONS[pos]} w-[1px] ${color} pointer-events-none`} style={{ height: size }} />
+          <div className={`absolute ${CROSSHAIR_POSITIONS[pos]} h-[1px] ${color} pointer-events-none`} style={{ width: size }} />
+        </React.Fragment>
+      ))}
+    </>
+  );
+}
+
 // ─── EYEBROW LABEL ───────────────────────────────────────────────────────────
 interface EyebrowProps {
   text: string;
   className?: string;
-  variant?: 'bar' | 'dot';
+  variant?: 'bar' | 'dot' | 'line';
 }
 
 export function Eyebrow({ text, className = '', variant = 'bar' }: EyebrowProps) {
+  const indicator = {
+    bar: 'w-[1.5px] h-3 bg-white/40',
+    dot: 'w-1 h-1 rounded-full bg-white/40',
+    line: 'w-3 h-px bg-white/30',
+  }[variant];
+
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <div className={variant === 'bar' ? "w-[1.5px] h-3 bg-white/40" : "w-1 h-1 rounded-full bg-white/40"} />
+      <div className={indicator} />
       <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/40">
         {text}
       </span>
@@ -143,7 +166,7 @@ export function SectionHeader({
   return (
     <div className={`flex flex-col gap-[16px] ${alignClass} ${className}`}>
       <Eyebrow text={eyebrow} variant={eyebrowVariant} />
-      <h2 className="text-[clamp(28px,4vw,46px)] font-normal tracking-[-0.05em] leading-[1.1] text-[#fafafa]">
+      <h2 className="text-[clamp(28px,4vw,46px)] font-normal tracking-[-0.05em] leading-[1.1] text-foreground">
         {title}
       </h2>
     </div>
@@ -240,7 +263,7 @@ export function LandingSection({
   showBottomBrackets?: boolean;
 }) {
   return (
-    <section id={id} className={`flex flex-col items-center w-full bg-[#0a0a0a] ${className}`}>
+    <section id={id} className={`flex flex-col items-center w-full bg-background ${className}`}>
       <div className={`w-full max-w-[1200px] border-x border-white/12 relative group ${containerClassName}`}>
         <SectionCornerBrackets showTop={showTopBrackets} showBottom={showBottomBrackets} />
         {children}
@@ -260,7 +283,7 @@ export function Card({
   showCorners?: boolean;
 }) {
   return (
-    <div className={`relative border border-[#242424] bg-[#171717] p-6 group ${className}`}>
+    <div className={`relative border border-white/12 bg-surface-card p-6 group ${className}`}>
       {children}
       {showCorners && <CrosshairCorners color="bg-zinc-500" />}
     </div>

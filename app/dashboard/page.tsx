@@ -3,8 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useSession, signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { encodePassphrase, generateRoomId, randomString } from '@/lib/client-utils';
+import { Corners, Eyebrow } from '@/components/ui/primitives';
+import { AppNavbar } from '@/components/ui/AppNavbar';
 
 type Meeting = {
   id: string;
@@ -41,84 +43,7 @@ function timeUntil(iso: string) {
   return `in ${m}m`;
 }
 
-// Corner marker decoration — same as landing page
-function Corners({ size = 7, opacity = '10' }: { size?: number; opacity?: string }) {
-  const s = `${size}px`;
-  const cls = `bg-white/${opacity}`;
-  return (
-    <>
-      <div className={`absolute -left-px -top-px h-[${s}] w-px ${cls}`} />
-      <div className={`absolute -left-px -top-px h-px w-[${s}] ${cls}`} />
-      <div className={`absolute -right-px -top-px h-[${s}] w-px ${cls}`} />
-      <div className={`absolute -right-px -top-px h-px w-[${s}] ${cls}`} />
-      <div className={`absolute -left-px -bottom-px h-[${s}] w-px ${cls}`} />
-      <div className={`absolute -left-px -bottom-px h-px w-[${s}] ${cls}`} />
-      <div className={`absolute -right-px -bottom-px h-[${s}] w-px ${cls}`} />
-      <div className={`absolute -right-px -bottom-px h-px w-[${s}] ${cls}`} />
-    </>
-  );
-}
 
-function Eyebrow({ text }: { text: string }) {
-  return (
-    <div className="flex items-center gap-2 font-mono text-[11px] text-white/40 uppercase tracking-widest mb-3">
-      <span className="w-3 h-px bg-white/30" />
-      {text}
-    </div>
-  );
-}
-
-function MobileMenu() {
-  const [open, setOpen] = useState(false);
-  return (
-    <div className="md:hidden">
-      <button
-        onClick={() => setOpen(!open)}
-        className="relative w-10 h-10 border border-[#242424] bg-[#0a0908] flex items-center justify-center text-white/60 hover:text-white transition-colors"
-      >
-        <Corners size={5} opacity="20" />
-        {open ? (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        ) : (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        )}
-      </button>
-
-      {open && (
-        <div className="absolute top-[72px] right-0 left-0 border border-[#242424] bg-[#0a0908] p-4 flex flex-col gap-2 z-[100] shadow-2xl">
-          <Corners size={8} opacity="30" />
-          <a
-            href="/meetings/history"
-            className="flex items-center px-4 py-3 font-mono text-[13px] text-white/60 hover:text-white hover:bg-white/5 transition-colors border-b border-white/5"
-            onClick={() => setOpen(false)}
-          >
-            History
-          </a>
-          <a
-            href="/profile"
-            className="flex items-center px-4 py-3 font-mono text-[13px] text-white/60 hover:text-white hover:bg-white/5 transition-colors border-b border-white/5"
-            onClick={() => setOpen(false)}
-          >
-            Profile
-          </a>
-          <button
-            onClick={() => {
-              setOpen(false);
-              signOut({ callbackUrl: '/' });
-            }}
-            className="flex items-center px-4 py-3 font-mono text-[13px] text-red-400/60 hover:text-red-400 hover:bg-white/5 transition-colors text-left"
-          >
-            Sign out
-          </button>
-        </div>
-      )}
-    </div>
-  );
-}
 
 export default function Dashboard() {
   const router = useRouter();
@@ -135,8 +60,8 @@ export default function Dashboard() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    fetch('/api/meetings/upcoming').then(r => r.json()).then(d => setUpcoming(d.meetings ?? []));
-    fetch('/api/meetings/history').then(r => r.json()).then(d => setHistory(d.meetings ?? []));
+    fetch('/api/meeting/upcoming').then(r => r.json()).then(d => setUpcoming(d.meetings ?? []));
+    fetch('/api/meeting/history').then(r => r.json()).then(d => setHistory(d.meetings ?? []));
   }, []);
 
   async function startInstant() {
@@ -165,14 +90,31 @@ export default function Dashboard() {
     if (res.ok) {
       const d = await res.json();
       setCreatedRoom({ roomName: d.roomName, url: `${window.location.origin}/rooms/${d.roomName}` });
-      fetch('/api/meetings/upcoming').then(r => r.json()).then(data => setUpcoming(data.meetings ?? []));
+      fetch('/api/meeting/upcoming').then(r => r.json()).then(data => setUpcoming(data.meetings ?? []));
     }
     setLoading(false);
   }
 
   async function joinRoom() {
-    if (!joinCode.trim()) return;
-    router.push(`/rooms/${joinCode.trim()}`);
+    let code = joinCode.trim();
+    if (!code) return;
+    
+    try {
+      const urlString = code.startsWith('http') ? code : `https://${code}`;
+      const url = new URL(urlString);
+      const pathSegments = url.pathname.split('/').filter(Boolean);
+      if (pathSegments.length > 0) {
+        code = pathSegments[pathSegments.length - 1];
+      }
+    } catch {
+      if (code.includes('/')) {
+        code = code.split('/').filter(Boolean).pop() || code;
+      }
+    }
+    
+    code = code.split('?')[0].split('#')[0];
+
+    router.push(`/rooms/${code}`);
   }
 
   const greeting = (() => {
@@ -183,63 +125,18 @@ export default function Dashboard() {
   })();
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-white selection:text-black">
+    <div className="min-h-screen bg-background text-white selection:bg-white selection:text-black">
 
       {/* NAV */}
-      <nav className="sticky top-0 z-50 w-full flex justify-center bg-[#0a0a0a]/90 backdrop-blur-md pt-4 px-4">
-        <div className="relative flex w-full max-w-[1200px] h-[64px] items-center justify-between border border-[#242424] bg-[#0a0908] px-6">
-          <Corners />
-          <div className="flex items-center gap-2">
-            <Link href="/#hero">
-              <img
-                src="https://framerusercontent.com/images/E1cdDQforYmgVbu5AtpZDN1cjVs.png?width=512&height=512"
-                alt="Meetly"
-                className="h-7 w-7 rounded-[4px] object-contain cursor-pointer"
-              />
-            </Link>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="font-mono text-[12px] text-white/40 hidden md:block">
-              {session?.user?.name}
-            </span>
-
-            {/* Desktop Nav */}
-            <div className="hidden md:flex items-center gap-3">
-              <a
-                href="/meetings/history"
-                className="font-mono text-[12px] text-white/40 hover:text-white transition-colors"
-              >
-                History
-              </a>
-              <a
-                href="/profile"
-                className="relative border border-[#242424] bg-[#0a0908] px-4 py-2 font-mono text-[12px] text-white/60 hover:text-white hover:bg-white/5 transition-colors"
-              >
-                <Corners size={5} opacity="20" />
-                Profile
-              </a>
-              <button
-                onClick={() => signOut({ callbackUrl: '/' })}
-                className="relative border border-[#242424] bg-[#0a0908] px-4 py-2 font-mono text-[12px] text-white/60 hover:text-white hover:bg-white/5 transition-colors"
-              >
-                <Corners size={5} opacity="20" />
-                Sign out
-              </button>
-            </div>
-
-            {/* Mobile Nav Toggle */}
-            <MobileMenu />
-          </div>
-        </div>
-      </nav>
+      <AppNavbar />
 
       <div className="flex flex-col items-center px-4 pb-20">
         <div className="w-full max-w-[1200px]">
 
           {/* HEADER */}
-          <div className="border-x border-[#242424] px-8 pt-16 pb-10 relative">
+          <div className="border-x border-white/12 px-8 pt-16 pb-10 relative">
             <div className="absolute inset-0 repeating-grid-subtle pointer-events-none" />
-            <Eyebrow text="Dashboard" />
+            <Eyebrow text="Dashboard" variant="line" className="mb-3" />
             <h1 className="text-[clamp(28px,4vw,48px)] font-normal tracking-[-0.04em] leading-[1.1] text-white">
               {greeting}{session?.user?.name ? `, ${session.user.name.split(' ')[0]}` : ''}.
             </h1>
@@ -249,14 +146,14 @@ export default function Dashboard() {
           </div>
 
           {/* MAIN GRID */}
-          <div className="border border-[#242424] border-t-0 flex flex-col md:flex-row">
+          <div className="border border-white/12 border-t-0 flex flex-col md:flex-row">
 
             {/* LEFT — New Meeting */}
-            <div className="flex-1 border-b md:border-b-0 md:border-r border-[#242424] p-8">
-              <Eyebrow text="New meeting" />
+            <div className="flex-1 border-b md:border-b-0 md:border-r border-white/12 p-8">
+              <Eyebrow text="New meeting" variant="line" className="mb-3" />
 
               {/* Tab toggle */}
-              <div className="flex border border-[#242424] w-fit mb-6">
+              <div className="flex border border-white/12 w-fit mb-6">
                 {(['instant', 'schedule'] as const).map(t => (
                   <button
                     key={t}
@@ -272,7 +169,7 @@ export default function Dashboard() {
               <div className="flex flex-col gap-3">
                 {createdRoom ? (
                   <div className="flex flex-col gap-4 mt-2">
-                    <div className="bg-[#111] border border-[#242424] p-4 rounded-lg flex flex-col gap-2">
+                    <div className="bg-surface-raised border border-white/12 p-4 rounded-[2px] flex flex-col gap-2">
                       <p className="font-mono text-[10px] text-white/40 uppercase tracking-widest">
                         Meeting Link
                       </p>
@@ -286,7 +183,7 @@ export default function Dashboard() {
                             setCopied(true);
                             setTimeout(() => setCopied(false), 2000);
                           }}
-                          className="font-mono text-[11px] bg-white/10 text-white px-3 py-1.5 hover:bg-white/20 transition-colors whitespace-nowrap"
+                          className="font-mono text-[11px] bg-white/10 text-white px-3 py-1.5 hover:bg-white/20 transition-colors whitespace-nowrap rounded-[2px]"
                         >
                           {copied ? 'Copied!' : 'Copy'}
                         </button>
@@ -295,13 +192,13 @@ export default function Dashboard() {
                     <div className="flex gap-3">
                       <button
                         onClick={() => router.push(`/rooms/${createdRoom.roomName}`)}
-                        className="flex-1 bg-white text-black font-mono text-[13px] py-3 hover:opacity-90 transition-opacity"
+                        className="flex-1 bg-white text-black font-mono text-[13px] py-3 hover:opacity-90 transition-opacity rounded-[2px]"
                       >
                         Join Room
                       </button>
                       <button
                         onClick={() => setCreatedRoom(null)}
-                        className="flex-1 border border-[#242424] text-white font-mono text-[13px] py-3 hover:bg-white/5 transition-colors"
+                        className="flex-1 border border-white/12 text-white font-mono text-[13px] py-3 hover:bg-white/5 transition-colors rounded-[2px]"
                       >
                         Done
                       </button>
@@ -313,7 +210,7 @@ export default function Dashboard() {
                       value={title}
                       onChange={e => setTitle(e.target.value)}
                       placeholder="Meeting title (optional)"
-                      className="w-full bg-[#111] border border-[#242424] px-4 py-3 font-mono text-[13px] text-white placeholder-white/20 focus:outline-none focus:border-white/30 transition-colors"
+                      className="w-full bg-surface-raised border border-white/12 px-4 py-3 font-mono text-[13px] text-white placeholder-white/20 focus:outline-none focus:border-white/30 transition-colors"
                     />
 
                     {tab === 'schedule' && (
@@ -322,13 +219,13 @@ export default function Dashboard() {
                           type="date"
                           value={scheduleDate}
                           onChange={e => setScheduleDate(e.target.value)}
-                          className="flex-1 bg-[#111] border border-[#242424] px-4 py-3 font-mono text-[13px] text-white focus:outline-none focus:border-white/30 transition-colors"
+                          className="flex-1 bg-surface-raised border border-white/12 px-4 py-3 font-mono text-[13px] text-white focus:outline-none focus:border-white/30 transition-colors"
                         />
                         <input
                           type="time"
                           value={scheduleTime}
                           onChange={e => setScheduleTime(e.target.value)}
-                          className="flex-1 bg-[#111] border border-[#242424] px-4 py-3 font-mono text-[13px] text-white focus:outline-none focus:border-white/30 transition-colors"
+                          className="flex-1 bg-surface-raised border border-white/12 px-4 py-3 font-mono text-[13px] text-white focus:outline-none focus:border-white/30 transition-colors"
                         />
                       </div>
                     )}
@@ -336,9 +233,9 @@ export default function Dashboard() {
                     <button
                       onClick={tab === 'instant' ? startInstant : scheduleRoom}
                       disabled={loading || (tab === 'schedule' && (!scheduleDate || !scheduleTime))}
-                      className="relative w-full bg-white text-black font-mono text-[13px] py-3 hover:opacity-90 transition-opacity disabled:opacity-30"
+                      className="relative w-full bg-white text-black font-mono text-[13px] py-3 hover:opacity-90 transition-opacity disabled:opacity-30 rounded-[2px]"
                     >
-                      <Corners size={5} opacity="20" />
+                      <Corners size={5} color="bg-white/20" />
                       {loading ? 'Starting...' : tab === 'instant' ? 'Start meeting' : 'Schedule meeting'}
                     </button>
                   </>
@@ -348,21 +245,21 @@ export default function Dashboard() {
 
             {/* RIGHT — Join */}
             <div className="flex-1 p-8">
-              <Eyebrow text="Join a meeting" />
+              <Eyebrow text="Join a meeting" variant="line" className="mb-3" />
               <div className="flex flex-col gap-3">
                 <input
                   value={joinCode}
                   onChange={e => setJoinCode(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && joinRoom()}
                   placeholder="Enter room code or link"
-                  className="w-full bg-[#111] border border-[#242424] px-4 py-3 font-mono text-[13px] text-white placeholder-white/20 focus:outline-none focus:border-white/30 transition-colors"
+                  className="w-full bg-surface-raised border border-white/12 px-4 py-3 font-mono text-[13px] text-white placeholder-white/20 focus:outline-none focus:border-white/30 transition-colors"
                 />
                 <button
                   onClick={joinRoom}
                   disabled={!joinCode.trim()}
-                  className="relative w-full border border-[#242424] bg-[#0a0908] text-white font-mono text-[13px] py-3 hover:bg-white/5 transition-colors disabled:opacity-30"
+                  className="relative w-full border border-white/12 bg-surface text-white font-mono text-[13px] py-3 hover:bg-white/5 transition-colors disabled:opacity-30 rounded-[2px]"
                 >
-                  <Corners size={5} opacity="20" />
+                  <Corners size={5} color="bg-white/20" />
                   Join room
                 </button>
               </div>
@@ -371,14 +268,14 @@ export default function Dashboard() {
 
           {/* UPCOMING MEETINGS */}
           {upcoming.length > 0 && (
-            <div className="border border-[#242424] border-t-0">
-              <div className="border-b border-[#242424] px-8 py-5">
-                <Eyebrow text="Upcoming" />
+            <div className="border border-white/12 border-t-0">
+              <div className="border-b border-white/12 px-8 py-5">
+                <Eyebrow text="Upcoming" variant="line" />
               </div>
               {upcoming.map((m, i) => (
                 <div
                   key={m.id}
-                  className={`flex items-center justify-between px-8 py-5 hover:bg-white/[0.02] transition-colors cursor-pointer ${i < upcoming.length - 1 ? 'border-b border-[#242424]' : ''
+                  className={`flex items-center justify-between px-8 py-5 hover:bg-white/[0.02] transition-colors cursor-pointer ${i < upcoming.length - 1 ? 'border-b border-white/12' : ''
                     }`}
                   onClick={() => router.push(`/rooms/${m.roomName}`)}
                 >
@@ -392,7 +289,7 @@ export default function Dashboard() {
                     <span className="font-mono text-[11px] text-white/30">
                       {timeUntil(m.scheduledAt!)}
                     </span>
-                    <span className="font-mono text-[11px] px-2 py-1 border border-white/10 text-white/50">
+                    <span className="font-mono text-[11px] px-2 py-1 border border-white/10 text-white/50 rounded-[2px]">
                       Join →
                     </span>
                   </div>
@@ -402,9 +299,9 @@ export default function Dashboard() {
           )}
 
           {/* MEETING HISTORY */}
-          <div className="border border-[#242424] border-t-0">
-            <div className="border-b border-[#242424] px-8 py-5">
-              <Eyebrow text="Recent meetings" />
+          <div className="border border-white/12 border-t-0">
+            <div className="border-b border-white/12 px-8 py-5">
+              <Eyebrow text="Recent meetings" variant="line" />
             </div>
 
             {history.length === 0 ? (
@@ -418,7 +315,7 @@ export default function Dashboard() {
               history.map((m, i) => (
                 <div
                   key={m.id}
-                  className={`flex items-center justify-between px-8 py-5 hover:bg-white/[0.02] transition-colors ${i < history.length - 1 ? 'border-b border-[#242424]' : ''
+                  className={`flex items-center justify-between px-8 py-5 hover:bg-white/[0.02] transition-colors ${i < history.length - 1 ? 'border-b border-white/12' : ''
                     }`}
                 >
                   <div className="flex-1 min-w-0">
@@ -439,7 +336,7 @@ export default function Dashboard() {
                     {m.status === 'COMPLETED' && (
                       <button
                         onClick={() => router.push(`/meetings/${m.id}/summary`)}
-                        className="font-mono text-[11px] text-white/50 border border-[#242424] px-3 py-1 hover:text-white hover:border-white/30 transition-colors"
+                        className="font-mono text-[11px] text-white/50 border border-white/12 px-3 py-1 hover:text-white hover:border-white/30 transition-colors rounded-[2px]"
                       >
                         View summary →
                       </button>

@@ -4,14 +4,14 @@ import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { CTA_DATA, SITE } from '../data/landingData';
-import { CrosshairCorners, Logo, CornerBox, SectionSpacer, SectionCornerBrackets } from './ui/primitives';
+import { CrosshairCorners, Logo, CornerBox, SectionSpacer, SectionCornerBrackets } from '@/components/ui/primitives';
 
 export default function CTA() {
   const router = useRouter();
   const { headline, subheadline, dashboardImg } = CTA_DATA;
 
   return (
-    <section className="relative w-full bg-[#0a0a0a] text-center pt-0 pb-0">
+    <section className="relative w-full bg-background text-center pt-0 pb-0">
 
       {/* ─── BACKGROUND VISUAL ─── */}
       <div className="absolute inset-0 z-0">
@@ -67,7 +67,7 @@ export default function CTA() {
 
           {/* Central Mockup */}
           <div className="mt-8 w-full max-w-5xl mx-auto relative z-20">
-            <div className="relative border border-white/12 overflow-hidden bg-[#0a0a0a]">
+            <div className="relative border border-white/12 overflow-hidden bg-background">
 
               <img
                 src={dashboardImg}

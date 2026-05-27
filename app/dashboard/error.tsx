@@ -14,7 +14,7 @@ export default function DashboardError({
   }, [error]);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white flex items-center justify-center px-4">
+    <div className="min-h-screen bg-background text-white flex items-center justify-center px-4">
       <div className="w-full max-w-[400px] text-center">
         <div className="flex items-center justify-center gap-2 font-mono
                         text-[11px] text-white/30 uppercase tracking-widest mb-4">
@@ -27,14 +27,14 @@ export default function DashboardError({
         <div className="flex gap-2 justify-center">
           <button
             onClick={reset}
-            className="border border-[#242424] px-5 py-2.5 font-mono
+            className="border border-white/12 px-5 py-2.5 font-mono
                        text-[12px] text-white hover:bg-white/5 transition-colors"
           >
             Retry
           </button>
           
            <a href="/"
-            className="border border-[#242424] px-5 py-2.5 font-mono
+            className="border border-white/12 px-5 py-2.5 font-mono
                        text-[12px] text-white/40 hover:text-white
                        hover:bg-white/5 transition-colors"
           >

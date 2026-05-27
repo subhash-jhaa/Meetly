@@ -4,15 +4,15 @@ import React from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { SITE } from '../data/landingData';
-import { CrosshairCorners } from './ui/primitives';
+import { CrosshairCorners } from '@/components/ui/primitives';
 
 export default function Navbar() {
   const { data: session, status } = useSession();
   const isSignedIn = status === 'authenticated' && !!session?.user;
 
   return (
-    <nav className="sticky top-0 z-[100] w-full flex flex-col items-center bg-[#0a0a0a]/90 backdrop-blur-md pt-4 px-4">
-      <div className="relative flex w-full max-w-[1200px] h-[64px] items-center justify-between border border-[#242424] bg-[#0a0908] px-[24px]">
+    <nav className="sticky top-0 z-50 w-full flex flex-col items-center bg-background/90 backdrop-blur-md pt-4 px-4">
+      <div className="relative flex w-full max-w-[1200px] h-[64px] items-center justify-between border border-white/12 bg-surface px-[24px]">
 
         {/* LEFT — logo */}
         <div className="flex-1 flex justify-start">
@@ -51,7 +51,7 @@ export default function Navbar() {
             <>
               <Link
                 href={SITE.signInUrl}
-                className="group relative flex items-center justify-center border border-[#242424] bg-[#0a0908] px-[16px] py-[8px] no-underline transition-colors hover:bg-white/5"
+                className="group relative flex items-center justify-center border border-white/12 bg-surface px-[16px] py-[8px] no-underline transition-colors hover:bg-white/5"
               >
                 <span className="font-mono text-[13px] text-white">Sign in</span>
                 <CrosshairCorners color="bg-zinc-500" size={4} />

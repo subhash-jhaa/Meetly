@@ -23,17 +23,18 @@ export default async function Page({
 
   if (!room) {
     return (
-      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center flex flex-col items-center gap-4">
           <div className="text-5xl">🔍</div>
           <h1 className="text-2xl font-semibold text-white">Room not found</h1>
-          <p className="text-gray-400 text-sm">
+          <p className="text-white/40 font-mono text-[13px]">
             This meeting link is invalid or has expired.
           </p>
           
             <a href="/dashboard"
-            className="mt-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500
-                       text-white text-sm font-medium rounded-lg transition-colors"
+            className="mt-2 px-5 py-2.5 border border-white/12 bg-surface
+                       text-white text-[13px] font-mono rounded-[2px]
+                       hover:bg-white/5 transition-colors"
           >
             Go to Dashboard
           </a>
@@ -54,28 +55,29 @@ export default async function Page({
     if (diffMinutes > 5) {
       const formattedTime = new Date(scheduledMeeting.scheduledAt).toLocaleString();
       return (
-        <div className="min-h-screen bg-gray-950 flex items-center justify-center">
-          <div className="text-center flex flex-col items-center gap-4">
-            <div className="text-5xl">⏰</div>
-            <h1 className="text-2xl font-semibold text-white">
-              Meeting hasn't started yet
-            </h1>
-            {scheduledMeeting.title && (
-              <p className="text-lg text-white/70">{scheduledMeeting.title}</p>
-            )}
-            <p className="text-gray-400 text-sm">Scheduled for {formattedTime}</p>
-            <p className="text-gray-500 text-xs">
-              You can join 5 minutes before the meeting starts.
-            </p>
-            
-              <a href="/dashboard"
-              className="mt-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500
-                         text-white text-sm font-medium rounded-lg transition-colors"
-            >
-              Go to Dashboard
-            </a>
-          </div>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center flex flex-col items-center gap-4">
+          <div className="text-5xl">⏰</div>
+          <h1 className="text-2xl font-semibold text-white">
+            Meeting hasn't started yet
+          </h1>
+          {scheduledMeeting.title && (
+            <p className="text-lg text-white/70">{scheduledMeeting.title}</p>
+          )}
+          <p className="text-white/40 font-mono text-[13px]">Scheduled for {formattedTime}</p>
+          <p className="text-white/20 font-mono text-[11px]">
+            You can join 5 minutes before the meeting starts.
+          </p>
+          
+            <a href="/dashboard"
+            className="mt-2 px-5 py-2.5 border border-white/12 bg-surface
+                       text-white text-[13px] font-mono rounded-[2px]
+                       hover:bg-white/5 transition-colors"
+          >
+            Go to Dashboard
+          </a>
         </div>
+      </div>
       );
     }
   }

@@ -170,4 +170,25 @@
   background-color: rgba(229, 62, 62, 0.1) !important;
   border-color: #e53e3e !important;
 }
+
+/* Global lk-button active / pressed overrides */
+.lk-button[aria-pressed="true"],
+.lk-button[data-lk-active="true"] {
+  background-color: #fafafa !important;
+  color: #0a0a0a !important;
+  border-color: #fafafa !important;
+}
+
+.lk-button[aria-pressed="true"]:hover,
+.lk-button[data-lk-active="true"]:hover {
+  background-color: rgba(250, 250, 250, 0.85) !important;
+  color: #0a0a0a !important;
+}
+
+/* Ensure nested elements (text, svg, spans) inside active buttons also inherit the dark color */
+.lk-button[aria-pressed="true"] *,
+.lk-button[data-lk-active="true"] * {
+  color: #0a0a0a !important;
+  fill: currentColor !important;
+}
 

@@ -1,12 +1,26 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Corners, Logo } from '@/components/ui/primitives';
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center relative overflow-hidden">
+      {/* BACKGROUND VISUAL */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <Image
+          src="/images/cta-bg.png"
+          alt="Auth background"
+          fill
+          className="object-cover opacity-15 grayscale"
+          priority
+        />
+        {/* Vignette/Gradients to blend */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-transparent to-black" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#0a0a0a_100%)]" />
+      </div>
+
       {/* BACKGROUND ELEMENTS */}
-      <div className="absolute inset-0 repeating-grid-subtle opacity-50" />
       <div className="absolute inset-0 diagonal-dither opacity-[0.03] pointer-events-none" />
 
       {/* LOGO */}

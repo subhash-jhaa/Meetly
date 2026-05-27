@@ -63,37 +63,37 @@ export const FEATURE_BLOCKS = [
     tag: 'AI Summaries',
     title: 'AI Summaries',
     description: `Meetly captures and transcribes audio in the background. You stay focused on the conversation.`,
-    img: '/meetly_feature_ai_summaries.png',
+    img: '/Ai-summary.png',
   },
   {
     tag: 'Extracted Action Items',
     title: 'Extracted Action Items',
     description: `Our pipeline pulls out key decisions and tasks the moment the call ends. Nothing slips through the cracks.`,
-    img: '/meetly_feature_action_items.png',
+    img: '/action-items.png',
   },
   {
     tag: 'Automated Distribution',
     title: 'Automated Distribution',
     description: `Structured summaries hit everyone's inbox automatically. Nobody has to ask for the notes.`,
-    img: '/meetly_feature_distribution.png',
+    img: '/notification.png',
   },
   {
     tag: 'Secure Waiting Room',
     title: 'Secure Waiting Room',
     description: `Control access with a pre-meeting lobby. Manage participants with direct host controls.`,
-    img: '/meetly_feature_waiting_room.png',
+    img: '/waiting room.png',
   },
   {
     tag: 'Frictionless Joining',
     title: 'Frictionless Joining',
     description: `Create instant rooms or schedule in advance. Share simple links that work directly in the browser.`,
-    img: '/meetly_feature_joining.png',
+    img: '/joining.png',
   },
   {
     tag: 'Searchable Archive',
     title: 'Searchable Archive',
     description: `Query your entire history of transcripts and summaries. Find exactly what was decided months ago, instantly.`,
-    img: '/meetly_feature_archive.png',
+    img: '/archive.png',
   },
 ] as const;
 
